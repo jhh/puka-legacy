@@ -25,7 +25,8 @@
   "homepage": "https://github.com/jhh/puka-react#readme",
   "dependencies": {
     "react": "^0.14.7",
-    "react-dom": "^0.14.7"
+    "react-dom": "^0.14.7",
+    "react-router": "^2.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.7.2",

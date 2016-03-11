@@ -1,5 +1,5 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   devtool: '#inline-source-map',
@@ -16,7 +16,7 @@ module.exports = {
         loader: "babel",
         test: /\.jsx?$/,
         include: [
-          path.resolve(__dirname, "src"),
+          path.resolve(__dirname, 'src'),
         ],
         query: {
           presets: ['es2015', 'react']
@@ -25,11 +25,12 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'] 
+    extensions: ['', '.js', '.jsx']
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Puka'
+      title: 'Puka',
+      template: path.resolve(__dirname, 'src', 'index.html')
     })
   ]
-};
+}
