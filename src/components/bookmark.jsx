@@ -2,13 +2,15 @@ import React, {PropTypes} from 'react'
 import moment from 'moment'
 import './bookmark.css'
 
-function formatTags(bookmark) {
+function formatTags(bookmark, onFilterByTag) {
   return bookmark.tags.map((tag, i) =>
-    <li key={i} className='list-inline-item'><a className='tag'>{tag}</a></li>
+    <li key={i} className='list-inline-item'>
+      <a className='tag' href='#' onClick={onFilterByTag}>{tag}</a>
+    </li>
   )
 }
 
-export const Bookmark = ({data}) => {
+export const Bookmark = ({data, onFilterByTag}) => {
   const bookmark = data.attributes
   return (
     <article className='bookmark'>
@@ -17,7 +19,7 @@ export const Bookmark = ({data}) => {
       </div>
       <p>{bookmark.description}</p>
       <ul className='list-inline tags' style={{display: 'inline-block'}}>
-        {formatTags(bookmark)}
+        {formatTags(bookmark, onFilterByTag)}
       </ul>
       <span className='date'> {moment(bookmark.date).fromNow()}</span>
     </article>
@@ -25,5 +27,6 @@ export const Bookmark = ({data}) => {
 }
 
 Bookmark.propTypes = {
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
+  onFilterByTag: PropTypes.func.isRequired
 }

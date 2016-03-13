@@ -1,11 +1,11 @@
-import React, {PropTypes} from 'react'
-import BookmarkContainer from '../containers/bookmark-container'
+import React, { PropTypes } from 'react'
+import { Bookmark } from './bookmark'
 
-export const BookmarkList = ({data, meta, links, jsonapi}) => {
-  // const bookmarks = data.map(bm => <BookmarkContainer key={bm.id} data={bm} />)
+export const BookmarkList = (props) => {
+  var {data, meta, links, jsonapi, ...other} = props
   return (
     <div>
-      {data.map(bm => <BookmarkContainer key={bm.id} data={bm} />)}
+      {data.map(bm => <Bookmark {...other} key={bm.id} data={bm} />)}
     </div>
   )
 }

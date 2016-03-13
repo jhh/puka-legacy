@@ -1,7 +1,7 @@
 import React from 'react'
 import { BookmarkSearchbar } from '../components/bookmark-searchbar'
 import { BookmarkList } from '../components/bookmark-list'
-import { getBookmarks, getBookmark } from '../util/pukaHelpers'
+import { getBookmarks, getBookmarksByTag, getBookmark } from '../util/pukaHelpers'
 
 export default class SearchableBookmarkListContainer extends React.Component {
 
@@ -12,6 +12,17 @@ export default class SearchableBookmarkListContainer extends React.Component {
       meta: {},
       links: {},
       jsonapi: {}
+    }
+  }
+
+  async handleFilterByTag(evt) {
+    evt.preventDefault()
+    const tag = evt.target.text
+    try {
+      const data = await getBookmarksByTag(tag)
+      this.setState(data)
+    } catch (e) {
+      console.warn('Error in SearchableBookmarkListContainer', e)
     }
   }
 
@@ -44,7 +55,8 @@ export default class SearchableBookmarkListContainer extends React.Component {
           data={this.state.data}
           meta={this.state.meta}
           links={this.state.links}
-          jsonapi={this.state.jsonapi} />
+          jsonapi={this.state.jsonapi}
+          onFilterByTag={(evt) => this.handleFilterByTag(evt)} />
       </div>
     )
   }

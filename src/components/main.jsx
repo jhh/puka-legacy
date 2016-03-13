@@ -1,5 +1,6 @@
 import React from 'react'
 import { DevBookmarks } from './dev-bookmarks'
+import { Link } from 'react-router'
 
 const headingStyle = {
   paddingBottom: '9px',
@@ -11,7 +12,7 @@ export const Main = (props) => {
   return (
     <main className='container'>
       <div style={headingStyle}>
-        <h1>Puka</h1>
+        <h1><a href='/'>Puka</a></h1>
       </div>
       <div className='row'>
         <div className='col-md-8'>

@@ -20,7 +20,8 @@ module.exports = {
           path.resolve(__dirname, 'src'),
         ],
         query: {
-          presets: ['es2015', 'react', 'babel-preset-stage-3']
+          presets: ['es2015', 'react', 'babel-preset-stage-3'],
+          plugins: ['transform-object-rest-spread']
         }
       },
       { loaders: ['style', 'css'],
