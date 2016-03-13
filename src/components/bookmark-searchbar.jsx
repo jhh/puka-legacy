@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 
 export const BookmarkSearchbar = (props) => {
-  return (<p>BookmarkSearchbar</p>);
+  return (<div></div>);
 }
 
 BookmarkSearchbar.propTypes = {

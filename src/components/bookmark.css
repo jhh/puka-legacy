@@ -1,0 +1,27 @@
+.bookmark a {
+  color: #00b7ff;
+  font-size: 110%;
+}
+
+article {
+  padding-bottom: 0.5rem;
+}
+
+article p {
+  margin-bottom: auto;
+  font-size: 95%;
+}
+
+article ul {
+  margin-bottom: auto;
+}
+
+a.tag {
+  color: #b93636;
+  font-size: 85%;
+}
+
+.date {
+  color: #9a8f96;
+  font-size: 85%;
+}

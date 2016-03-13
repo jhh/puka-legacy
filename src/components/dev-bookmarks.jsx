@@ -16,6 +16,14 @@ const BOOKMARKS = [
   {
     title: 'HTML5 Please',
     url: 'http://html5please.com/'
+  },
+  {
+    title: 'Axios',
+    url: 'https://github.com/mzabriskie/axios'
+  },
+  {
+    title: 'React.js Program',
+    url: 'https://github.com/reactjsprogram'
   }
 ]
 
