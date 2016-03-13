@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React from 'react'
 import { BookmarkSearchbar } from '../components/bookmark-searchbar'
 import { BookmarkList } from '../components/bookmark-list'
 import { getBookmarks, getBookmark } from '../util/pukaHelpers'
@@ -32,7 +32,7 @@ export default class SearchableBookmarkListContainer extends React.Component {
       this.setState(data)
       // await this.crazyLoader(data)
     } catch (e) {
-      console.warn('Error in SearchableBookmarkListContainer', e);
+      console.warn('Error in SearchableBookmarkListContainer', e)
     }
   }
 
@@ -48,7 +48,4 @@ export default class SearchableBookmarkListContainer extends React.Component {
       </div>
     )
   }
-}
-
-SearchableBookmarkListContainer.propTypes = {
 }
