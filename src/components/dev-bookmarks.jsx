@@ -24,6 +24,10 @@ const BOOKMARKS = [
   {
     title: 'React.js Program',
     url: 'https://github.com/reactjsprogram'
+  },
+  {
+    title: 'Chrome DevTools',
+    url: 'https://developers.google.com/web/tools/chrome-devtools/'
   }
 ]
 

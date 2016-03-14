@@ -2,8 +2,11 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
+const nodeEnv = process.env.NODE_ENV || 'development';
+const isProd = nodeEnv === 'production';
+
 module.exports = {
-  devtool: '#inline-source-map',
+  devtool: isProd ? 'hidden-source-map' : '#inline-source-map',
   entry: [
     './src/index.js'
   ],

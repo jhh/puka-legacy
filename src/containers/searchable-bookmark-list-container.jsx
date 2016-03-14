@@ -26,28 +26,17 @@ export default class SearchableBookmarkListContainer extends React.Component {
     }
   }
 
-  async crazyLoader(data) {
-    let promises = data.data.map(bm => getBookmark(bm.id))
-
-    let results = []
-    for (let promise of promises) {
-      let bm = await promise
-      results.push(bm.data)
-    }
-    this.setState({data: results})
-  }
-
   async componentDidMount() {
     try {
       const data = await getBookmarks()
       this.setState(data)
-      // await this.crazyLoader(data)
     } catch (e) {
       console.warn('Error in SearchableBookmarkListContainer', e)
     }
   }
 
   render() {
+    console.log('In SearchableBookmarkListContainer render ')
     return (
       <div>
         <BookmarkSearchbar />

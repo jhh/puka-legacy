@@ -9,10 +9,11 @@ const headingStyle = {
 }
 
 export const Main = (props) => {
+  console.log('In Main render...');
   return (
     <main className='container'>
       <div style={headingStyle}>
-        <h1><a href='/'>Puka</a></h1>
+        <h1><Link to={{pathname: '/', query: {reset: true} }}>Puka</Link></h1>
       </div>
       <div className='row'>
         <div className='col-md-8'>
