@@ -28,6 +28,5 @@ export const Bookmark = ({data, onFilterByTag}) => {
 }
 
 Bookmark.propTypes = {
-  data: PropTypes.object.isRequired,
-  onFilterByTag: PropTypes.func.isRequired
+  data: PropTypes.object.isRequired
 }
