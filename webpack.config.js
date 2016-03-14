@@ -18,7 +18,8 @@ module.exports = {
   ],
   output: {
     filename: '/main.js',
-    path: __dirname + '/public'
+    path: __dirname + '/public',
+    sourceMapFilename: '[hash].map'
   },
   module: {
     loaders: [
