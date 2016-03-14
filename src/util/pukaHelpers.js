@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const HOST = PRODUCTION ? '' : 'http://localhost:9292'
+const HOST = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9292'
 
 export default {
   getBookmarks:async () => {
