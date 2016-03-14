@@ -7,6 +7,7 @@ export const routes = (
   <Router history={hashHistory}>
     <Route path='/' component={Main}>
       <IndexRoute component={SearchableBookmarkListContainer} />
+      <Route path='tag' component={SearchableBookmarkListContainer} />
     </Route>
   </Router>
 )

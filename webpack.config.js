@@ -40,6 +40,9 @@ module.exports = {
       title: 'Puka',
       template: path.resolve(__dirname, 'src', 'index.html')
     }),
-    new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/])
+    new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
+    new webpack.DefinePlugin({
+    'PRODUCTION': isProd
+    }),
   ]
 }
