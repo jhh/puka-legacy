@@ -13,7 +13,7 @@ export const Main = (props) => {
   return (
     <main className='container'>
       <div style={headingStyle}>
-        <h1><Link to={{pathname: '/', query: {reset: true} }}>Puka</Link></h1>
+        <h1><Link to='/' style={{color: '#000', textDecoration: 'none'}}>Puka</Link></h1>
       </div>
       <div className='row'>
         <div className='col-md-8'>

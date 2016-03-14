@@ -1,7 +1,7 @@
 import React from 'react'
 import { BookmarkSearchbar } from '../components/bookmark-searchbar'
 import { BookmarkList } from '../components/bookmark-list'
-import { getBookmarks, getBookmarksByTag, getBookmark } from '../util/pukaHelpers'
+import pukaHelpers from '../util/pukaHelpers'
 
 export default class SearchableBookmarkListContainer extends React.Component {
 
@@ -19,20 +19,32 @@ export default class SearchableBookmarkListContainer extends React.Component {
     evt.preventDefault()
     const tag = evt.target.text
     try {
-      const data = await getBookmarksByTag(tag)
+      const data = await pukaHelpers.getBookmarksByTag(tag)
       this.setState(data)
     } catch (e) {
       console.warn('Error in SearchableBookmarkListContainer', e)
     }
   }
 
-  async componentDidMount() {
+  async getBookmarks(tag) {
     try {
-      const data = await getBookmarks()
+      let data = tag
+        ? await pukaHelpers.getBookmarksByTag(tag)
+        : await pukaHelpers.getBookmarks()
       this.setState(data)
     } catch (e) {
-      console.warn('Error in SearchableBookmarkListContainer', e)
+      console.warn('Error in SearchableBookmarkListContainer.getBookmarks', e)
     }
+  }
+
+  componentDidMount() {
+    const { tag } = this.props.routeParams
+    this.getBookmarks(tag)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { tag } = nextProps.routeParams
+    this.getBookmarks(tag)
   }
 
   render() {

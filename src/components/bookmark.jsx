@@ -1,11 +1,12 @@
 import React, {PropTypes} from 'react'
+import { Link } from 'react-router'
 import moment from 'moment'
 import './bookmark.css'
 
 function formatTags(bookmark, onFilterByTag) {
   return bookmark.tags.map((tag, i) =>
     <li key={i} className='list-inline-item'>
-      <a className='tag' href='#' onClick={onFilterByTag}>{tag}</a>
+      <Link to={'/tag/' + tag} className='tag'>{tag}</Link>
     </li>
   )
 }

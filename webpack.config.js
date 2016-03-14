@@ -7,11 +7,17 @@ const isProd = nodeEnv === 'production';
 
 module.exports = {
   devtool: isProd ? 'hidden-source-map' : '#inline-source-map',
+  devServer: {
+    historyApiFallback: {
+      index: '/index.html',
+      verbose: true
+    }
+  },
   entry: [
     './src/index.js'
   ],
   output: {
-    filename: 'main.js',
+    filename: '/main.js',
     path: __dirname + '/public'
   },
   module: {
@@ -42,7 +48,7 @@ module.exports = {
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
     new webpack.DefinePlugin({
-    'PRODUCTION': isProd
+      'PRODUCTION': isProd
     }),
   ]
 }
