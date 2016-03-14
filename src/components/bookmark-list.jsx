@@ -2,10 +2,10 @@ import React, { PropTypes } from 'react'
 import { Bookmark } from './bookmark'
 
 export const BookmarkList = (props) => {
-  var {data, meta, links, jsonapi, ...other} = props
+  var {data, meta, links, jsonapi} = props
   return (
     <div>
-      {data.map(bm => <Bookmark {...other} key={bm.id} data={bm} />)}
+      {data.map(bm => <Bookmark key={bm.id} data={bm} />)}
     </div>
   )
 }

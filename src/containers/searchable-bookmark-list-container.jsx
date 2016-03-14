@@ -15,17 +15,6 @@ export default class SearchableBookmarkListContainer extends React.Component {
     }
   }
 
-  async handleFilterByTag(evt) {
-    evt.preventDefault()
-    const tag = evt.target.text
-    try {
-      const data = await pukaHelpers.getBookmarksByTag(tag)
-      this.setState(data)
-    } catch (e) {
-      console.warn('Error in SearchableBookmarkListContainer', e)
-    }
-  }
-
   async getBookmarks(tag) {
     try {
       let data = tag
@@ -56,8 +45,7 @@ export default class SearchableBookmarkListContainer extends React.Component {
           data={this.state.data}
           meta={this.state.meta}
           links={this.state.links}
-          jsonapi={this.state.jsonapi}
-          onFilterByTag={(evt) => this.handleFilterByTag(evt)} />
+          jsonapi={this.state.jsonapi} />
       </div>
     )
   }
