@@ -13,9 +13,10 @@ module.exports = {
       verbose: true
     }
   },
-  entry: [
-    './src/index.js'
-  ],
+  entry: {
+    app: './src/index.js',
+    vendor: ['axios', 'moment', 'react', 'react-dom', 'react-router']
+  },
   output: {
     filename: '/main.js',
     path: __dirname + '/public',
@@ -53,5 +54,6 @@ module.exports = {
         'NODE_ENV': JSON.stringify(nodeEnv)
       }
     }),
+     new webpack.optimize.CommonsChunkPlugin('vendor', '/vendor.bundle.js')
   ]
 }
