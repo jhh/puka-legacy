@@ -3,7 +3,11 @@ import React from 'react'
 const BOOKMARKS = [
   {
     title: 'React',
-    url: 'http://facebook.github.io/react/index.html'
+    url: '/tag/react'
+  },
+  {
+    title: 'Redux',
+    url: '/tag/redux'
   },
   {
     title: 'Mozilla Developer Network',
