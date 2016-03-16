@@ -27,11 +27,8 @@ module.exports = {
       {
         loader: 'babel',
         test: /\.jsx?$/,
-        include: [
-          path.resolve(__dirname, 'src'),
-        ],
+        exclude: /node_modules/,
         query: {
-          presets: ['es2015', 'react', 'babel-preset-stage-3'],
           plugins: ['transform-object-rest-spread']
         }
       },
