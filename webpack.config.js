@@ -25,7 +25,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        loader: "babel",
+        loader: 'babel',
         test: /\.jsx?$/,
         include: [
           path.resolve(__dirname, 'src'),
@@ -37,6 +37,17 @@ module.exports = {
       },
       { loaders: ['style', 'css'],
         test: /\.css$/
+      },
+      {
+        loader: 'file',
+        test: /\.(eot|woff|ttf|svg)$/,
+        include: [
+          path.resolve(__dirname, 'assets')
+        ],
+        query: {
+          name: '/[path][name].[ext]',
+          context: path.resolve(__dirname, 'assets')
+        }
       }
     ]
   },
