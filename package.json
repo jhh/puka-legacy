@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
+    "test:watch": "npm run test -- --watch",
     "build": "webpack",
     "production": "webpack -p",
     "start": "webpack-dev-server"
@@ -35,6 +36,7 @@
     "css-loader": "^0.23.1",
     "file-loader": "^0.8.5",
     "html-webpack-plugin": "^2.9.0",
+    "immutable": "^3.7.6",
     "json-loader": "^0.5.4",
     "moment": "^2.12.0",
     "react": "^15.0.0-rc.1",
@@ -45,7 +47,10 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "chai-immutable": "^1.5.3",
+    "jsdom": "^8.1.0",
     "mocha": "^2.4.5",
+    "react-addons-test-utils": "^0.14.7",
     "webpack-dev-server": "^1.14.1"
   },
   "babel": {

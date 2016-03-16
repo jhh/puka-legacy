@@ -1,9 +1,9 @@
 import React, {PropTypes} from 'react'
 import { Link } from 'react-router'
 import moment from 'moment'
-import './bookmark.css'
+// import './bookmark.css'
 
-function formatTags(bookmark, onFilterByTag) {
+function formatTags(bookmark) {
   return bookmark.tags.map((tag, i) =>
     <li key={i} className='list-inline-item'>
       <Link to={'/tag/' + tag} className='tag'>{tag}</Link>
@@ -11,7 +11,7 @@ function formatTags(bookmark, onFilterByTag) {
   )
 }
 
-export const Bookmark = ({data, onFilterByTag}) => {
+const Bookmark = ({data}) => {
   const bookmark = data.attributes
   return (
     <article className='bookmark'>
@@ -20,7 +20,7 @@ export const Bookmark = ({data, onFilterByTag}) => {
       </div>
       <p>{bookmark.description}</p>
       <ul className='list-inline tags' style={{display: 'inline-block'}}>
-        {formatTags(bookmark, onFilterByTag)}
+        {formatTags(bookmark)}
       </ul>
       <span className='date'> {moment(bookmark.date).fromNow()}</span>
     </article>
@@ -28,5 +28,17 @@ export const Bookmark = ({data, onFilterByTag}) => {
 }
 
 Bookmark.propTypes = {
-  data: PropTypes.object.isRequired
+  data: PropTypes.shape({
+    type: PropTypes.string,
+    id: PropTypes.string.isRequired,
+    attributes: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      bookmark: PropTypes.string.isRequired,
+      description: PropTypes.string,
+      date: PropTypes.string.isRequired,
+      tags: PropTypes.array
+    }).isRequired
+  }).isRequired
 }
+
+export default Bookmark

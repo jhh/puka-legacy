@@ -34,5 +34,13 @@
   {
     "title": "Chrome DevTools",
     "url": "https://developers.google.com/web/tools/chrome-devtools/"
+  },
+  {
+    "title": "Mocha Javascript Test Framework",
+    "url": "https://mochajs.org/"
+  },
+  {
+    "title": "Chai Assertion Library",
+    "url": "http://chaijs.com/"
   }
 ]
