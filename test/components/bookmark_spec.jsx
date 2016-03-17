@@ -35,15 +35,28 @@ describe('Bookmark', () => {
     expect(component.type).to.equal('article')
   })
 
-  it('has the right children element types', () => {
-    expect(component.props.children[0].type).to.equal('div')
-    expect(component.props.children[1].type).to.equal('p')
-    expect(component.props.children[2].type).to.equal('ul')
+  it('has a bookmark link', () => {
+    let div = component.props.children[0]
+    expect(div.type).to.equal('div')
+    let a = div.props.children
+    expect(a.type).to.equal('a')
+    expect(a.props.href).to.equal('http://www.example.com')
+    expect(a.props.children).to.equal('A Title')
+  })
+
+  it('has a description', () => {
+    let p = component.props.children[1]
+    expect(p.type).to.equal('p')
+    expect(p.props.children).to.equal('A description is here.')
+  })
+
+  it('has the entry date', () => {
     expect(component.props.children[3].type).to.equal('span')
   })
 
   it('has tags with links', () => {
     let ul = component.props.children[2]
+    expect(ul.type).to.equal('ul')
     let li = ul.props.children[0]
     expect(li.type).to.equal('li')
     expect(li.props.children.props.to).to.equal('/tag/rockets')
