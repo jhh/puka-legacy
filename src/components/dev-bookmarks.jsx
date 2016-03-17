@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BOOKMARKS = require('json!./dev-bookmarks.json');
+const BOOKMARKS = require('json!../../assets/dev-bookmarks.json');
 
 export const DevBookmarks = () => {
   const bookmarks = BOOKMARKS.map((bm, i) => {
