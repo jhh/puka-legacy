@@ -4,6 +4,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { routes } from './config/routes'
 
+require('./styles/bookmark.css')
+
 require('file?name=favicon.ico!../assets/favicon.ico')
 require('../assets/octicons/octicons.css')
 require('../assets/octicons/octicons.eot')
