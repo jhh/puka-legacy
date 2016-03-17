@@ -23,15 +23,11 @@ export default class SearchableBookmarkListContainer extends React.Component {
   }
 
   getBookmarks(tag) {
-    pukaAPI.getBookmarks().then(resp => this.setState({ data: resp }));
-    // try {
-    //   const data = tag
-    //     ? await pukaHelpers.getBookmarksByTag(tag)
-    //     : await pukaHelpers.getBookmarks();
-    //   this.setState(data);
-    // } catch (e) {
-    //   console.warn('Error in SearchableBookmarkListContainer.getBookmarks', e);
-    // }
+    if (tag) {
+      pukaAPI.getBookmarksByTag(tag).then(resp => this.setState({ data: resp }));
+    } else {
+      pukaAPI.getBookmarks().then(resp => this.setState({ data: resp }));
+    }
   }
 
   render() {
