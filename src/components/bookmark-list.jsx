@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { Bookmark } from './bookmark'
+import Bookmark from './bookmark'
 
 export const BookmarkList = (props) => {
   var {data, meta, links, jsonapi} = props
