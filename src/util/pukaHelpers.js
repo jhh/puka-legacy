@@ -1,36 +1,39 @@
-import axios from 'axios'
+import axios from 'axios';
 
-const HOST = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9292'
+const HOST = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9292';
 
 export default {
-  getBookmarks:async () => {
+  getBookmarks: async () => {
     try {
-      const response = await axios.get(HOST + '/api/bookmarks?page[limit]=100')
-      return response.data
+      const response = await axios.get(`${HOST}/api/bookmarks?page[limit]=100`);
+      return response.data;
     } catch (e) {
-      console.warn('Error in getBookmarks', e)
+      console.warn('Error in getBookmarks', e);
     }
+    return null;
   },
 
-  getBookmarksByTag:async (tag) => {
+  getBookmarksByTag: async (tag) => {
     try {
-      const response = await axios.get(HOST + '/api/bookmarks', {
+      const response = await axios.get(`${HOST}/api/bookmarks`, {
         params: {
-          'filter[tag]': tag
-        }
-      })
-      return response.data
+          'filter[tag]': tag,
+        },
+      });
+      return response.data;
     } catch (e) {
-      console.warn('Error in getBookmarksByTag', e)
+      console.warn('Error in getBookmarksByTag', e);
     }
+    return null;
   },
 
-  getBookmark:async (id) => {
+  getBookmark: async (id) => {
     try {
-      const response = await axios.get(HOST + '/api/bookmarks/' + id)
-      return response.data
+      const response = await axios.get(`${HOST}/api/bookmarks/${id}`);
+      return response.data;
     } catch (e) {
-      console.warn('Error in getBookmarks', e)
+      console.warn('Error in getBookmarks', e);
     }
-  }
-}
+    return null;
+  },
+};

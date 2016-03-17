@@ -1,43 +1,42 @@
-import React from 'react'
-import { BookmarkSearchbar } from '../components/bookmark-searchbar'
-import { BookmarkList } from '../components/bookmark-list'
-import pukaHelpers from '../util/pukaHelpers'
+import React, { PropTypes } from 'react';
+import { BookmarkSearchbar } from '../components/bookmark-searchbar';
+import { BookmarkList } from '../components/bookmark-list';
+import pukaHelpers from '../util/pukaHelpers';
 
 export default class SearchableBookmarkListContainer extends React.Component {
 
   constructor() {
-    super()
+    super();
     this.state = {
       data: [],
       meta: {},
       links: {},
-      jsonapi: {}
-    }
+      jsonapi: {},
+    };
+  }
+
+  componentDidMount() {
+    const { tag } = this.props.routeParams;
+    this.getBookmarks(tag);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { tag } = nextProps.routeParams;
+    this.getBookmarks(tag);
   }
 
   async getBookmarks(tag) {
     try {
-      let data = tag
+      const data = tag
         ? await pukaHelpers.getBookmarksByTag(tag)
-        : await pukaHelpers.getBookmarks()
-      this.setState(data)
+        : await pukaHelpers.getBookmarks();
+      this.setState(data);
     } catch (e) {
-      console.warn('Error in SearchableBookmarkListContainer.getBookmarks', e)
+      console.warn('Error in SearchableBookmarkListContainer.getBookmarks', e);
     }
   }
 
-  componentDidMount() {
-    const { tag } = this.props.routeParams
-    this.getBookmarks(tag)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { tag } = nextProps.routeParams
-    this.getBookmarks(tag)
-  }
-
   render() {
-    console.log('In SearchableBookmarkListContainer render ')
     return (
       <div>
         <BookmarkSearchbar />
@@ -45,8 +44,13 @@ export default class SearchableBookmarkListContainer extends React.Component {
           data={this.state.data}
           meta={this.state.meta}
           links={this.state.links}
-          jsonapi={this.state.jsonapi} />
+          jsonapi={this.state.jsonapi}
+        />
       </div>
-    )
+    );
   }
 }
+
+SearchableBookmarkListContainer.propTypes = {
+  routeParams: PropTypes.object.isRequired,
+};
