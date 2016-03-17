@@ -7,7 +7,7 @@ Redux state shape.
     bookmarks: {
       '56df2644a7a14638c23fee98': {
         title: 'React.js Tutorial',
-        bookmark: 'http://example.com/react',
+        url: 'http://example.com/react',
         description: 'Simple tutorial describing React.',
         date: '2016-03-08T17:19:00Z',
         tags: [
@@ -15,9 +15,9 @@ Redux state shape.
           'react',
         ]        
       },
-      '56df2644a7a14638c23fee98': {
+      '56df2644a7a14638c23fee99': {
         title: 'Optimizing React Performance',
-        bookmark: 'http://example.com/optimizing-react',
+        url: 'http://example.com/optimizing-react',
         description: 'Optimizing React Performance using performance tools',
         date: '2016-03-06T13:24:00Z',
         tags: [

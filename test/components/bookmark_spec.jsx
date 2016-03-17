@@ -7,15 +7,11 @@ import {
 import Bookmark from '../../src/components/bookmark';
 
 const BOOKMARK_DATA = {
-  type: 'bookmarks',
-  id: '56a65d1dc8e5dd260a40fbc1',
-  attributes: {
-    title: 'A Title',
-    bookmark: 'http://www.example.com',
-    description: 'A description is here.',
-    date: '2016-01-22T23:57:18Z',
-    tags: ['rockets', 'candy'],
-  },
+  title: 'A Title',
+  bookmark: 'http://www.example.com',
+  description: 'A description is here.',
+  date: '2016-01-22T23:57:18Z',
+  tags: ['rockets', 'candy'],
 };
 
 describe('Bookmark', () => {

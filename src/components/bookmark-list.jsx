@@ -1,18 +1,18 @@
 import React, { PropTypes } from 'react';
 import Bookmark from './bookmark';
 
-export const BookmarkList = (props) => {
-  const { data } = props;
+const BookmarkList = ({ data }) => {
+  const bookmarkElements = [];
+  data.forEach((v, k) => bookmarkElements.push(<Bookmark key={k} data={v} />));
   return (
     <div>
-      {data.map(bm => <Bookmark key={bm.id} data={bm} />)}
+      {bookmarkElements}
     </div>
   );
 };
 
 BookmarkList.propTypes = {
-  data: PropTypes.array.isRequired,
-  meta: PropTypes.object.isRequired,
-  links: PropTypes.object.isRequired,
-  jsonapi: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 };
+
+export default BookmarkList;

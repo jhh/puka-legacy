@@ -1,17 +1,14 @@
 import React, { PropTypes } from 'react';
 import { BookmarkSearchbar } from '../components/bookmark-searchbar';
-import { BookmarkList } from '../components/bookmark-list';
-import pukaHelpers from '../util/pukaHelpers';
+import BookmarkList from '../components/bookmark-list';
+import pukaAPI from '../util/pukaAPI';
 
 export default class SearchableBookmarkListContainer extends React.Component {
 
   constructor() {
     super();
     this.state = {
-      data: [],
-      meta: {},
-      links: {},
-      jsonapi: {},
+      data: new Map(),
     };
   }
 
@@ -25,15 +22,16 @@ export default class SearchableBookmarkListContainer extends React.Component {
     this.getBookmarks(tag);
   }
 
-  async getBookmarks(tag) {
-    try {
-      const data = tag
-        ? await pukaHelpers.getBookmarksByTag(tag)
-        : await pukaHelpers.getBookmarks();
-      this.setState(data);
-    } catch (e) {
-      console.warn('Error in SearchableBookmarkListContainer.getBookmarks', e);
-    }
+  getBookmarks(tag) {
+    pukaAPI.getBookmarks().then(resp => this.setState({ data: resp }));
+    // try {
+    //   const data = tag
+    //     ? await pukaHelpers.getBookmarksByTag(tag)
+    //     : await pukaHelpers.getBookmarks();
+    //   this.setState(data);
+    // } catch (e) {
+    //   console.warn('Error in SearchableBookmarkListContainer.getBookmarks', e);
+    // }
   }
 
   render() {
@@ -42,9 +40,6 @@ export default class SearchableBookmarkListContainer extends React.Component {
         <BookmarkSearchbar />
         <BookmarkList
           data={this.state.data}
-          meta={this.state.meta}
-          links={this.state.links}
-          jsonapi={this.state.jsonapi}
         />
       </div>
     );
