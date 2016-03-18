@@ -52,7 +52,6 @@ describe('BookmarkList', () => {
   });
 
   it('has 2 Bookmarks as children', () => {
-    const c = component.props.children;
-    expect(c).to.have.length(2);
+    expect(component.props.children).to.have.length(2);
   });
 });
