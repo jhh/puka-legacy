@@ -5,7 +5,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
+    "test": "mocha --compilers js:babel-core/register,css:./test/null-compiler --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "test:watch": "npm run test -- --watch",
     "build": "webpack",
     "production": "webpack -p",
@@ -47,7 +47,6 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "chai-as-promised": "^5.2.0",
     "chai-immutable": "^1.5.3",
     "eslint": "^2.4.0",
     "eslint-config-airbnb": "^6.1.0",

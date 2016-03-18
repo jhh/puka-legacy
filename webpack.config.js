@@ -32,8 +32,21 @@ module.exports = {
           plugins: ['transform-object-rest-spread'],
         },
       },
-      { loaders: ['style', 'css'],
+      { test: /\.css$/,
+        loaders: [
+          'style',
+          'css?' + JSON.stringify({
+            modules: true,
+            importLoaders: 1,
+            localIdentName: '[name]__[local]___[hash:base64:5]',
+          }),
+        ],
+        include: path.resolve(__dirname, 'src'),
+      },
+      {
         test: /\.css$/,
+        loaders: ['style', 'css'],
+        include: path.resolve(__dirname, 'assets'),
       },
       {
         loader: 'file',

@@ -1,27 +1,36 @@
-.bookmark a {
-  color: #00b7ff;
-  font-size: 110%;
-}
-
-article {
+.bookmark {
   padding-bottom: 0.5rem;
 }
 
-article p {
+.url {
+  color: rgb(0, 183, 255);
+  font-size: 110%;
+}
+
+.description {
   margin-bottom: auto;
   font-size: 95%;
 }
 
-article ul {
+.tags {
+  padding-left: 0;
+  list-style: none;
+  display: inline-block;
   margin-bottom: auto;
 }
 
-a.tag {
-  color: #b93636;
+.tags li {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.tag {
+  color: rgb(185, 54, 54);
   font-size: 85%;
 }
 
 .date {
-  color: #9a8f96;
+  color: rgb(154, 143, 150);
   font-size: 85%;
+  margin-left: 10px;
 }
