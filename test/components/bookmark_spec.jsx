@@ -19,7 +19,7 @@ describe('Bookmark', () => {
 
   before(() => {
     const renderer = createRenderer();
-    renderer.render(<Bookmark data={BOOKMARK_DATA} />);
+    renderer.render(<Bookmark {...BOOKMARK_DATA} />);
     component = renderer.getRenderOutput();
   });
 

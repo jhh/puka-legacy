@@ -3,7 +3,7 @@ import Bookmark from './bookmark';
 
 const BookmarkList = ({ data }) => {
   const bookmarkElements = [];
-  data.forEach((v, k) => bookmarkElements.push(<Bookmark key={k} data={v} />));
+  data.forEach((v, k) => bookmarkElements.push(<Bookmark key={k} {...v} />));
   return (
     <div>
       {bookmarkElements}
