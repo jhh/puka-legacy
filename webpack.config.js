@@ -35,7 +35,7 @@ module.exports = {
       { test: /\.css$/,
         loaders: [
           'style',
-          'css?' + JSON.stringify({
+          'css?' + JSON.stringify({       // eslint-disable-line prefer-template
             modules: true,
             importLoaders: 1,
             localIdentName: '[name]__[local]___[hash:base64:5]',
