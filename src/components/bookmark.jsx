@@ -3,35 +3,35 @@ import { Link } from 'react-router';
 import moment from 'moment';
 import styles from '../styles/bookmark.css';
 
-function formatTags(bookmark) {
-  return bookmark.tags.map((tag, i) =>
+function formatTags(tags) {
+  return tags.map((tag, i) =>
     <li key={i}>
       <Link to={`/tag/${tag}`} className={styles.tag}>{tag}</Link>
     </li>
   );
 }
 
-const Bookmark = ({ data }) => (
+const Bookmark = ({ title, bookmark, description, date, tags }) => (
   <article className={styles.bookmark}>
     <div>
-      <a className={styles.url} target="_blank" href={data.bookmark}>{data.title}</a>
+      <a className={styles.url} target="_blank" href={bookmark}>{title}</a>
     </div>
-    <p className={styles.description}>{data.description}</p>
+    <p className={styles.description}>{description}</p>
     <ul className={styles.tags}>
-      {formatTags(data)}
+      {formatTags(tags)}
     </ul>
-    <span className={styles.date}>{moment(data.date).fromNow()}</span>
+    <span className={styles.date}>{moment(date).fromNow()}</span>
   </article>
 );
 
+// TODO: hoist props out of data, use spread attributes in BookmarkList
+//       https://facebook.github.io/react/docs/jsx-spread.html
 Bookmark.propTypes = {
-  data: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    bookmark: PropTypes.string.isRequired,
-    description: PropTypes.string,
-    date: PropTypes.string.isRequired,
-    tags: PropTypes.array,
-  }).isRequired,
+  title: PropTypes.string.isRequired,
+  bookmark: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  date: PropTypes.string.isRequired,
+  tags: PropTypes.array,
 };
 
 export default Bookmark;
