@@ -5,7 +5,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register,css:./test/null-compiler --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
+    "test": "mocha --compilers js:babel-core/register,css:./test/misc/null-compiler --require ./test/misc/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "test:watch": "npm run test -- --watch",
     "build": "webpack",
     "production": "webpack -p",
