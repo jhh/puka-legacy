@@ -26,7 +26,8 @@ export default class SearchableBookmarkListContainer extends React.Component {
     if (tag) {
       pukaAPI.getBookmarksByTag(tag).then(resp => this.setState({ data: resp }));
     } else {
-      pukaAPI.getBookmarks().then(resp => this.setState({ data: resp }));
+      pukaAPI.getBookmarks().then(resp => this.setState({ data: resp }))
+                            .catch(e => console.error('SBLC.getBookmarks: ', e));
     }
   }
 
