@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { Main } from './components/main';
-import SearchableBookmarkListContainer from './containers/searchable-bookmark-list-container';
+import VisibleBookmarksList from './containers/visible-bookmarks-list';
 
 require('file?name=[name].[ext]!../assets/favicon.ico');
 require('../assets/octicons/octicons.css');
@@ -16,8 +16,8 @@ require('../assets/octicons/octicons.svg');
 const routes = (
   <Router history={browserHistory}>
     <Route path="/" component={Main}>
-      <IndexRoute component={SearchableBookmarkListContainer} />
-      <Route path="tag/:tag" component={SearchableBookmarkListContainer} />
+      <IndexRoute component={VisibleBookmarksList} />
+      <Route path="tag/:tag" component={VisibleBookmarksList} />
     </Route>
   </Router>
 );

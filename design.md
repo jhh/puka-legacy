@@ -6,6 +6,7 @@ Redux state shape.
   entities: {
     bookmarks: {
       '56df2644a7a14638c23fee98': {
+        id: '56df2644a7a14638c23fee98',
         title: 'React.js Tutorial',
         url: 'http://example.com/react',
         description: 'Simple tutorial describing React.',
@@ -16,6 +17,7 @@ Redux state shape.
         ]        
       },
       '56df2644a7a14638c23fee99': {
+        id: '56df2644a7a14638c23fee99',
         title: 'Optimizing React Performance',
         url: 'http://example.com/optimizing-react',
         description: 'Optimizing React Performance using performance tools',

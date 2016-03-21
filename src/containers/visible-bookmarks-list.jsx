@@ -1,9 +1,10 @@
+/* eslint no-console: "off" */
 import React, { PropTypes } from 'react';
 import { BookmarkSearchbar } from '../components/bookmark-searchbar';
 import BookmarkList from '../components/bookmark-list';
 import pukaAPI from '../util/pukaAPI';
 
-export default class SearchableBookmarkListContainer extends React.Component {
+export default class VisibleBookmarksList extends React.Component {
 
   constructor() {
     super();
@@ -27,7 +28,7 @@ export default class SearchableBookmarkListContainer extends React.Component {
       pukaAPI.getBookmarksByTag(tag).then(resp => this.setState({ data: resp }));
     } else {
       pukaAPI.getBookmarks().then(resp => this.setState({ data: resp }))
-                            .catch(e => console.error('SBLC.getBookmarks: ', e));
+                            .catch(e => console.error('VisibleBookmarksList.getBookmarks: ', e));
     }
   }
 
@@ -43,6 +44,6 @@ export default class SearchableBookmarkListContainer extends React.Component {
   }
 }
 
-SearchableBookmarkListContainer.propTypes = {
+VisibleBookmarksList.propTypes = {
   routeParams: PropTypes.object.isRequired,
 };
