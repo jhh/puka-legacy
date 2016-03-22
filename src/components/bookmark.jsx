@@ -24,8 +24,6 @@ const Bookmark = ({ title, bookmark, description, date, tags }) => (
   </article>
 );
 
-// TODO: hoist props out of data, use spread attributes in BookmarkList
-//       https://facebook.github.io/react/docs/jsx-spread.html
 Bookmark.propTypes = {
   title: PropTypes.string.isRequired,
   bookmark: PropTypes.string.isRequired,

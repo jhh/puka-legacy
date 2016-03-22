@@ -14,12 +14,10 @@ export default class VisibleBookmarksList extends React.Component {
   }
 
   componentDidMount() {
-    const { tag } = this.props.routeParams;
-    this.getBookmarks(tag);
+    this.getBookmarks(this.props.routeParams.tag);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { tag } = nextProps.routeParams;
+  componentWillReceiveProps({ routeParams: { tag } }) {
     this.getBookmarks(tag);
   }
 
@@ -45,5 +43,7 @@ export default class VisibleBookmarksList extends React.Component {
 }
 
 VisibleBookmarksList.propTypes = {
-  routeParams: PropTypes.object.isRequired,
+  routeParams: PropTypes.shape({
+    tag: PropTypes.string,
+  }).isRequired,
 };
