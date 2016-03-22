@@ -42,5 +42,9 @@
   {
     "title": "Chai Assertion Library",
     "url": "http://chaijs.com/"
+  },
+  {
+    "title": "Immutable",
+    "url": "https://facebook.github.io/immutable-js/"
   }
 ]
