@@ -9,7 +9,7 @@ export default class VisibleBookmarksList extends React.Component {
   constructor() {
     super();
     this.state = {
-      data: new Map(),
+      data: {},
     };
   }
 
@@ -23,10 +23,13 @@ export default class VisibleBookmarksList extends React.Component {
 
   getBookmarks(tag) {
     if (tag) {
-      pukaAPI.getBookmarksByTag(tag).then(resp => this.setState({ data: resp }));
+      pukaAPI.getBookmarksByTag(tag)
+        .then(resp => this.setState({ data: resp.entities.bookmarks }))
+        .catch(e => console.error('VisibleBookmarksList.getBookmarks: ', e));
     } else {
-      pukaAPI.getBookmarks().then(resp => this.setState({ data: resp }))
-                            .catch(e => console.error('VisibleBookmarksList.getBookmarks: ', e));
+      pukaAPI.getBookmarks()
+        .then(resp => this.setState({ data: resp.entities.bookmarks }))
+        .catch(e => console.error('VisibleBookmarksList.getBookmarks: ', e));
     }
   }
 

@@ -4,15 +4,15 @@ const HOST = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9292
 
 // TODO: check for JSON API errors
 function mapResponse(response) {
-  const map = new Map();
+  const bookmarks = {};
   try {
     for (const item of response.data) {
-      map.set(item.id, item.attributes);
+      bookmarks[item.id] = item.attributes;
     }
   } catch (e) {
     Promise.reject(new Error(e.message));
   }
-  return Promise.resolve(map);
+  return Promise.resolve({ entities: { bookmarks } });
 }
 
 function doFetch(url) {

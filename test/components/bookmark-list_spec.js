@@ -41,9 +41,9 @@ describe('BookmarkList', () => {
   let component;
 
   before(() => {
-    const dataMap = new Map();
-    dataMap.set(BOOKMARK_DATA[0][0], BOOKMARK_DATA[0][1]);
-    dataMap.set(BOOKMARK_DATA[1][0], BOOKMARK_DATA[1][1]);
+    const dataMap = {};
+    dataMap[BOOKMARK_DATA[0][0]] = BOOKMARK_DATA[0][1];
+    dataMap[BOOKMARK_DATA[1][0]] = BOOKMARK_DATA[1][1];
     component = renderIntoDocument(<BookmarkListTestWrapper data={dataMap} />);
   });
 
