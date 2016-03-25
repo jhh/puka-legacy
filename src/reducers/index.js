@@ -1,6 +1,6 @@
 import merge from 'lodash/merge';
 import { combineReducers } from 'redux';
-import { SELECT_TAG, RECEIVE_BOOKMARKS } from '../actions';
+import { SELECT_TAG, FETCH_BOOKMARKS_SUCCESS } from '../actions';
 
 export function selectedTag(state = '', action) {
   const { type, payload } = action;
@@ -12,7 +12,7 @@ export function selectedTag(state = '', action) {
 
 export function entities(state = { bookmarks: {} }, action) {
   const { type, payload } = action;
-  if (type === RECEIVE_BOOKMARKS && payload.response && payload.response.entities) {
+  if (type === FETCH_BOOKMARKS_SUCCESS && payload.response && payload.response.entities) {
     return merge({}, state, payload.response.entities);
   }
   return state;

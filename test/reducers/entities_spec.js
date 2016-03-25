@@ -48,7 +48,7 @@ describe('reducer', () => {
 
       const tag = 'foo';
 
-      const newState = entities(state, actions.receiveBookmarks(tag, response));
+      const newState = entities(state, actions.fetchBookmarksSuccess(tag, response));
       expect(newState).to.deep.equal(response.entities);
     });
 
@@ -69,7 +69,7 @@ describe('reducer', () => {
 
       const tag = 'foo';
 
-      const newState = entities(state, actions.receiveBookmarks(tag, response));
+      const newState = entities(state, actions.fetchBookmarksSuccess(tag, response));
       expect(newState).to.deep.equal({
         bookmarks: {
           [BOOKMARK_1.key]: BOOKMARK_1.value,
@@ -96,7 +96,7 @@ describe('reducer', () => {
 
       const tag = 'foo';
 
-      const newState = entities(state, actions.receiveBookmarks(tag, response));
+      const newState = entities(state, actions.fetchBookmarksSuccess(tag, response));
       // console.log(JSON.stringify(newState, null, 2));
       expect(newState).to.deep.equal({
         bookmarks: {
