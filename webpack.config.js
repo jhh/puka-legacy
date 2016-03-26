@@ -15,7 +15,7 @@ module.exports = {
   },
   entry: {
     app: './src/index.js',
-    vendor: ['moment', 'react', 'react-dom', 'react-router'],
+    vendor: ['lodash', 'moment', 'react', 'react-dom', 'react-router', 'redux', 'redux-thunk'],
   },
   output: {
     filename: '/main.js',

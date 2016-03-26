@@ -1,5 +1,6 @@
 import pukaAPI from '../util/pukaAPI';
 
+export const TAG_NONE = 'TAG_NONE';
 export const SELECT_TAG = 'SELECT_TAG';
 export const INVALIDATE_TAG = 'INVALIDATE_TAG';
 export const FETCH_BOOKMARKS_PENDING = 'FETCH_BOOKMARKS_PENDING';
@@ -32,20 +33,24 @@ export const fetchBookmarksSuccess = (tag, response) => ({
   payload: {
     tag,
     response,
+    receivedAt: Date.now(),
   },
 });
 
-export const fetchBookmarksFailure = (error) => ({
+export const fetchBookmarksFailure = (tag, error) => ({
   type: FETCH_BOOKMARKS_FAILURE,
   error: true,
-  payload: error,
+  payload: {
+    tag,
+    error,
+  },
 });
 
 const fetchBookmarks = (tag) => dispatch => {
   dispatch(fetchBookmarksPending(tag));
   return pukaAPI.getBookmarks(tag)
     .then(response => dispatch(fetchBookmarksSuccess(tag, response)))
-    .catch(error => dispatch(fetchBookmarksFailure(error)));
+    .catch(error => dispatch(fetchBookmarksFailure(tag, error)));
 };
 
 const shouldFetchBookmarks = (state, tag) => {

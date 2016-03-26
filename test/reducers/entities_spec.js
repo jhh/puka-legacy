@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as actions from '../../src/actions';
 import { entities } from '../../src/reducers';
 
-const BOOKMARK_1 = {
+export const BOOKMARK_1 = {
   key: '56df2644a7a14638c23fee98',
   value: {
     id: '56df2644a7a14638c23fee98',
@@ -17,7 +17,7 @@ const BOOKMARK_1 = {
   },
 };
 
-const BOOKMARK_2 = {
+export const BOOKMARK_2 = {
   key: '56df2644a7a14638c23fee99',
   value: {
     id: '56df2644a7a14638c23fee99',
