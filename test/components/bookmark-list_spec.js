@@ -12,6 +12,7 @@ const BOOKMARK_DATA = [
   [
     '56df2644a7a14638c23fee98',
     {
+      id: '56df2644a7a14638c23fee98',
       title: 'React.js Tutorial',
       bookmark: 'http://example.com/react',
       description: 'Simple tutorial describing React.',
@@ -25,6 +26,7 @@ const BOOKMARK_DATA = [
   [
     '56df2644a7a14638c23fee99',
     {
+      id: '56df2644a7a14638c23fee99',
       title: 'Redux Tutorial',
       bookmark: 'http://example.com/redux',
       description: 'Redux Redux.',
@@ -41,10 +43,11 @@ describe('BookmarkList', () => {
   let component;
 
   before(() => {
-    const dataMap = {};
-    dataMap[BOOKMARK_DATA[0][0]] = BOOKMARK_DATA[0][1];
-    dataMap[BOOKMARK_DATA[1][0]] = BOOKMARK_DATA[1][1];
-    component = renderIntoDocument(<BookmarkListTestWrapper data={dataMap} />);
+    const vbm = [
+      BOOKMARK_DATA[0][1],
+      BOOKMARK_DATA[1][1],
+    ];
+    component = renderIntoDocument(<BookmarkListTestWrapper visibleBookmarks={vbm} />);
   });
 
   it('is of type div', () => {

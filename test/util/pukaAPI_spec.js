@@ -32,7 +32,7 @@ describe('pukaAPI', () => {
     it('returns bookmark properties', () =>
       result.then(resp => {
         const val = values(resp.entities.bookmarks)[99];
-        expect(val).to.have.all.keys(['title', 'bookmark', 'date', 'description', 'tags']);
+        expect(val).to.have.all.keys(['id', 'title', 'bookmark', 'date', 'description', 'tags']);
       })
     );
   });
