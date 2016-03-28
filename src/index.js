@@ -8,7 +8,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
 import rootReducer from './reducers';
-import { Main } from './components/main';
+import MainContainer from './containers/main-container';
 import VisibleBookmarksList from './containers/visible-bookmarks-list';
 
 require('file?name=[name].[ext]!../assets/favicon.ico');
@@ -29,7 +29,7 @@ const store = createStore(
 const routes = (
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={Main}>
+      <Route path="/" component={MainContainer}>
         <IndexRoute component={VisibleBookmarksList} />
         <Route path="tag/:tag" component={VisibleBookmarksList} />
       </Route>
