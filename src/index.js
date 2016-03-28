@@ -22,7 +22,8 @@ const store = createStore(
   rootReducer,
   compose(
     applyMiddleware(thunkMiddleware),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
+    process.env.NODE_ENV !== 'production' && window.devToolsExtension
+      ? window.devToolsExtension() : f => f
   )
 );
 
