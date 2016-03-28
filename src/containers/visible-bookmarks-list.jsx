@@ -8,8 +8,8 @@ import { fetchBookmarksIfNeeded, TAG_NONE } from '../actions';
 class VisibleBookmarksList extends React.Component {
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(fetchBookmarksIfNeeded(TAG_NONE));
+    const { dispatch, routeParams: { tag } } = this.props;
+    dispatch(fetchBookmarksIfNeeded(tag || TAG_NONE));
   }
 
   componentWillReceiveProps({ routeParams: { tag } }) {
@@ -17,9 +17,6 @@ class VisibleBookmarksList extends React.Component {
       const { dispatch } = this.props;
       dispatch(fetchBookmarksIfNeeded(tag));
     }
-
-    const { dispatch } = this.props;
-    dispatch(fetchBookmarksIfNeeded(tag));
   }
 
   render() {

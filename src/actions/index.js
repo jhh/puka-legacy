@@ -64,7 +64,11 @@ const shouldFetchBookmarks = (state, tag) => {
 };
 
 export const fetchBookmarksIfNeeded = (tag) => (dispatch, getState) => {
-  if (shouldFetchBookmarks(getState(), tag)) {
+  const state = getState();
+  if (tag !== state.selectedTag) {
+    dispatch(selectTag(tag));
+  }
+  if (shouldFetchBookmarks(state, tag)) {
     return dispatch(fetchBookmarks(tag));
   }
   return Promise.resolve();
