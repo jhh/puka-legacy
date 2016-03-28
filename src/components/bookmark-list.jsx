@@ -1,10 +1,8 @@
-import forOwn from 'lodash/forOwn';
 import React, { PropTypes } from 'react';
 import Bookmark from './bookmark';
 
-const BookmarkList = ({ data }) => {
-  const bookmarkElements = [];
-  forOwn(data, (v, k) => bookmarkElements.push(<Bookmark key={k} {...v} />));
+const BookmarkList = ({ visibleBookmarks }) => {
+  const bookmarkElements = visibleBookmarks.map(b => <Bookmark key={b.id} {...b} />);
   return (
     <div>
       {bookmarkElements}
@@ -13,7 +11,7 @@ const BookmarkList = ({ data }) => {
 };
 
 BookmarkList.propTypes = {
-  data: PropTypes.object.isRequired,
+  visibleBookmarks: PropTypes.array.isRequired,
 };
 
 export default BookmarkList;

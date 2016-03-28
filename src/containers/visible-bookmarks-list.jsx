@@ -13,7 +13,7 @@ class VisibleBookmarksList extends React.Component {
   }
 
   componentWillReceiveProps({ routeParams: { tag } }) {
-    if (tag !== this.props.selectedTag) {
+    if (tag && tag !== this.props.selectedTag) {
       const { dispatch } = this.props;
       dispatch(fetchBookmarksIfNeeded(tag));
     }
@@ -32,17 +32,19 @@ class VisibleBookmarksList extends React.Component {
 VisibleBookmarksList.propTypes = {
   dispatch: PropTypes.func.isRequired,
   selectedTag: PropTypes.string.isRequired,
-  data: PropTypes.object.isRequired,
+  visibleBookmarks: PropTypes.array.isRequired,
   routeParams: PropTypes.shape({
     tag: PropTypes.string,
   }).isRequired,
 };
 
-// FIXME: this is hardcoded
 const mapStateToProps = (state) => {
   const { selectedTag, entities, bookmarksByTag } = state;
+  const items = bookmarksByTag[selectedTag] ? bookmarksByTag[selectedTag].items : [];
+  const visibleBookmarks = items.map(b => entities.bookmarks[b]);
   return ({
-    data: state.entities.bookmarks,
+    selectedTag,
+    visibleBookmarks,
   });
 };
 

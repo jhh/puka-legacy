@@ -7,6 +7,7 @@ function mapResponse(response) {
   const bookmarks = {};
   try {
     for (const item of response.data) {
+      item.attributes.id = item.id;
       bookmarks[item.id] = item.attributes;
     }
   } catch (e) {

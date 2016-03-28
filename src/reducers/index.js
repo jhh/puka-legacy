@@ -3,14 +3,13 @@ import union from 'lodash/union';
 import keys from 'lodash/keys';
 import { combineReducers } from 'redux';
 import {
-  NO_TAG,
   SELECT_TAG,
   FETCH_BOOKMARKS_PENDING,
   FETCH_BOOKMARKS_SUCCESS,
   FETCH_BOOKMARKS_FAILURE,
 } from '../actions';
 
-export function selectedTag(state = '', action) {
+export function selectedTag(state = '@@INIT@@', action) {
   const { type, payload } = action;
   if (type === SELECT_TAG) {
     return payload.tag;
