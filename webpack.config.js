@@ -15,7 +15,6 @@ module.exports = {
   },
   entry: {
     app: './src/index.js',
-    vendor: ['lodash', 'moment', 'react', 'react-dom', 'react-router', 'redux', 'redux-thunk'],
   },
   output: {
     filename: '/main.js',
@@ -75,6 +74,6 @@ module.exports = {
         NODE_ENV: JSON.stringify(nodeEnv),
       },
     }),
-    new webpack.optimize.CommonsChunkPlugin('vendor', '/vendor.bundle.js'),
+    new webpack.optimize.OccurenceOrderPlugin(),
   ],
 };
