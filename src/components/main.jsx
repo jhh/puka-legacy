@@ -8,10 +8,10 @@ import { TAG_NONE } from '../actions';
 export const Main = ({ children, fetchBookmarksIfNeeded }) => (
   <main className="container">
     <div className={styles.heading}>
-      <h1><Link to="/"
+      <Link to="/"
         className={styles.brand}
         onClick={() => fetchBookmarksIfNeeded(TAG_NONE)}
-      >Puka</Link></h1>
+      ><h1>Puka</h1></Link>
     </div>
     <div className="row">
       <div className="col-md-8">
