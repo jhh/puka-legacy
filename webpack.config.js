@@ -8,14 +8,15 @@ const isProd = nodeEnv === 'production';
 module.exports = {
   devtool: isProd ? 'hidden-source-map' : '#inline-source-map',
   devServer: {
-    historyApiFallback: {
-      index: '/index.html',
-      verbose: true,
-    },
+    historyApiFallback: true,
   },
-  entry: {
-    app: './src/index.js',
-  },
+  entry: isProd
+    ? ['./src/index.js']
+    : [
+      'webpack-dev-server/client?http://0.0.0.0:8080', // WebpackDevServer host and port
+      'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
+      './src/index.js',
+    ],
   output: {
     filename: '/main.js',
     path: `${__dirname}/public`,
@@ -24,12 +25,9 @@ module.exports = {
   module: {
     loaders: [
       {
-        loader: 'babel',
+        loaders: isProd ? ['babel'] : ['react-hot', 'babel'],
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        query: {
-          plugins: ['transform-object-rest-spread'],
-        },
       },
       { test: /\.css$/,
         loaders: [
@@ -74,6 +72,6 @@ module.exports = {
         NODE_ENV: JSON.stringify(nodeEnv),
       },
     }),
-    new webpack.optimize.OccurenceOrderPlugin(),
+    isProd ? new webpack.optimize.OccurenceOrderPlugin(true) : f => f,
   ],
 };
