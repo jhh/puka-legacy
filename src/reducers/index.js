@@ -43,6 +43,7 @@ function updateBookmarksForTag(state = BOOKMARKS_BY_TAG_DEFAULT, action) {
         isFetching: false,
         items: union(state.items, keys(payload.response.entities.bookmarks)),
         lastUpdated: payload.receivedAt,
+        nextPage: payload.response.nextPage,
       });
     case FETCH_BOOKMARKS_FAILURE:
       return merge({}, state, {

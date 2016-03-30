@@ -46,16 +46,22 @@ export const fetchBookmarksFailure = (tag, error) => ({
   },
 });
 
-const fetchBookmarks = (tag) => dispatch => {
+const endpoint = (state) => {
+  const tag = state.selectedTag;
+  return tag === TAG_NONE ? '/api/bookmarks?page[limit]=100'
+                          : `/api/bookmarks?page[limit]=100&filter[tag]=${tag}`;
+};
+
+const fetchBookmarks = () => (dispatch, getState) => {
+  const tag = getState().selectedTag;
   dispatch(fetchBookmarksPending(tag));
-  const api = (tag === TAG_NONE) ? pukaAPI.getBookmarks : pukaAPI.getBookmarksByTag;
-  return api(tag)
+  return pukaAPI(endpoint(getState()))
     .then(response => dispatch(fetchBookmarksSuccess(tag, response)))
     .catch(error => dispatch(fetchBookmarksFailure(tag, error)));
 };
 
-const shouldFetchBookmarks = (state, tag) => {
-  const bookmarks = state.bookmarksByTag[tag];
+const shouldFetchBookmarks = (state) => {
+  const bookmarks = state.bookmarksByTag[state.selectedTag];
   if (!bookmarks) {
     return true;
   } else if (bookmarks.isFetching) {
@@ -65,12 +71,11 @@ const shouldFetchBookmarks = (state, tag) => {
 };
 
 export const fetchBookmarksIfNeeded = (tag) => (dispatch, getState) => {
-  const state = getState();
-  if (tag !== state.selectedTag) {
+  if (tag !== getState().selectedTag) {
     dispatch(selectTag(tag));
   }
-  if (shouldFetchBookmarks(state, tag)) {
-    return dispatch(fetchBookmarks(tag));
+  if (shouldFetchBookmarks(getState())) {
+    return dispatch(fetchBookmarks());
   }
   return Promise.resolve();
 };

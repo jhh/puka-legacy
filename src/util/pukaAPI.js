@@ -13,21 +13,17 @@ function mapResponse(response) {
   } catch (e) {
     Promise.reject(new Error(e.message));
   }
-  return Promise.resolve({ entities: { bookmarks } });
+  return Promise.resolve({
+    entities: { bookmarks },
+    nextPage: response.links.next,
+  });
 }
 
-function doFetch(url) {
-  return fetch(url, { redirect: 'error', credentials: 'include' }).then(response => {
+export default (endpoint) =>
+  fetch(`${HOST}${endpoint}`, { redirect: 'error', credentials: 'include' }).then(response => {
     if (response.status >= 200 && response.status < 300) {
       return Promise.resolve(response.json());
     }
     return Promise.reject(new Error(response.statusText));
   })
   .then(mapResponse);
-}
-
-export default {
-  getBookmarks: () => doFetch(`${HOST}/api/bookmarks?page[limit]=100`),
-  getBookmarksByTag: (tag) => doFetch(`${HOST}/api/bookmarks?page[limit]=100&filter[tag]=${tag}`),
-  getBookmark: (id) => doFetch(`${HOST}/api/bookmarks/${id}`),
-};

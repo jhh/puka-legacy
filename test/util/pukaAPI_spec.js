@@ -4,7 +4,7 @@ import pukaAPI from '../../src/util/pukaAPI';
 
 describe('pukaAPI', () => {
   describe('getBookmarks', () => {
-    const result = pukaAPI.getBookmarks();
+    const result = pukaAPI('/api/bookmarks?page[limit]=100');
 
     it('returns a Promise', () => {
       expect(result).to.be.an.instanceof(Promise);
