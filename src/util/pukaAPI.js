@@ -1,5 +1,3 @@
-import fetch from 'isomorphic-fetch';
-
 const HOST = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9292';
 
 // TODO: check for JSON API errors

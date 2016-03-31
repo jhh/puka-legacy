@@ -34,9 +34,10 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-3": "^6.5.0",
     "css-loader": "^0.23.1",
+    "exports-loader": "^0.6.3",
     "file-loader": "^0.8.5",
     "html-webpack-plugin": "^2.9.0",
-    "isomorphic-fetch": "^2.2.1",
+    "imports-loader": "^0.6.5",
     "json-loader": "^0.5.4",
     "lodash": "^4.6.1",
     "moment": "^2.12.0",
@@ -47,7 +48,8 @@
     "redux": "^3.3.1",
     "redux-thunk": "^2.0.1",
     "style-loader": "^0.13.0",
-    "webpack": "^1.12.14"
+    "webpack": "^1.12.14",
+    "whatwg-fetch": "^0.11.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -63,7 +65,9 @@
     "webpack-dev-server": "^1.14.1"
   },
   "babel": {
-    "plugins": ["syntax-object-rest-spread"],
+    "plugins": [
+      "syntax-object-rest-spread"
+    ],
     "presets": [
       "es2015",
       "react",

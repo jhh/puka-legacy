@@ -73,5 +73,8 @@ module.exports = {
       },
     }),
     isProd ? new webpack.optimize.OccurenceOrderPlugin(true) : f => f,
+    new webpack.ProvidePlugin({
+      fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
+    }),
   ],
 };
