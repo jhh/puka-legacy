@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import 'isomorphic-fetch';
 import jsdom from 'jsdom';
 import chai from 'chai';
 import chaiImmutable from 'chai-immutable';
