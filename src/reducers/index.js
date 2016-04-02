@@ -4,6 +4,7 @@ import keys from 'lodash/keys';
 import { combineReducers } from 'redux';
 import {
   SELECT_TAG,
+  INVALIDATE_TAG,
   FETCH_BOOKMARKS_PENDING,
   FETCH_BOOKMARKS_SUCCESS,
   FETCH_BOOKMARKS_FAILURE,
@@ -34,6 +35,10 @@ const BOOKMARKS_BY_TAG_DEFAULT = {
 function updateBookmarksForTag(state = BOOKMARKS_BY_TAG_DEFAULT, action) {
   const { type, payload } = action;
   switch (type) {
+    case INVALIDATE_TAG:
+      return merge({}, state, {
+        didInvalidate: true,
+      });
     case FETCH_BOOKMARKS_PENDING:
       return merge({}, state, {
         isFetching: true,
@@ -41,6 +46,7 @@ function updateBookmarksForTag(state = BOOKMARKS_BY_TAG_DEFAULT, action) {
     case FETCH_BOOKMARKS_SUCCESS:
       return merge({}, state, {
         isFetching: false,
+        didInvalidate: false,
         items: union(state.items, keys(payload.response.entities.bookmarks)),
         lastUpdated: payload.receivedAt,
         nextPage: payload.response.nextPage,
@@ -57,6 +63,7 @@ function updateBookmarksForTag(state = BOOKMARKS_BY_TAG_DEFAULT, action) {
 export function bookmarksByTag(state = {}, action) {
   const { type, payload } = action;
   switch (type) {
+    case INVALIDATE_TAG:
     case FETCH_BOOKMARKS_PENDING:
     case FETCH_BOOKMARKS_SUCCESS:
     case FETCH_BOOKMARKS_FAILURE:

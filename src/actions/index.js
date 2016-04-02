@@ -46,10 +46,16 @@ export const fetchBookmarksFailure = (tag, error) => ({
   },
 });
 
+const HOST = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9292';
+
 const endpoint = (state) => {
   const tag = state.selectedTag;
-  return tag === TAG_NONE ? '/api/bookmarks?page[limit]=100'
-                          : `/api/bookmarks?page[limit]=100&filter[tag]=${tag}`;
+  const bookmarks = state.bookmarksByTag[state.selectedTag];
+  if (bookmarks && bookmarks.nextPage) {
+    return bookmarks.nextPage;
+  }
+  return tag === TAG_NONE ? `${HOST}/api/bookmarks?page[limit]=100`
+                          : `${HOST}/api/bookmarks?page[limit]=100&filter[tag]=${tag}`;
 };
 
 const fetchBookmarks = () => (dispatch, getState) => {

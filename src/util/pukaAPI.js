@@ -1,6 +1,3 @@
-const HOST = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9292';
-
-// TODO: check for JSON API errors
 function mapResponse(response) {
   const bookmarks = {};
   try {
@@ -18,7 +15,7 @@ function mapResponse(response) {
 }
 
 export default (endpoint) =>
-  fetch(`${HOST}${endpoint}`, { redirect: 'error', credentials: 'include' }).then(response => {
+  fetch(endpoint, { redirect: 'error', credentials: 'include' }).then(response => {
     if (response.status >= 200 && response.status < 300) {
       return Promise.resolve(response.json());
     }
