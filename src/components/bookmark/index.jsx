@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import moment from 'moment';
-import styles from '../styles/bookmark.css';
+import styles from './styles.css';
 
 function formatTags(tags) {
   return tags.map((tag, i) =>
