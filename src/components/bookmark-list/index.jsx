@@ -1,9 +1,9 @@
 /* eslint no-console: "off" */
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { BookmarkSearchbar } from '../components/bookmark-searchbar';
-import BookmarkList from '../components/bookmark-list';
-import { fetchBookmarksIfNeeded, invalidateTag, TAG_NONE } from '../actions';
+import { BookmarkSearchbar } from '../bookmark-searchbar';
+import BookmarkList from './view';
+import { fetchBookmarksIfNeeded, invalidateTag, TAG_NONE } from '../../actions';
 
 class VisibleBookmarksList extends React.Component {
 

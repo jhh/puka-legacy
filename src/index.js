@@ -9,7 +9,7 @@ import thunkMiddleware from 'redux-thunk';
 
 import rootReducer from './reducers';
 import MainContainer from './components/main';
-import VisibleBookmarksList from './containers/visible-bookmarks-list';
+import VisibleBookmarksList from './components/bookmark-list';
 
 require('file?name=[name].[ext]!../assets/favicon.ico');
 require('../assets/octicons/octicons.css');
