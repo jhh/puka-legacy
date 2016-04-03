@@ -8,7 +8,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
 import rootReducer from './reducers';
-import MainContainer from './containers/main-container';
+import MainContainer from './components/main';
 import VisibleBookmarksList from './containers/visible-bookmarks-list';
 
 require('file?name=[name].[ext]!../assets/favicon.ico');
