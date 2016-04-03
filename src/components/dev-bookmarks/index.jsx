@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-const BOOKMARKS = require('json!../../assets/dev-bookmarks.json');
+const BOOKMARKS = require('json!./dev-bookmarks.json');
 const STYLE = { color: '#00b7ff' };
 
 export const DevBookmarks = () => {

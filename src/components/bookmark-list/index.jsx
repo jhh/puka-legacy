@@ -1,7 +1,6 @@
 /* eslint no-console: "off" */
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { BookmarkSearchbar } from '../bookmark-searchbar';
 import BookmarkList from './view';
 import { fetchBookmarksIfNeeded, invalidateTag, TAG_NONE } from '../../actions';
 
@@ -26,7 +25,6 @@ class VisibleBookmarksList extends React.Component {
   render() {
     return (
       <div>
-        <BookmarkSearchbar />
         <BookmarkList {...this.props} />
         <button onClick={() => {
           const { dispatch, selectedTag } = this.props;
