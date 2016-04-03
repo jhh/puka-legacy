@@ -1,6 +1,6 @@
 /* eslint react/prefer-stateless-function: "off" */
 import React from 'react';
-import BookmarkList from '../../src/components/bookmark-list';
+import BookmarkList from '../../src/components/bookmark-list/view';
 
 export default class BookmarkListTestWrapper extends React.Component {
   render() {
