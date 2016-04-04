@@ -2,7 +2,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import BookmarkList from './view';
-import { fetchBookmarksIfNeeded, invalidateTag, TAG_NONE } from '../../actions';
+import BookmarkListPager from '../bookmark-list-pager';
+import { fetchBookmarksIfNeeded, TAG_NONE } from '../../actions';
 
 class VisibleBookmarksList extends React.Component {
 
@@ -26,12 +27,7 @@ class VisibleBookmarksList extends React.Component {
     return (
       <div>
         <BookmarkList {...this.props} />
-        <button onClick={() => {
-          const { dispatch, selectedTag } = this.props;
-          dispatch(invalidateTag(selectedTag));
-          dispatch(fetchBookmarksIfNeeded(selectedTag));
-        }
-       }>Load More</button>
+        <BookmarkListPager />
       </div>
     );
   }
