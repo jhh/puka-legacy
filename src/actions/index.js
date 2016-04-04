@@ -70,7 +70,7 @@ const shouldFetchBookmarks = (state) => {
   const bookmarks = state.bookmarksByTag[state.selectedTag];
   if (!bookmarks) {
     return true;
-  } else if (bookmarks.isFetching) {
+  } else if (bookmarks.isFetching || bookmarks.atEnd) {
     return false;
   }
   return bookmarks.didInvalidate;

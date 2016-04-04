@@ -3,10 +3,17 @@ import BookmarkListPager from './view';
 
 const mapStateToProps = (state) => {
   const { selectedTag, bookmarksByTag } = state;
-  const isFetching = bookmarksByTag[selectedTag] ? bookmarksByTag[selectedTag].isFetching : false;
+  let isFetching = false;
+  let atEnd = false;
+  const bookmarks = bookmarksByTag[selectedTag];
+  if (bookmarks) {
+    isFetching = bookmarks.isFetching;
+    atEnd = bookmarks.atEnd;
+  }
   return ({
     selectedTag,
     isFetching,
+    atEnd,
   });
 };
 

@@ -29,6 +29,7 @@ export function entities(state = { bookmarks: {} }, action) {
 const BOOKMARKS_BY_TAG_DEFAULT = {
   isFetching: false,
   didInvalidate: false,
+  atEnd: false,
   items: [],
 };
 
@@ -50,6 +51,7 @@ function updateBookmarksForTag(state = BOOKMARKS_BY_TAG_DEFAULT, action) {
         items: union(state.items, keys(payload.response.entities.bookmarks)),
         lastUpdated: payload.receivedAt,
         nextPage: payload.response.nextPage,
+        atEnd: !payload.response.nextPage,
       });
     case FETCH_BOOKMARKS_FAILURE:
       return merge({}, state, {
