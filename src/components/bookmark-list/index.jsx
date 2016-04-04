@@ -45,9 +45,13 @@ VisibleBookmarksList.propTypes = {
 
 const mapStateToProps = (state) => {
   const { selectedTag, entities, bookmarksByTag } = state;
-  const items = bookmarksByTag[selectedTag] ? bookmarksByTag[selectedTag].items : [];
-  const visibleBookmarks = items.map(b => entities.bookmarks[b]);
-  const lastUpdated = bookmarksByTag[selectedTag] ? bookmarksByTag[selectedTag].lastUpdated : 0;
+  let visibleBookmarks = [];
+  let lastUpdated = 0;
+  const bookmarks = bookmarksByTag[selectedTag];
+  if (bookmarks) {
+    visibleBookmarks = bookmarks.items.map(b => entities.bookmarks[b]);
+    lastUpdated = bookmarks.lastUpdated;
+  }
   return ({
     selectedTag,
     visibleBookmarks,
