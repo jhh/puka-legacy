@@ -9,7 +9,7 @@ import thunkMiddleware from 'redux-thunk';
 
 import rootReducer from './reducers';
 import MainContainer from './components/main';
-import VisibleBookmarksList from './components/bookmark-list';
+import BookmarkPage from './components/bookmark-page';
 
 require('file?name=[name].[ext]!../assets/favicon.ico');
 require('../assets/octicons/octicons.css');
@@ -31,8 +31,8 @@ const routes = (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={MainContainer}>
-        <IndexRoute component={VisibleBookmarksList} />
-        <Route path="tag/:tag" component={VisibleBookmarksList} />
+        <IndexRoute component={BookmarkPage} />
+        <Route path="tag/:tag" component={BookmarkPage} />
       </Route>
     </Router>
   </Provider>

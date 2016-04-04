@@ -1,21 +1,14 @@
 /* eslint no-console: "off" */
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import BookmarkList from './view';
-import BookmarkListPager from '../bookmark-list-pager';
-import { fetchBookmarksIfNeeded, TAG_NONE } from '../../actions';
+import Bookmark from '../bookmark';
+import { fetchBookmarksIfNeeded } from '../../actions';
 
-class VisibleBookmarksList extends React.Component {
+class BookmarksList extends React.Component {
 
-  componentDidMount() {
-    const { dispatch, routeParams: { tag } } = this.props;
-    dispatch(fetchBookmarksIfNeeded(tag || TAG_NONE));
-  }
-
-  componentWillReceiveProps({ routeParams: { tag } }) {
-    if (tag && tag !== this.props.selectedTag) {
-      const { dispatch } = this.props;
-      dispatch(fetchBookmarksIfNeeded(tag));
+  componentWillReceiveProps({ selectedTag }) {
+    if (selectedTag !== this.props.selectedTag) {
+      this.props.dispatch(fetchBookmarksIfNeeded(selectedTag));
     }
   }
 
@@ -26,21 +19,17 @@ class VisibleBookmarksList extends React.Component {
   render() {
     return (
       <div>
-        <BookmarkList {...this.props} />
-        <BookmarkListPager />
+        {this.props.visibleBookmarks.map(b => <Bookmark key={b.id} {...b} />)}
       </div>
     );
   }
 }
 
-VisibleBookmarksList.propTypes = {
+BookmarksList.propTypes = {
   dispatch: PropTypes.func.isRequired,
   selectedTag: PropTypes.string.isRequired,
   visibleBookmarks: PropTypes.array.isRequired,
   lastUpdated: PropTypes.number,
-  routeParams: PropTypes.shape({
-    tag: PropTypes.string,
-  }).isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -59,4 +48,4 @@ const mapStateToProps = (state) => {
   });
 };
 
-export default connect(mapStateToProps)(VisibleBookmarksList);
+export default connect(mapStateToProps)(BookmarksList);
