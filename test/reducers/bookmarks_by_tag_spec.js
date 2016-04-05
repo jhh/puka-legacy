@@ -24,6 +24,7 @@ describe('reducer', () => {
         [actions.TAG_NONE]: {
           isFetching: false,
           didInvalidate: false,
+          atEnd: true,
           items: [],
           lastUpdated,
         },
@@ -37,6 +38,7 @@ describe('reducer', () => {
         [actions.TAG_NONE]: {
           isFetching: true,
           didInvalidate: false,
+          atEnd: false,
           items: [],
         },
       });
@@ -49,6 +51,7 @@ describe('reducer', () => {
         [actions.TAG_NONE]: {
           isFetching: false,
           didInvalidate: false,
+          atEnd: false,
           items: [],
         },
       });
@@ -80,6 +83,7 @@ describe('reducer', () => {
         [actions.TAG_NONE]: {
           isFetching: false,
           didInvalidate: false,
+          atEnd: true,
           items: ['aaa', 'bbb', '56df2644a7a14638c23fee98', '56df2644a7a14638c23fee99'],
           lastUpdated,
         },
@@ -91,6 +95,7 @@ describe('reducer', () => {
         [actions.TAG_NONE]: {
           isFetching: false,
           didInvalidate: false,
+          atEnd: false,
           items: ['aaa', 'bbb'],
           lastUpdated: Date.now(),
         },
@@ -112,12 +117,14 @@ describe('reducer', () => {
         [actions.TAG_NONE]: {
           isFetching: false,
           didInvalidate: false,
+          atEnd: false,
           items: ['aaa', 'bbb'],
           lastUpdated: state[actions.TAG_NONE].lastUpdated,
         },
         [tag]: {
           isFetching: false,
           didInvalidate: false,
+          atEnd: true,
           items: ['56df2644a7a14638c23fee98', '56df2644a7a14638c23fee99'],
           lastUpdated: newState[tag].lastUpdated,
         },
