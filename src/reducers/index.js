@@ -8,6 +8,8 @@ import {
   FETCH_BOOKMARKS_PENDING,
   FETCH_BOOKMARKS_SUCCESS,
   FETCH_BOOKMARKS_FAILURE,
+  BOOKMARK_FORM_UPDATE_VALUE,
+  BOOKMARK_FORM_RESET,
 } from '../actions';
 
 export function selectedTag(state = '@@INIT@@', action) {
@@ -37,15 +39,15 @@ function updateBookmarksForTag(state = BOOKMARKS_BY_TAG_DEFAULT, action) {
   const { type, payload } = action;
   switch (type) {
     case INVALIDATE_TAG:
-      return merge({}, state, {
+      return Object.assign({}, state, {
         didInvalidate: true,
       });
     case FETCH_BOOKMARKS_PENDING:
-      return merge({}, state, {
+      return Object.assign({}, state, {
         isFetching: true,
       });
     case FETCH_BOOKMARKS_SUCCESS:
-      return merge({}, state, {
+      return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
         items: union(state.items, keys(payload.response.entities.bookmarks)),
@@ -54,7 +56,7 @@ function updateBookmarksForTag(state = BOOKMARKS_BY_TAG_DEFAULT, action) {
         atEnd: !payload.response.nextPage,
       });
     case FETCH_BOOKMARKS_FAILURE:
-      return merge({}, state, {
+      return Object.assign({}, state, {
         isFetching: false,
       });
     default:
@@ -69,9 +71,30 @@ export function bookmarksByTag(state = {}, action) {
     case FETCH_BOOKMARKS_PENDING:
     case FETCH_BOOKMARKS_SUCCESS:
     case FETCH_BOOKMARKS_FAILURE:
-      return merge({}, state, {
+      return Object.assign({}, state, {
         [payload.tag]: updateBookmarksForTag(state[payload.tag], action),
       });
+    default:
+      return state;
+  }
+}
+
+const BOOKMARK_FORM_DEFAULT = {
+  title: '',
+  url: '',
+  description: '',
+  tags: '',
+};
+
+function bookmarkForm(state = BOOKMARK_FORM_DEFAULT, action) {
+  const { type, payload } = action;
+  switch (type) {
+    case BOOKMARK_FORM_UPDATE_VALUE:
+      return Object.assign({}, state, {
+        [payload.name]: payload.value,
+      });
+    case BOOKMARK_FORM_RESET:
+      return BOOKMARK_FORM_DEFAULT;
     default:
       return state;
   }
@@ -81,4 +104,5 @@ export default combineReducers({
   selectedTag,
   entities,
   bookmarksByTag,
+  bookmarkForm,
 });

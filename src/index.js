@@ -10,6 +10,7 @@ import thunkMiddleware from 'redux-thunk';
 import rootReducer from './reducers';
 import MainContainer from './components/main';
 import BookmarkPage from './components/bookmark-page';
+import BookmarkForm from './components/bookmark-form';
 
 require('file?name=[name].[ext]!../assets/favicon.ico');
 require('../assets/octicons/octicons.css');
@@ -33,6 +34,7 @@ const routes = (
       <Route path="/" component={MainContainer}>
         <IndexRoute component={BookmarkPage} />
         <Route path="tag/:tag" component={BookmarkPage} />
+        <Route path="new" component={BookmarkForm} />
       </Route>
     </Router>
   </Provider>

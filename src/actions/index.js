@@ -7,6 +7,12 @@ export const FETCH_BOOKMARKS_PENDING = 'FETCH_BOOKMARKS_PENDING';
 export const FETCH_BOOKMARKS_SUCCESS = 'FETCH_BOOKMARKS_SUCCESS';
 export const FETCH_BOOKMARKS_FAILURE = 'FETCH_BOOKMARKS_FAILURE';
 
+export const BOOKMARK_FORM_UPDATE_VALUE = 'BOOKMARK_FORM_UPDATE_VALUE';
+export const BOOKMARK_FORM_RESET = 'BOOKMARK_FORM_RESET';
+export const SAVE_BOOKMARK_PENDING = 'SAVE_BOOKMARK_PENDING';
+export const SAVE_BOOKMARK_SUCCESS = 'SAVE_BOOKMARK_SUCCESS';
+export const SAVE_BOOKMARK_FAILURE = 'SAVE_BOOKMARK_FAILURE';
+
 export const selectTag = (tag) => ({
   type: SELECT_TAG,
   payload: {
@@ -84,4 +90,41 @@ export const fetchBookmarksIfNeeded = (tag) => (dispatch, getState) => {
     return dispatch(fetchBookmarks());
   }
   return Promise.resolve();
+};
+
+export const updateBookmarkForm = (name, value) => ({
+  type: BOOKMARK_FORM_UPDATE_VALUE,
+  payload: {
+    name,
+    value,
+  },
+});
+
+export const resetBookmarkForm = () => ({
+  type: BOOKMARK_FORM_RESET,
+});
+
+export const saveBookmarkPending = () => ({
+  type: SAVE_BOOKMARK_PENDING,
+});
+
+export const saveBookmarkSuccess = (response) => ({
+  type: SAVE_BOOKMARK_SUCCESS,
+  payload: {
+    response,
+    receivedAt: Date.now(),
+  },
+});
+
+export const saveBookmarkFailure = (error) => ({
+  type: SAVE_BOOKMARK_FAILURE,
+  error: true,
+  payload: {
+    error,
+  },
+});
+
+
+export const submitBookmarkForm = () => (dispatch, getState) => {
+  console.log(getState().bookmarkForm);
 };
