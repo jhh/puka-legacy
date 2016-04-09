@@ -20,6 +20,9 @@ export const Main = ({ children, fetchBookmarksIfNeeded }) => (
       <div className="col-md-4">
         <DevBookmarks />
       </div>
+      <div>
+        <Link to="/new">New</Link>
+      </div>
     </div>
   </main>
 );

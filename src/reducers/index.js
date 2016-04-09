@@ -1,5 +1,6 @@
 import merge from 'lodash/merge';
 import union from 'lodash/union';
+import concat from 'lodash/concat';
 import keys from 'lodash/keys';
 import { combineReducers } from 'redux';
 import {
@@ -10,6 +11,8 @@ import {
   FETCH_BOOKMARKS_FAILURE,
   BOOKMARK_FORM_UPDATE_VALUE,
   BOOKMARK_FORM_RESET,
+  SAVE_BOOKMARK_SUCCESS,
+  UPDATE_BOOKMARKS,
 } from '../actions';
 
 export function selectedTag(state = '@@INIT@@', action) {
@@ -22,10 +25,16 @@ export function selectedTag(state = '@@INIT@@', action) {
 
 export function entities(state = { bookmarks: {} }, action) {
   const { type, payload } = action;
-  if (type === FETCH_BOOKMARKS_SUCCESS && payload.response && payload.response.entities) {
-    return merge({}, state, payload.response.entities);
+  switch (type) {
+    case FETCH_BOOKMARKS_SUCCESS:
+    case SAVE_BOOKMARK_SUCCESS:
+      if (payload.response && payload.response.entities) {
+        return merge({}, state, payload.response.entities);
+      }
+      return state;
+    default:
+      return state;
   }
-  return state;
 }
 
 const BOOKMARKS_BY_TAG_DEFAULT = {
@@ -35,7 +44,7 @@ const BOOKMARKS_BY_TAG_DEFAULT = {
   items: [],
 };
 
-function updateBookmarksForTag(state = BOOKMARKS_BY_TAG_DEFAULT, action) {
+function updateBookmarksByTagFromFetch(state = BOOKMARKS_BY_TAG_DEFAULT, action) {
   const { type, payload } = action;
   switch (type) {
     case INVALIDATE_TAG:
@@ -64,6 +73,17 @@ function updateBookmarksForTag(state = BOOKMARKS_BY_TAG_DEFAULT, action) {
   }
 }
 
+function updateBookmarksByTag(state = BOOKMARKS_BY_TAG_DEFAULT, action) {
+  const { type, payload } = action;
+  if (type === UPDATE_BOOKMARKS) {
+    return Object.assign({}, state, {
+      items: concat(keys(payload.bookmark), state.items),
+      lastUpdated: payload.receivedAt,
+    });
+  }
+  return state;
+}
+
 export function bookmarksByTag(state = {}, action) {
   const { type, payload } = action;
   switch (type) {
@@ -72,7 +92,11 @@ export function bookmarksByTag(state = {}, action) {
     case FETCH_BOOKMARKS_SUCCESS:
     case FETCH_BOOKMARKS_FAILURE:
       return Object.assign({}, state, {
-        [payload.tag]: updateBookmarksForTag(state[payload.tag], action),
+        [payload.tag]: updateBookmarksByTagFromFetch(state[payload.tag], action),
+      });
+    case UPDATE_BOOKMARKS:
+      return Object.assign({}, state, {
+        [payload.tag]: updateBookmarksByTag(state[payload.tag], action),
       });
     default:
       return state;

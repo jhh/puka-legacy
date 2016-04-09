@@ -1,3 +1,4 @@
+import keys from 'lodash/keys';
 import pukaAPI from '../util/pukaAPI';
 
 export const TAG_NONE = '@@TAG_NONE@@';
@@ -9,9 +10,12 @@ export const FETCH_BOOKMARKS_FAILURE = 'FETCH_BOOKMARKS_FAILURE';
 
 export const BOOKMARK_FORM_UPDATE_VALUE = 'BOOKMARK_FORM_UPDATE_VALUE';
 export const BOOKMARK_FORM_RESET = 'BOOKMARK_FORM_RESET';
+
 export const SAVE_BOOKMARK_PENDING = 'SAVE_BOOKMARK_PENDING';
 export const SAVE_BOOKMARK_SUCCESS = 'SAVE_BOOKMARK_SUCCESS';
 export const SAVE_BOOKMARK_FAILURE = 'SAVE_BOOKMARK_FAILURE';
+
+export const UPDATE_BOOKMARKS = 'UPDATE_BOOKMARKS';
 
 export const selectTag = (tag) => ({
   type: SELECT_TAG,
@@ -76,10 +80,12 @@ const shouldFetchBookmarks = (state) => {
   const bookmarks = state.bookmarksByTag[state.selectedTag];
   if (!bookmarks) {
     return true;
-  } else if (bookmarks.isFetching || bookmarks.atEnd) {
+  } else if (bookmarks.isFetching) {
     return false;
+  } else if (bookmarks.didInvalidate) {
+    return true;
   }
-  return bookmarks.didInvalidate;
+  return !bookmarks.atEnd;
 };
 
 export const fetchBookmarksIfNeeded = (tag) => (dispatch, getState) => {
@@ -112,19 +118,40 @@ export const saveBookmarkSuccess = (response) => ({
   type: SAVE_BOOKMARK_SUCCESS,
   payload: {
     response,
-    receivedAt: Date.now(),
   },
 });
 
-export const saveBookmarkFailure = (error) => ({
+export const saveBookmarkFailure = (reason) => ({
   type: SAVE_BOOKMARK_FAILURE,
   error: true,
   payload: {
-    error,
+    reason,
+  },
+});
+
+export const updateBookmarks = (tag, bookmark) => ({
+  type: UPDATE_BOOKMARKS,
+  payload: {
+    tag,
+    bookmark,
+    receivedAt: Date.now(),
   },
 });
 
 export const submitBookmarkForm = () => (dispatch, getState) => {
   dispatch(saveBookmarkPending());
-  console.log(getState().bookmarkForm);
+  return pukaAPI.saveBookmark(`${HOST}/api/bookmarks`, getState().bookmarkForm)
+    .then(response => {
+      dispatch(saveBookmarkSuccess(response));
+      try {
+        const bookmarks = response.entities.bookmarks;
+        const id = keys(bookmarks)[0];
+        bookmarks[id].tags.map(t => dispatch(updateBookmarks(t, bookmarks)));
+        dispatch(updateBookmarks(TAG_NONE, bookmarks));
+        return Promise.resolve(response);
+      } catch (e) {
+        return Promise.reject(`Error in actions.submitBookmarkForm: ${e.message}`);
+      }
+    })
+    .catch(reason => dispatch(saveBookmarkFailure(reason)));
 };
