@@ -27,6 +27,7 @@ describe('reducer', () => {
           atEnd: true,
           items: [],
           lastUpdated,
+          nextPage: undefined,
         },
       });
     });
@@ -86,6 +87,7 @@ describe('reducer', () => {
           atEnd: true,
           items: ['aaa', 'bbb', '56df2644a7a14638c23fee98', '56df2644a7a14638c23fee99'],
           lastUpdated,
+          nextPage: undefined,
         },
       });
     });
@@ -127,6 +129,7 @@ describe('reducer', () => {
           atEnd: true,
           items: ['56df2644a7a14638c23fee98', '56df2644a7a14638c23fee99'],
           lastUpdated: newState[tag].lastUpdated,
+          nextPage: undefined,
         },
       });
     });
