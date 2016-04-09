@@ -41,6 +41,15 @@ export const BookmarkForm = ({
         value={bookmarkForm.description}
         placeHolder="URL"
         onChange={(e) => updateBookmarkForm('description', e.target.value)}
+      />
+    </fieldset>
+    <fieldset className="form-group">
+      <label htmlFor="tags">Tags</label>
+      <input
+        id="tags"
+        className="form-control"
+        value={bookmarkForm.tags}
+        onChange={(e) => updateBookmarkForm('tags', e.target.value)}
         type="text"
       />
     </fieldset>

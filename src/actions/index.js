@@ -124,7 +124,7 @@ export const saveBookmarkFailure = (error) => ({
   },
 });
 
-
 export const submitBookmarkForm = () => (dispatch, getState) => {
+  dispatch(saveBookmarkPending());
   console.log(getState().bookmarkForm);
 };
