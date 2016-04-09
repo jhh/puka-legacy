@@ -14,11 +14,13 @@ function mapResponse(response) {
   });
 }
 
-export default (endpoint) =>
-  fetch(endpoint, { redirect: 'error', credentials: 'include' }).then(response => {
-    if (response.status >= 200 && response.status < 300) {
-      return Promise.resolve(response.json());
-    }
-    return Promise.reject(new Error(response.statusText));
-  })
-  .then(mapResponse);
+export default {
+  getBookmarks: (endpoint) =>
+    fetch(endpoint, { redirect: 'error', credentials: 'include' }).then(response => {
+      if (response.status >= 200 && response.status < 300) {
+        return Promise.resolve(response.json());
+      }
+      return Promise.reject(new Error(response.statusText));
+    })
+    .then(mapResponse),
+};

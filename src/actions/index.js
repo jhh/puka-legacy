@@ -67,7 +67,7 @@ const endpoint = (state) => {
 const fetchBookmarks = () => (dispatch, getState) => {
   const tag = getState().selectedTag;
   dispatch(fetchBookmarksPending(tag));
-  return pukaAPI(endpoint(getState()))
+  return pukaAPI.getBookmarks(endpoint(getState()))
     .then(response => dispatch(fetchBookmarksSuccess(tag, response)))
     .catch(error => dispatch(fetchBookmarksFailure(tag, error)));
 };
