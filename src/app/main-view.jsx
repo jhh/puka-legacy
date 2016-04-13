@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
-import { DevBookmarks } from '../dev-bookmarks';
+import { DevBookmarks } from './dev-bookmarks';
 import { Link } from 'react-router';
-import styles from './styles.css';
-import { TAG_NONE } from '../../actions';
+import styles from './main-styles.css';
+import { TAG_NONE } from './actions';
 
 
 export const Main = ({ children, fetchBookmarksIfNeeded }) => (

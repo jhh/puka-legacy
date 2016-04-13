@@ -1,8 +1,8 @@
 /* eslint no-console: "off" */
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Bookmark from '../bookmark';
-import { fetchBookmarksIfNeeded } from '../../actions';
+import Bookmark from './bookmark';
+import { fetchBookmarksIfNeeded } from '../app/actions';
 
 class BookmarksList extends React.Component {
 

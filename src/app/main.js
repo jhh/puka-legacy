@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchBookmarksIfNeeded } from '../../actions';
-import { Main } from './view';
+import { fetchBookmarksIfNeeded } from './actions';
+import { Main } from './main-view';
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ fetchBookmarksIfNeeded }, dispatch);

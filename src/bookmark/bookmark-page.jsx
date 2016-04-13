@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { selectTag, TAG_NONE } from '../../actions';
-import BookmarkList from '../bookmark-list';
-import BookmarkListPager from '../bookmark-list-pager';
+import { selectTag, TAG_NONE } from '../app/actions';
+import BookmarkList from './bookmark-list';
+import BookmarkListPager from './bookmark-list-pager';
 
 class BookmarkPage extends React.Component {
 

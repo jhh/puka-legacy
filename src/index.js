@@ -7,10 +7,10 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
-import rootReducer from './reducers';
-import MainContainer from './components/main';
-import BookmarkPage from './components/bookmark-page';
-import BookmarkForm from './components/bookmark-form';
+import rootReducer from './app/reducers';
+import MainContainer from './app/main';
+import BookmarkPage from './bookmark/bookmark-page';
+import BookmarkForm from './bookmark/bookmark-form';
 
 require('file?name=[name].[ext]!../assets/favicon.ico');
 require('../assets/octicons/octicons.css');

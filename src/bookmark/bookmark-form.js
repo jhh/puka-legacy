@@ -5,8 +5,8 @@ import {
   updateBookmarkForm,
   resetBookmarkForm,
   submitBookmarkForm,
-} from '../../actions';
-import { BookmarkForm } from './view';
+} from '../app/actions';
+import { BookmarkForm } from './bookmark-form-view';
 
 function mapStateToProps({ bookmarkForm }) {
   return { bookmarkForm };

@@ -13,7 +13,7 @@ import {
   BOOKMARK_FORM_RESET,
   SAVE_BOOKMARK_SUCCESS,
   UPDATE_BOOKMARKS,
-} from '../actions';
+} from './actions';
 
 export function selectedTag(state = '@@INIT@@', action) {
   const { type, payload } = action;

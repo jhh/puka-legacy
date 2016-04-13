@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { fetchBookmarksIfNeeded, invalidateTag } from '../../actions';
+import { fetchBookmarksIfNeeded, invalidateTag } from '../app/actions';
 
 
 const BookmarkListPager = (props) => {

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import BookmarkListPager from './view';
+import BookmarkListPager from './bookmark-list-pager-view';
 
 const mapStateToProps = (state) => {
   const { selectedTag, bookmarksByTag } = state;
