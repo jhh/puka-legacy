@@ -56,7 +56,8 @@ export const fetchBookmarksFailure = (tag, error) => ({
   },
 });
 
-const HOST = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9292';
+const HOST = process.env.NODE_ENV === 'production' ?
+  'https://puka-api-001.herokuapp.com' : 'http://localhost:9292';
 
 const endpoint = (state) => {
   const tag = state.selectedTag;

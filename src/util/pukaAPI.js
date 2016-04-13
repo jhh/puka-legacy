@@ -25,7 +25,7 @@ function mapResponse(response) {
 export default {
   getBookmarks: (endpoint) =>
     fetch(endpoint, {
-      redirect: 'error',
+      redirect: 'follow',
       credentials: 'include',
       headers: {
         Accept: JSON_API_CONTENT_TYPE,
@@ -49,7 +49,7 @@ export default {
     return fetch(endpoint, {
       method: 'POST',
       body: JSON.stringify(body),
-      redirect: 'error',
+      redirect: 'follow',
       credentials: 'include',
       headers: {
         Accept: JSON_API_CONTENT_TYPE,
