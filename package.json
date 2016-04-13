@@ -10,7 +10,7 @@
     "test:debug": "npm run test -- --debug-brk",
     "test:watch": "npm run test -- --watch",
     "build": "webpack",
-    "production": "webpack -p",
+    "production": "rm -rf output && webpack -p",
     "start": "webpack-dev-server --hot --inline"
   },
   "repository": {

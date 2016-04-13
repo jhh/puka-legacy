@@ -1,14 +1,15 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { selectTag, TAG_NONE } from '../app/actions';
+import { selectTag } from '../app/actions';
 import BookmarkList from './bookmark-list';
 import BookmarkListPager from './bookmark-list-pager';
+import * as c from '../app/constants';
 
 class BookmarkPage extends React.Component {
 
   componentDidMount() {
     const { dispatch, routeParams: { tag } } = this.props;
-    dispatch(selectTag(tag || TAG_NONE));
+    dispatch(selectTag(tag || c.TAG_NONE));
   }
 
   componentWillReceiveProps({ routeParams: { tag } }) {

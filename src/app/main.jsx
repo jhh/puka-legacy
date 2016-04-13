@@ -4,14 +4,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { DevBookmarks } from './dev-bookmarks';
 import styles from './main-styles.css';
-import { fetchBookmarksIfNeeded, TAG_NONE } from './actions';
+import { fetchBookmarksIfNeeded } from './actions';
+import * as c from './constants';
 
 export const Main = ({ children, actions }) => (
   <main className="container">
     <div className={styles.heading}>
       <Link to="/"
         className={styles.brand}
-        onClick={() => actions.fetchBookmarksIfNeeded(TAG_NONE)}
+        onClick={() => actions.fetchBookmarksIfNeeded(c.TAG_NONE)}
       ><h1>Puka</h1></Link>
     </div>
     <div className="row">
