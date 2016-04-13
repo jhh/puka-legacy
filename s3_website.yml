@@ -1,0 +1,15 @@
+# From .env
+s3_id: <%= ENV['S3_ID'] %>
+s3_secret: <%= ENV['S3_SECRET'] %>
+s3_bucket: puka.jeffhutchison.com
+s3_reduced_redundancy: true
+
+site: public
+
+index_document: index.html
+error_document: index.html
+gzip: true
+
+max_age:
+  "octicons/*": <%= 24 * 60 * 60 %>
+  "*": <%= 5 * 60 %>
