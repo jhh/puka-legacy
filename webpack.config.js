@@ -18,7 +18,7 @@ module.exports = {
       './src/index.js',
     ],
   output: {
-    filename: '/main.js',
+    filename: '/main.[hash].js',
     path: `${__dirname}/public`,
     sourceMapFilename: '[hash].map',
   },

@@ -11,5 +11,6 @@ error_document: index.html
 gzip: true
 
 max_age:
-  "octicons/*": <%= 24 * 60 * 60 %>
+  "octicons/*": <%= 365 * 24 * 60 * 60 %>
+  "*.js": <%= 365 * 24 * 60 * 60 %>
   "*": <%= 5 * 60 %>
