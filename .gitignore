@@ -1,5 +1,5 @@
 .env
 /node_modules
 /build
-/public
+/output
 npm-debug.log

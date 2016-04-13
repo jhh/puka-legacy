@@ -19,7 +19,7 @@ module.exports = {
     ],
   output: {
     filename: '/main.[hash].js',
-    path: `${__dirname}/public`,
+    path: `${__dirname}/output`,
     sourceMapFilename: '[hash].map',
   },
   module: {
