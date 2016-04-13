@@ -131,6 +131,7 @@ export const submitBookmarkForm = () => (dispatch, getState) => {
         const id = keys(bookmarks)[0];
         bookmarks[id].tags.map(t => dispatch(updateBookmarks(t, bookmarks)));
         dispatch(updateBookmarks(c.TAG_NONE, bookmarks));
+        dispatch(resetBookmarkForm());
         return Promise.resolve(response);
       } catch (e) {
         return Promise.reject(`Error in actions.submitBookmarkForm: ${e.message}`);
