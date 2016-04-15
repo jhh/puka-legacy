@@ -10,10 +10,7 @@ import * as c from './constants';
 export const Main = ({ children, actions }) => (
   <main className="container">
     <div className={styles.heading}>
-      <Link to="/"
-        className={styles.brand}
-        onClick={() => actions.fetchBookmarksIfNeeded(c.TAG_NONE)}
-      ><h1>Puka</h1></Link>
+      <Link to="/" className={styles.brand}><h1>Puka</h1></Link>
     </div>
     <div className="row">
       <div className="col-md-8">

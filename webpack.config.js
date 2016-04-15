@@ -2,30 +2,20 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const nodeEnv = process.env.NODE_ENV || 'development';
-const isProd = nodeEnv === 'production';
-
 module.exports = {
-  devtool: isProd ? 'hidden-source-map' : '#inline-source-map',
-  devServer: {
-    historyApiFallback: true,
+  devtool: process.env.NODE_ENV === 'production' ? 'hidden-source-map' : '#inline-source-map',
+  entry: {
+    app: './src/index.js',
   },
-  entry: isProd
-    ? ['./src/index.js']
-    : [
-      'webpack-dev-server/client?http://0.0.0.0:8080', // WebpackDevServer host and port
-      'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
-      './src/index.js',
-    ],
   output: {
     filename: '/main.[hash].js',
-    path: `${__dirname}/output`,
+    path: path.resolve(__dirname, 'output'),
     sourceMapFilename: '[hash].map',
   },
   module: {
     loaders: [
       {
-        loaders: isProd ? ['babel'] : ['react-hot', 'babel'],
+        loaders: process.env.NODE_ENV === 'production' ? ['babel'] : ['react-hot', 'babel'],
         test: /\.jsx?$/,
         exclude: /node_modules/,
       },
@@ -61,18 +51,28 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
   },
-  plugins: [
+  plugins: process.env.NODE_ENV === 'production' ? [
     new HtmlWebpackPlugin({
       title: 'Puka',
       template: path.resolve(__dirname, 'src', 'index.html'),
     }),
+    new webpack.ProvidePlugin({
+      fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
+    }),
     new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(nodeEnv),
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       },
     }),
-    isProd ? new webpack.optimize.OccurenceOrderPlugin(true) : f => f,
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin(),
+  ] : [
+    new HtmlWebpackPlugin({
+      title: 'Puka Development',
+      template: path.resolve(__dirname, 'src', 'index.html'),
+    }),
     new webpack.ProvidePlugin({
       fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
     }),

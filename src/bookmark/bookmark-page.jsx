@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { selectTag } from '../app/actions';
 import BookmarkList from './bookmark-list';
@@ -8,14 +9,12 @@ import * as c from '../app/constants';
 class BookmarkPage extends React.Component {
 
   componentDidMount() {
-    const { dispatch, routeParams: { tag } } = this.props;
-    dispatch(selectTag(tag || c.TAG_NONE));
+    const { actions, routeParams: { tag } } = this.props;
+    actions.selectTag(tag || c.TAG_NONE);
   }
 
-  componentWillReceiveProps({ routeParams: { tag } }) {
-    if (tag) {
-      this.props.dispatch(selectTag(tag));
-    }
+  componentWillReceiveProps({ actions, routeParams: { tag } }) {
+    actions.selectTag(tag || c.TAG_NONE);
   }
 
   render() {
@@ -29,10 +28,16 @@ class BookmarkPage extends React.Component {
 }
 
 BookmarkPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  actions: PropTypes.object.isRequired,
   routeParams: PropTypes.shape({
     tag: PropTypes.string,
   }).isRequired,
 };
 
-export default connect()(BookmarkPage);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({ selectTag }, dispatch),
+  };
+}
+
+export default connect(undefined, mapDispatchToProps)(BookmarkPage);

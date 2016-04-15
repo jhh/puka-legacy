@@ -10,8 +10,7 @@
     "test:debug": "npm run test -- --debug-brk",
     "test:watch": "npm run test -- --watch",
     "build": "webpack",
-    "production": "rm -rf output && webpack -p",
-    "start": "webpack-dev-server --hot --inline"
+    "start": "webpack-dev-server --hot --inline --content-base output --history-api-fallback"
   },
   "repository": {
     "type": "git",

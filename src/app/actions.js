@@ -1,3 +1,4 @@
+import { browserHistory } from 'react-router';
 import keys from 'lodash/keys';
 import pukaAPI from '../util/pukaAPI';
 import * as c from './constants';
@@ -132,6 +133,7 @@ export const submitBookmarkForm = () => (dispatch, getState) => {
         bookmarks[id].tags.map(t => dispatch(updateBookmarks(t, bookmarks)));
         dispatch(updateBookmarks(c.TAG_NONE, bookmarks));
         dispatch(resetBookmarkForm());
+        browserHistory.push('/');
         return Promise.resolve(response);
       } catch (e) {
         return Promise.reject(`Error in actions.submitBookmarkForm: ${e.message}`);

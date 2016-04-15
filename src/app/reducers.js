@@ -95,7 +95,7 @@ export function bookmarksByTag(state = {}, action) {
 
 const BOOKMARK_FORM_DEFAULT = {
   title: '',
-  url: '',
+  bookmark: '',
   description: '',
   tags: '',
 };
