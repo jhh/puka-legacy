@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import * as actions from '../../src/actions';
-import { entities } from '../../src/reducers';
+import * as actions from '../../src/app/actions';
+import { entities } from '../../src/app/reducers';
 
 export const BOOKMARK_1 = {
   key: '56df2644a7a14638c23fee98',

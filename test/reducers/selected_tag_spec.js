@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import * as actions from '../../src/actions';
-import reducer, { selectedTag } from '../../src/reducers';
+import * as actions from '../../src/app/actions';
+import reducer, { selectedTag } from '../../src/app/reducers';
 
 describe('reducer', () => {
   describe('selectedTag', () => {

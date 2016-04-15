@@ -4,7 +4,7 @@ import {
   createRenderer,
 } from 'react-addons-test-utils';
 
-import Bookmark from '../../src/components/bookmark';
+import Bookmark from '../../src/bookmark/bookmark';
 
 const BOOKMARK_DATA = {
   title: 'A Title',
