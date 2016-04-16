@@ -17,7 +17,7 @@ module.exports = {
       {
         loaders: process.env.NODE_ENV === 'production' ? ['babel'] : ['react-hot', 'babel'],
         test: /\.jsx?$/,
-        exclude: /node_modules/,
+        include: path.resolve(__dirname, 'src'),
       },
       { test: /\.css$/,
         loaders: [
