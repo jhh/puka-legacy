@@ -4,8 +4,6 @@ s3_secret: <%= ENV['S3_SECRET'] %>
 s3_bucket: puka.jeffhutchison.com
 s3_reduced_redundancy: true
 
-site: output
-
 index_document: index.html
 error_document: index.html
 gzip: true

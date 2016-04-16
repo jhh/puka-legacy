@@ -1,0 +1,7 @@
+#!/bin/sh
+
+source config/scripts.sh
+
+echo "Cleaning $BUILD_DIR..."
+[ -d $BUILD_DIR ] && rm -rv $BUILD_DIR
+exit 0

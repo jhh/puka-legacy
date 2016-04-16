@@ -5,12 +5,16 @@
   "private": true,
   "main": "index.js",
   "scripts": {
+    "build": "scripty",
+    "clean": "scripty",
+    "deploy": "scripty",
+    "deploy:dryrun": "scripty",
+    "deploy:upload": "scripty",
+    "start": "scripty",
     "test": "scripty",
     "test:browser": "scripty",
     "test:debug": "scripty",
-    "test:watch": "scripty",
-    "build": "scripty",
-    "start": "scripty"
+    "test:watch": "scripty"
   },
   "repository": {
     "type": "git",

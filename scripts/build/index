@@ -1,2 +1,3 @@
 #!/bin/sh
-webpack
+source config/scripts.sh
+webpack --config $CONFIG_DIR/webpack.config.js

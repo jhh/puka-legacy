@@ -1,0 +1,5 @@
+#!/bin/sh
+export NODE_ENV=production
+npm run clean
+npm run build
+npm run deploy:upload -- $1

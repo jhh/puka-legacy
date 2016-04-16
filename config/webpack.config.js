@@ -10,7 +10,7 @@ module.exports = {
   },
   output: {
     filename: '/main.[hash].js',
-    path: path.resolve(__dirname, 'output'),
+    path: path.resolve(__dirname, '..', 'output'),
     sourceMapFilename: '[hash].map',
   },
   module: {
@@ -18,7 +18,7 @@ module.exports = {
       {
         loaders: process.env.NODE_ENV === 'production' ? ['babel'] : ['react-hot', 'babel'],
         test: /\.jsx?$/,
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, '..', 'src'),
       },
       { test: /\.css$/,
         loaders: [
@@ -29,22 +29,22 @@ module.exports = {
             localIdentName: '[name]__[local]___[hash:base64:5]',
           }),
         ],
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, '..', 'src'),
       },
       {
         test: /\.css$/,
         loaders: ['style', 'css'],
-        include: path.resolve(__dirname, 'assets'),
+        include: path.resolve(__dirname, '..', 'assets'),
       },
       {
         loader: 'file',
         test: /\.(eot|woff|ttf|svg)$/,
         include: [
-          path.resolve(__dirname, 'assets'),
+          path.resolve(__dirname, '..', 'assets'),
         ],
         query: {
           name: '/[path][name].[ext]',
-          context: path.resolve(__dirname, 'assets'),
+          context: path.resolve(__dirname, '..', 'assets'),
         },
       },
     ],
@@ -55,7 +55,7 @@ module.exports = {
   plugins: process.env.NODE_ENV === 'production' ? [
     new HtmlWebpackPlugin({
       title: 'Puka',
-      template: path.resolve(__dirname, 'src', 'index.html'),
+      template: path.resolve(__dirname, '..', 'src', 'index.html'),
     }),
     new webpack.ProvidePlugin({
       fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
@@ -72,7 +72,7 @@ module.exports = {
   ] : [
     new HtmlWebpackPlugin({
       title: 'Puka Development',
-      template: path.resolve(__dirname, 'src', 'index.html'),
+      template: path.resolve(__dirname, '..', 'src', 'index.html'),
     }),
     new webpack.ProvidePlugin({
       fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
