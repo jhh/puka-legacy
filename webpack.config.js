@@ -1,3 +1,4 @@
+/* eslint prefer-template: "off" */
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -22,7 +23,7 @@ module.exports = {
       { test: /\.css$/,
         loaders: [
           'style',
-          'css?' + JSON.stringify({       // eslint-disable-line prefer-template
+          'css?' + JSON.stringify({
             modules: true,
             importLoaders: 1,
             localIdentName: '[name]__[local]___[hash:base64:5]',
