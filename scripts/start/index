@@ -2,6 +2,7 @@
 . config/scripts.sh
 webpack-dev-server                       \
   --config $CONFIG_DIR/webpack.config.js \
+  --host $DEV_HOST                       \
   --hot                                  \
   --inline                               \
   --content-base "output"                \
