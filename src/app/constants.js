@@ -14,7 +14,7 @@ export const SAVE_BOOKMARK_FAILURE = 'SAVE_BOOKMARK_FAILURE';
 
 export const UPDATE_BOOKMARKS = 'UPDATE_BOOKMARKS';
 
-const dev_api_host = process.env.DEV_API_HOST || 'localhost';
+const PUKA_DEV_API_HOST = process.env.PUKA_DEV_API_HOST || 'localhost';
 
 export const HOST = process.env.NODE_ENV === 'production' ?
-  'https://puka-api-001.herokuapp.com' : `http://${dev_api_host}:9292`;
+  'https://puka-api-001.herokuapp.com' : `http://${PUKA_DEV_API_HOST}:9292`;

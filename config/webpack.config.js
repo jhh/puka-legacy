@@ -80,7 +80,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        DEV_API_HOST: JSON.stringify(process.env.DEV_API_HOST),
+        PUKA_DEV_API_HOST: JSON.stringify(process.env.PUKA_DEV_API_HOST),
       },
     }),
   ],
