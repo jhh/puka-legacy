@@ -107,6 +107,8 @@ function bookmarkForm(state = BOOKMARK_FORM_DEFAULT, action) {
       return Object.assign({}, state, {
         [payload.name]: payload.value,
       });
+    case c.BOOKMARK_FORM_INITIALIZE:
+      return Object.assign({}, state, payload.bookmark);
     case c.BOOKMARK_FORM_RESET:
       return BOOKMARK_FORM_DEFAULT;
     default:

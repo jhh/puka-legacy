@@ -82,6 +82,18 @@ export const fetchBookmarksIfNeeded = (tag) => (dispatch, getState) => {
   return Promise.resolve();
 };
 
+export const initializeBookmarkForm = (bookmark) => ({
+  type: c.BOOKMARK_FORM_INITIALIZE,
+  payload: {
+    bookmark,
+  },
+});
+
+export const initializeBookmarkFormForID = (id) => (dispatch, getState) => {
+  const bookmark = getState().entities[id];
+  dispatch(initializeBookmarkForm(bookmark));
+};
+
 export const updateBookmarkForm = (name, value) => ({
   type: c.BOOKMARK_FORM_UPDATE_VALUE,
   payload: {
