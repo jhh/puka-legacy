@@ -35,6 +35,7 @@ const routes = (
         <IndexRoute component={BookmarkPage} />
         <Route path="tag/:tag" component={BookmarkPage} />
         <Route path="new" component={BookmarkForm} />
+        <Route path="edit" component={BookmarkForm} />
       </Route>
     </Router>
   </Provider>

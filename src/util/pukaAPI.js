@@ -22,45 +22,47 @@ function mapResponse(response) {
   });
 }
 
-export default {
-  getBookmarks: (endpoint) =>
-    fetch(endpoint, {
-      redirect: 'follow',
-      credentials: 'include',
-      headers: {
-        Accept: JSON_API_CONTENT_TYPE,
-      },
-    }).then(response => {
-      if (response.status >= 200 && response.status < 300) {
-        return Promise.resolve(response.json());
-      }
-      return Promise.reject(`Error in pukaAPI.getBookmarks response: ${response.statusText}`);
-    })
-    .then(mapResponse),
+export const getBookmarks = (endpoint) =>
+  fetch(endpoint, {
+    redirect: 'follow',
+    credentials: 'include',
+    headers: {
+      Accept: JSON_API_CONTENT_TYPE,
+    },
+  }).then(response => {
+    if (response.status >= 200 && response.status < 300) {
+      return Promise.resolve(response.json());
+    }
+    return Promise.reject(`Error in pukaAPI.getBookmarks response: ${response.statusText}`);
+  })
+  .then(mapResponse);
 
-  saveBookmark: (endpoint, bookmark) => {
-    const body = {
-      data: {
-        type: 'bookmarks',
-        attributes: bookmark,
-      },
-    };
-    body.data.attributes.tags = bookmark.tags.split(/\s*,\s*/);
-    return fetch(endpoint, {
-      method: 'POST',
-      body: JSON.stringify(body),
-      redirect: 'follow',
-      credentials: 'include',
-      headers: {
-        Accept: JSON_API_CONTENT_TYPE,
-        'Content-Type': JSON_API_CONTENT_TYPE,
-      },
-    }).then(response => {
-      if (response.status >= 200 && response.status < 300) {
-        return Promise.resolve(response.json());
-      }
-      return Promise.reject(`Error in pukaAPI.saveBookmark response: ${response.statusText}`);
-    })
-    .then(mapResponse);
-  },
+export const saveBookmark = (endpoint, bookmark) => {
+  const body = {
+    data: {
+      type: 'bookmarks',
+      id: bookmark.id,
+      attributes: bookmark,
+    },
+  };
+  body.data.attributes.tags = bookmark.tags.split(/\s*,\s*/);
+  return fetch(endpoint, {
+    method: bookmark.id ? 'PATCH' : 'POST',
+    body: JSON.stringify(body),
+    redirect: 'follow',
+    credentials: 'include',
+    headers: {
+      Accept: JSON_API_CONTENT_TYPE,
+      'Content-Type': JSON_API_CONTENT_TYPE,
+    },
+  }).then(response => {
+    if (response.status >= 200 && response.status < 300) {
+      return Promise.resolve(response.json());
+    }
+    return Promise.reject(`Error in pukaAPI.saveBookmark response: ${response.statusText}`);
+  })
+  .then(mapResponse);
 };
+
+export const updateBookmark = (endpoint, bookmark) =>
+  saveBookmark(`${endpoint}/${bookmark.id}`, bookmark);

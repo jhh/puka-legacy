@@ -11,7 +11,7 @@ function formatTags(tags) {
   );
 }
 
-const Bookmark = ({ title, bookmark, description, date, tags }) => (
+const Bookmark = ({ onClick, title, bookmark, description, date, tags }) => (
   <article className={styles.bookmark}>
     <div>
       <a className={styles.url} target="_blank" href={bookmark}>{title}</a>
@@ -21,10 +21,17 @@ const Bookmark = ({ title, bookmark, description, date, tags }) => (
       {formatTags(tags)}
     </ul>
     <span className={styles.date}>{moment(date).fromNow()}</span>
+    <a className={styles.edit} href="#"
+       onClick={e => {
+         e.preventDefault();
+         onClick();
+       }}
+    >edit</a>
   </article>
 );
 
 Bookmark.propTypes = {
+  onClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   bookmark: PropTypes.string.isRequired,
   description: PropTypes.string,

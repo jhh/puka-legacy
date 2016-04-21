@@ -1,6 +1,6 @@
 import { browserHistory } from 'react-router';
 import keys from 'lodash/keys';
-import pukaAPI from '../util/pukaAPI';
+import { getBookmarks, saveBookmark, updateBookmark } from '../util/pukaAPI';
 import * as c from './constants';
 
 export const selectTag = (tag) => ({
@@ -55,7 +55,7 @@ const endpoint = (state) => {
 const fetchBookmarks = () => (dispatch, getState) => {
   const tag = getState().selectedTag;
   dispatch(fetchBookmarksPending(tag));
-  return pukaAPI.getBookmarks(endpoint(getState()))
+  return getBookmarks(endpoint(getState()))
     .then(response => dispatch(fetchBookmarksSuccess(tag, response)))
     .catch(error => dispatch(fetchBookmarksFailure(tag, error)));
 };
@@ -90,7 +90,7 @@ export const initializeBookmarkForm = (bookmark) => ({
 });
 
 export const initializeBookmarkFormForID = (id) => (dispatch, getState) => {
-  const bookmark = getState().entities[id];
+  const bookmark = getState().entities.bookmarks[id];
   dispatch(initializeBookmarkForm(bookmark));
 };
 
@@ -125,8 +125,8 @@ export const saveBookmarkFailure = (reason) => ({
   },
 });
 
-export const updateBookmarks = (tag, bookmark) => ({
-  type: c.UPDATE_BOOKMARKS,
+export const addBookmark = (tag, bookmark) => ({
+  type: c.ADD_BOOKMARK,
   payload: {
     tag,
     bookmark,
@@ -136,14 +136,16 @@ export const updateBookmarks = (tag, bookmark) => ({
 
 export const submitBookmarkForm = () => (dispatch, getState) => {
   dispatch(saveBookmarkPending());
-  return pukaAPI.saveBookmark(`${c.HOST}/api/bookmarks`, getState().bookmarkForm)
+  const bookmarkForm = getState().bookmarkForm;
+  const api = bookmarkForm.id ? updateBookmark : saveBookmark;
+  return api(`${c.HOST}/api/bookmarks`, bookmarkForm)
     .then(response => {
       dispatch(saveBookmarkSuccess(response));
       try {
         const bookmarks = response.entities.bookmarks;
         const id = keys(bookmarks)[0];
-        bookmarks[id].tags.map(t => dispatch(updateBookmarks(t, bookmarks)));
-        dispatch(updateBookmarks(c.TAG_NONE, bookmarks));
+        bookmarks[id].tags.map(t => dispatch(addBookmark(t, bookmarks)));
+        dispatch(addBookmark(c.TAG_NONE, bookmarks));
         dispatch(resetBookmarkForm());
         browserHistory.push('/');
         return Promise.resolve(response);

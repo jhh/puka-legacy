@@ -1,10 +1,10 @@
 import { isPlainObject, size, keys, values } from 'lodash';
 import { expect } from 'chai';
-import pukaAPI from '../../src/util/pukaAPI';
+import { getBookmarks } from '../../src/util/pukaAPI';
 
 describe('pukaAPI', () => {
   describe('getBookmarks', () => {
-    const result = pukaAPI.getBookmarks('http://localhost:9292/api/bookmarks?page[limit]=100');
+    const result = getBookmarks('http://localhost:9292/api/bookmarks?page[limit]=100');
 
     it('returns a Promise', () => {
       expect(result).to.be.an.instanceof(Promise);

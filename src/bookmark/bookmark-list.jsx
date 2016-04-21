@@ -1,14 +1,16 @@
 /* eslint no-console: "off" */
 import React, { PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import Bookmark from './bookmark';
-import { fetchBookmarksIfNeeded } from '../app/actions';
+import { fetchBookmarksIfNeeded, initializeBookmarkFormForID } from '../app/actions';
 
 class BookmarksList extends React.Component {
 
-  componentWillReceiveProps({ selectedTag }) {
+  componentWillReceiveProps({ selectedTag, actions }) {
     if (selectedTag !== this.props.selectedTag) {
-      this.props.dispatch(fetchBookmarksIfNeeded(selectedTag));
+      actions.fetchBookmarksIfNeeded(selectedTag);
     }
   }
 
@@ -17,16 +19,25 @@ class BookmarksList extends React.Component {
   }
 
   render() {
+    const {visibleBookmarks, onEditClick} = this.props;
     return (
       <div>
-        {this.props.visibleBookmarks.map(b => <Bookmark key={b.id} {...b} />)}
+        {visibleBookmarks.map(bookmark =>
+          <Bookmark
+            key={bookmark.id}
+            {...bookmark}
+            onClick={() => onEditClick(bookmark.id)}
+          />
+        )}
       </div>
     );
   }
 }
 
+// TODO: use arrayOf and shape for visibleBookmarks
 BookmarksList.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  onEditClick: PropTypes.func.isRequired,
+  actions: PropTypes.object.isRequired,
   selectedTag: PropTypes.string.isRequired,
   visibleBookmarks: PropTypes.array.isRequired,
   lastUpdated: PropTypes.number,
@@ -48,4 +59,12 @@ const mapStateToProps = (state) => {
   });
 };
 
-export default connect(mapStateToProps)(BookmarksList);
+const mapDispatchToProps = (dispatch) => ({
+  onEditClick: (id) => {
+    dispatch(initializeBookmarkFormForID(id));
+    browserHistory.push('/edit');
+  },
+  actions: bindActionCreators({ fetchBookmarksIfNeeded }, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookmarksList);

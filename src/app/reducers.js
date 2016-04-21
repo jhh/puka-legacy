@@ -65,7 +65,7 @@ function updateBookmarksByTagFromFetch(state = BOOKMARKS_BY_TAG_DEFAULT, action)
 
 function updateBookmarksByTag(state = BOOKMARKS_BY_TAG_DEFAULT, action) {
   const { type, payload } = action;
-  if (type === c.UPDATE_BOOKMARKS) {
+  if (type === c.ADD_BOOKMARK) {
     return Object.assign({}, state, {
       items: concat(keys(payload.bookmark), state.items),
       lastUpdated: payload.receivedAt,
@@ -84,7 +84,7 @@ export function bookmarksByTag(state = {}, action) {
       return Object.assign({}, state, {
         [payload.tag]: updateBookmarksByTagFromFetch(state[payload.tag], action),
       });
-    case c.UPDATE_BOOKMARKS:
+    case c.ADD_BOOKMARK:
       return Object.assign({}, state, {
         [payload.tag]: updateBookmarksByTag(state[payload.tag], action),
       });
