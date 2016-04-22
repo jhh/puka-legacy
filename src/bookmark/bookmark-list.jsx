@@ -19,7 +19,7 @@ class BookmarksList extends React.Component {
   }
 
   render() {
-    const {visibleBookmarks, onEditClick} = this.props;
+    const { visibleBookmarks, onEditClick } = this.props;
     return (
       <div>
         {visibleBookmarks.map(bookmark =>

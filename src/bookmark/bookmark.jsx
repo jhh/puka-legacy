@@ -21,11 +21,13 @@ const Bookmark = ({ onClick, title, bookmark, description, date, tags }) => (
       {formatTags(tags)}
     </ul>
     <span className={styles.date}>{moment(date).fromNow()}</span>
-    <a className={styles.edit} href="#"
-       onClick={e => {
-         e.preventDefault();
-         onClick();
-       }}
+    <a
+      className={styles.edit}
+      href="#"
+      onClick={e => {
+        e.preventDefault();
+        onClick();
+      }}
     >edit</a>
   </article>
 );

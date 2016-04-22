@@ -1,13 +1,9 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { DevBookmarks } from './dev-bookmarks';
 import styles from './main-styles.css';
-import { fetchBookmarksIfNeeded } from './actions';
-import * as c from './constants';
 
-export const Main = ({ children, actions }) => (
+export const Main = ({ children }) => (
   <main className="container">
     <div className={styles.heading}>
       <Link to="/" className={styles.brand}><h1>Puka</h1></Link>
@@ -27,15 +23,7 @@ export const Main = ({ children, actions }) => (
 );
 
 Main.propTypes = {
-  actions: PropTypes.object.isRequired,
   children: PropTypes.element.isRequired,
 };
 
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({ fetchBookmarksIfNeeded }, dispatch),
-  };
-}
-
-export default connect(undefined, mapDispatchToProps)(Main);
+export default Main;
