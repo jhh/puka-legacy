@@ -12,5 +12,12 @@
   },
   "globals": {
     "PUKA_API_ENDPOINT": false
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "config/webpack.config.js"
+      }
+    }
   }
 }
