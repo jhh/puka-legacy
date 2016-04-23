@@ -59,7 +59,7 @@ export const submitBookmarkForm = () => (dispatch, getState) => {
   dispatch(saveBookmarkPending());
   const bookmarkForm = getState().bookmarkForm;
   const api = bookmarkForm.id ? updateBookmark : saveBookmark;
-  return api(`${c.HOST}/api/bookmarks`, bookmarkForm)
+  return api(PUKA_API_ENDPOINT, bookmarkForm)
     .then(response => {
       dispatch(saveBookmarkSuccess(response));
       try {

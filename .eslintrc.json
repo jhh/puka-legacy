@@ -9,5 +9,8 @@
   },
   "env": {
     "mocha": true
+  },
+  "globals": {
+    "PUKA_API_ENDPOINT": false
   }
 }

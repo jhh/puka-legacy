@@ -3,6 +3,9 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const PRODUCTION_API_ENDPOINT = 'https://puka-api-001.herokuapp.com/api/bookmarks';
+const DEV_API_ENDPOINT = `http://${process.env.PUKA_DEV_API_HOST || 'localhost'}:9292/api/bookmarks`;
+
 module.exports = {
   devtool: process.env.NODE_ENV === 'production' ? 'hidden-source-map' : '#inline-source-map',
   entry: {
@@ -62,6 +65,7 @@ module.exports = {
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
     new webpack.DefinePlugin({
+      PUKA_API_ENDPOINT: JSON.stringify(PRODUCTION_API_ENDPOINT),
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       },
@@ -78,6 +82,7 @@ module.exports = {
       fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
     }),
     new webpack.DefinePlugin({
+      PUKA_API_ENDPOINT: JSON.stringify(DEV_API_ENDPOINT),
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         PUKA_DEV_API_HOST: JSON.stringify(process.env.PUKA_DEV_API_HOST),

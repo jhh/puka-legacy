@@ -46,8 +46,8 @@ const endpoint = (state) => {
   if (bookmarks && bookmarks.nextPage) {
     return bookmarks.nextPage;
   }
-  return tag === c.TAG_NONE ? `${c.HOST}/api/bookmarks?page[limit]=100`
-                          : `${c.HOST}/api/bookmarks?page[limit]=100&filter[tag]=${tag}`;
+  return tag === c.TAG_NONE ? `${PUKA_API_ENDPOINT}?page[limit]=100`
+                          : `${PUKA_API_ENDPOINT}?page[limit]=100&filter[tag]=${tag}`;
 };
 
 const fetchBookmarks = () => (dispatch, getState) => {
