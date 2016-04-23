@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import * as actions from '../../src/app/actions';
+import * as actions from '../../src/bookmark/bookmark-list-actions';
 import { bookmarksByTag } from '../../src/app/reducers';
 import { BOOKMARK_1, BOOKMARK_2 } from './entities_spec';
 

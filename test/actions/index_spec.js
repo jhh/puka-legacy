@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import * as actions from '../../src/app/actions';
+import * as actions from '../../src/bookmark/bookmark-list-actions';
 import * as c from '../../src/app/constants';
 
 describe('actions', () => {

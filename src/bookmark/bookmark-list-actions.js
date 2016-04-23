@@ -1,5 +1,5 @@
 import { getBookmarks } from '../util/pukaAPI';
-import * as c from './constants';
+import * as c from '../app/constants';
 
 export const selectTag = (tag) => ({
   type: c.SELECT_TAG,

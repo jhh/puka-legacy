@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { selectTag } from '../app/actions';
+import { selectTag } from './bookmark-list-actions';
 import BookmarkList from './bookmark-list';
 import BookmarkListPager from './bookmark-list-pager';
 import * as c from '../app/constants';

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { fetchBookmarksIfNeeded, invalidateTag } from '../app/actions';
+import { fetchBookmarksIfNeeded, invalidateTag } from './bookmark-list-actions';
 
 export class BookmarkListPager extends React.Component {
 

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import Bookmark from './bookmark';
-import { fetchBookmarksIfNeeded } from '../app/actions';
+import { fetchBookmarksIfNeeded } from './bookmark-list-actions';
 import { initializeBookmarkFormForID } from './bookmark-form-actions';
 
 class BookmarksList extends React.Component {
