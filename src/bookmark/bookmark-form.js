@@ -6,7 +6,7 @@ import {
   updateBookmarkForm,
   resetBookmarkForm,
   submitBookmarkForm,
-} from '../app/actions';
+} from './bookmark-form-actions';
 
 export const BookmarkForm = ({ bookmarkForm, actions }) => (
   <div className="col-sm-8">
