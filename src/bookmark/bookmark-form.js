@@ -27,9 +27,9 @@ export const BookmarkForm = ({ bookmarkForm, actions }) => (
         <input
           id="url"
           className="form-control"
-          value={bookmarkForm.bookmark}
+          value={bookmarkForm.url}
           placeHolder="URL"
-          onChange={(e) => actions.updateBookmarkForm('bookmark', e.target.value)}
+          onChange={(e) => actions.updateBookmarkForm('url', e.target.value)}
           type="url"
         />
       </fieldset>

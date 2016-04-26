@@ -1,5 +1,4 @@
 import { browserHistory } from 'react-router';
-import keys from 'lodash/keys';
 import { saveBookmark, updateBookmark } from '../util/pukaAPI';
 import * as c from '../app/constants';
 
@@ -55,18 +54,36 @@ export const addBookmark = (tag, bookmark) => ({
   },
 });
 
+const processRemoveBookmark = (dispatch, response) => {
+  console.warn('Unimplemented');
+};
+
+const processAddBookmark = (dispatch, response) => {
+  const bookmarks = response.entities.bookmarks;
+  if (process.env.NODE_ENV !== 'production') {
+    const len = Object.keys(bookmarks).length;
+    if (len !== 1) {
+      console.error(`assertion failure: bookmarks length = ${len}`);
+    }
+  }
+  const id = Object.keys(bookmarks)[0];
+  bookmarks[id].tags.map(t => dispatch(addBookmark(t, bookmarks)));
+  dispatch(addBookmark(c.TAG_NONE, bookmarks));
+};
+
 export const submitBookmarkForm = () => (dispatch, getState) => {
   dispatch(saveBookmarkPending());
   const bookmarkForm = getState().bookmarkForm;
-  const api = bookmarkForm.id ? updateBookmark : saveBookmark;
+  const isUpdate = !!bookmarkForm.id;
+  const api = isUpdate ? updateBookmark : saveBookmark;
   return api(PUKA_API_ENDPOINT, bookmarkForm)
     .then(response => {
       dispatch(saveBookmarkSuccess(response));
       try {
-        const bookmarks = response.entities.bookmarks;
-        const id = keys(bookmarks)[0];
-        bookmarks[id].tags.map(t => dispatch(addBookmark(t, bookmarks)));
-        dispatch(addBookmark(c.TAG_NONE, bookmarks));
+        if (isUpdate) {
+          processRemoveBookmark(dispatch, response);
+        }
+        processAddBookmark(dispatch, response);
         dispatch(resetBookmarkForm());
         browserHistory.push('/');
         return Promise.resolve(response);

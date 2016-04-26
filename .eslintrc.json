@@ -5,7 +5,8 @@
       "mocha"
   ],
   "rules" : {
-    "mocha/no-exclusive-tests": 2
+    "mocha/no-exclusive-tests": "error",
+    "no-console": ["warn", {"allow": ["warn", "error"]}]
   },
   "env": {
     "mocha": true
