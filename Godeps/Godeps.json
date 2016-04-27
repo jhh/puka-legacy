@@ -3,14 +3,9 @@
 	"GoVersion": "go1.6",
 	"GodepVersion": "v62",
 	"Packages": [
-		"./..."
+		"./cmd/puka-web"
 	],
 	"Deps": [
-		{
-			"ImportPath": "github.com/codegangsta/cli",
-			"Comment": "v1.14.0-7-g4733699",
-			"Rev": "4733699ce30faa633c4db36ebfbe427963593d7d"
-		},
 		{
 			"ImportPath": "github.com/gin-gonic/gin",
 			"Comment": "v1.0rc1-266-g542be2f",
@@ -42,26 +37,6 @@
 			"ImportPath": "gopkg.in/go-playground/validator.v8",
 			"Comment": "v8.17.1",
 			"Rev": "014792cf3e266caff1e916876be12282b33059e0"
-		},
-		{
-			"ImportPath": "gopkg.in/mgo.v2",
-			"Comment": "r2016.02.04-1-gb6e2fa3",
-			"Rev": "b6e2fa371e64216a45e61072a96d4e3859f169da"
-		},
-		{
-			"ImportPath": "gopkg.in/mgo.v2/bson",
-			"Comment": "r2016.02.04-1-gb6e2fa3",
-			"Rev": "b6e2fa371e64216a45e61072a96d4e3859f169da"
-		},
-		{
-			"ImportPath": "gopkg.in/mgo.v2/internal/sasl",
-			"Comment": "r2016.02.04-1-gb6e2fa3",
-			"Rev": "b6e2fa371e64216a45e61072a96d4e3859f169da"
-		},
-		{
-			"ImportPath": "gopkg.in/mgo.v2/internal/scram",
-			"Comment": "r2016.02.04-1-gb6e2fa3",
-			"Rev": "b6e2fa371e64216a45e61072a96d4e3859f169da"
 		},
 		{
 			"ImportPath": "gopkg.in/yaml.v2",
