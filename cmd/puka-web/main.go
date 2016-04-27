@@ -1,19 +1,18 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 
 	"gopkg.in/mgo.v2"
-
-	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	session, err := mgo.Dial(os.Getenv("MONGODB_URI"))
 	if err != nil {
-		log.Fatalln("FATAL", err)
+		log.Fatalln(err)
 	}
 	defer session.Close()
 
@@ -22,12 +21,9 @@ func main() {
 		log.Fatal("$PORT must be set")
 	}
 
-	r := gin.Default()
-
-	// PING test
-	r.GET("/ping", func(c *gin.Context) {
-		c.String(http.StatusOK, "PONG")
+	http.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "pong")
 	})
 
-	r.Run(":" + p)
+	log.Fatal(http.ListenAndServe(":"+p, nil))
 }
