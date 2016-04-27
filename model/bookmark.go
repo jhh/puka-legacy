@@ -1,4 +1,4 @@
-package puka
+package model
 
 import (
 	"fmt"

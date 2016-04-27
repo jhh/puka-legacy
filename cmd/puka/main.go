@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/codegangsta/cli"
-	"github.com/jhh/puka"
+	"github.com/jhh/puka/model"
 
 	"gopkg.in/mgo.v2"
 )
@@ -87,7 +87,7 @@ func PrintOne(c *cli.Context) {
 
 	col := session.DB(c.GlobalString("database")).C(c.GlobalString("collection"))
 
-	result := puka.Bookmark{}
+	result := model.Bookmark{}
 	err = col.Find(nil).One(&result)
 	if err != nil {
 		log.Println("DEBUG", c.GlobalString("url"), c.GlobalString("database"), c.GlobalString("collection"))

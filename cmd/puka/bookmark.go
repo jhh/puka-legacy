@@ -3,9 +3,9 @@ package main
 import (
 	"time"
 
-	"gopkg.in/mgo.v2/bson"
+	"github.com/jhh/puka/model"
 
-	"github.com/jhh/puka"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // LegacyBookmark is the previous format for bookmarks.
@@ -19,8 +19,8 @@ type LegacyBookmark struct {
 }
 
 // NewBookmark converts to current Bookmark.
-func (b *LegacyBookmark) NewBookmark() puka.Bookmark {
-	return puka.Bookmark{
+func (b *LegacyBookmark) NewBookmark() model.Bookmark {
+	return model.Bookmark{
 		Title:       b.Title,
 		URL:         b.URL,
 		Description: b.Comment,
