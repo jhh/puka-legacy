@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	session, err := mgo.Dial("localhost")
+	session, err := mgo.Dial(os.Getenv("MONGODB_URI"))
 	if err != nil {
 		log.Fatalln("FATAL", err)
 	}
