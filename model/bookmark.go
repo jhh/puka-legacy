@@ -1,20 +1,35 @@
 package model
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
 	"gopkg.in/mgo.v2/bson"
 )
 
-// Bookmark stores a bookmark.
+// Bookmark represents a bookmark.
 type Bookmark struct {
-	ID          bson.ObjectId `bson:"_id,omitempty"`
-	Title       string
-	URL         string
-	Description string `bson:",omitempty"`
-	Timestamp   time.Time
-	Tags        []string
+	ID          bson.ObjectId `json:"-" bson:"_id,omitempty"`
+	Title       string        `json:"title"`
+	URL         string        `json:"url"`
+	Description string        `json:"description" bson:",omitempty"`
+	Timestamp   time.Time     `json:"timestamp"`
+	Tags        []string      `json:"tags"`
+}
+
+// GetID to satisfy jsonapi.MarshalIdentifier interface
+func (b Bookmark) GetID() string {
+	return b.ID.Hex()
+}
+
+// SetID to satisfy jsonapi.UnmarshalIdentifier interface
+func (b *Bookmark) SetID(id string) error {
+	if bson.IsObjectIdHex(id) {
+		b.ID = bson.ObjectIdHex(id)
+		return nil
+	}
+	return errors.New("can't convert \"" + id + "\" to ObjectId")
 }
 
 func (b Bookmark) String() string {

@@ -9,6 +9,8 @@ import (
 	"github.com/jhh/puka/model"
 
 	"gopkg.in/mgo.v2"
+
+	"github.com/manyminds/api2go/jsonapi"
 )
 
 func main() {
@@ -93,5 +95,9 @@ func PrintOne(c *cli.Context) {
 		log.Println("DEBUG", c.GlobalString("url"), c.GlobalString("database"), c.GlobalString("collection"))
 		log.Fatalln("FATAL", err)
 	}
-	fmt.Println(result)
+	json, err := jsonapi.Marshal(result)
+	if err != nil {
+		log.Fatalln("FATAL", err)
+	}
+	fmt.Println(string(json))
 }
