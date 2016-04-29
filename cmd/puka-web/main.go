@@ -5,25 +5,31 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
-	"gopkg.in/mgo.v2"
+	"github.com/jhh/puka/model"
+	"github.com/jhh/puka/resource"
+	"github.com/jhh/puka/storage"
+	"github.com/julienschmidt/httprouter"
+	"github.com/manyminds/api2go"
+	"github.com/manyminds/api2go/examples/resolver"
 )
 
 func main() {
-	session, err := mgo.Dial(os.Getenv("MONGODB_URI"))
+	port, err := strconv.Atoi(os.Getenv("PORT"))
 	if err != nil {
-		log.Fatalln(err)
-	}
-	defer session.Close()
-
-	p := os.Getenv("PORT")
-	if p == "" {
 		log.Fatal("$PORT must be set")
 	}
+	api := api2go.NewAPIWithResolver("v0", &resolver.RequestURL{Port: port})
+	bookmarkStorage := storage.NewBookmarkMemoryStorage()
+	api.AddResource(model.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bookmarkStorage})
 
-	http.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "pong")
+	fmt.Printf("Listening on :%d", port)
+	handler := api.Handler().(*httprouter.Router)
+	// It is also possible to get the instance of julienschmidt/httprouter and add more custom routes!
+	handler.GET("/hello-world", func(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+		fmt.Fprint(w, "Hello World!\n")
 	})
 
-	log.Fatal(http.ListenAndServe(":"+p, nil))
+	http.ListenAndServe(fmt.Sprintf(":%d", port), handler)
 }
