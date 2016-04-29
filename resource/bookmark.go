@@ -73,5 +73,5 @@ func (s BookmarkResource) Update(obj interface{}, r api2go.Request) (api2go.Resp
 		return &Response{}, api2go.NewHTTPError(err, err.Error(), http.StatusInternalServerError)
 	}
 
-	return &Response{Res: bookmark, Code: http.StatusCreated}, nil
+	return &Response{Res: bookmark, Code: http.StatusOK}, nil
 }
