@@ -63,6 +63,15 @@ GET /v0/bookmarks
 }
 ```
 
+## Getting Started
+
+The $PORT environment variable must be set.
+
+```
+$ go install ./cmd/puka-web
+$ env PORT=8080 puka-web
+```
+
 [golang]: https://golang.org/
 [api2go]: https://github.com/manyminds/api2go
 [jsonapi]: http://jsonapi.org/
