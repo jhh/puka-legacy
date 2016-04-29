@@ -33,7 +33,9 @@ func (b *Bookmark) SetID(id string) error {
 }
 
 func (b Bookmark) String() string {
-	return fmt.Sprintln("Title:", b.Title,
+	return fmt.Sprintln(
+		"ID:", b.GetID(),
+		"Title:", b.Title,
 		"URL:", b.URL,
 		"Description:", b.Description,
 		"Date:", b.Timestamp.Format(time.UnixDate),
