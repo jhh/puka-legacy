@@ -19,12 +19,25 @@ func TestCRUD(t *testing.T) {
 	api := api2go.NewAPIWithBaseURL("v0", "http://localhost:31415")
 	bookmarkStorage := storage.NewBookmarkMemoryStorage()
 	api.AddResource(model.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bookmarkStorage})
+
+	////////////////////////////////////////////////////////////////////////
+	// GET Collection
+	////////////////////////////////////////////////////////////////////////
 	rec := httptest.NewRecorder()
+	req, err := http.NewRequest("GET", "/v0/bookmarks", nil)
+	if err != nil {
+		t.Error(err)
+	}
+	api.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Errorf("http status = %d; want: %d", rec.Code, http.StatusOK)
+	}
 
 	////////////////////////////////////////////////////////////////////////
 	// POST
 	////////////////////////////////////////////////////////////////////////
-	req, err := http.NewRequest("POST", "/v0/bookmarks", strings.NewReader(`
+	rec = httptest.NewRecorder()
+	req, err = http.NewRequest("POST", "/v0/bookmarks", strings.NewReader(`
 		{
 			"data": {
 				"type": "bookmarks",
@@ -40,7 +53,7 @@ func TestCRUD(t *testing.T) {
 
 	api.Handler().ServeHTTP(rec, req)
 	if rec.Code != http.StatusCreated {
-		t.Errorf("expected %d, got: %d", http.StatusCreated, rec.Code)
+		t.Errorf("http status = %d; want: %d", rec.Code, http.StatusCreated)
 	}
 
 	js, err := simplejson.NewJson(rec.Body.Bytes())
@@ -51,17 +64,17 @@ func TestCRUD(t *testing.T) {
 	data := js.Get("data")
 	typ := data.Get("type").MustString()
 	if typ != "bookmarks" {
-		t.Errorf("expected: %q, got: %q", "foo", typ)
+		t.Errorf("type = %q; want: %q", typ, "foo")
 	}
 
 	id := data.Get("id").MustString()
 	if !bson.IsObjectIdHex(id) {
-		t.Errorf("expected id to be ObjectId, got: %q", id)
+		t.Errorf("id = %q is not ObjectId", id)
 	}
 
 	title := data.Get("attributes").Get("title").MustString()
 	if title != "foo" {
-		t.Errorf("expected: %q, got: %q", "foo", title)
+		t.Errorf("title = %q; want: %q", title, "foo")
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -74,7 +87,7 @@ func TestCRUD(t *testing.T) {
 	}
 	api.Handler().ServeHTTP(rec, req)
 	if rec.Code != http.StatusOK {
-		t.Errorf("expected %d, got: %d", http.StatusOK, rec.Code)
+		t.Errorf("http status = %d; want: %d", rec.Code, http.StatusOK)
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -96,7 +109,7 @@ func TestCRUD(t *testing.T) {
 	}
 	api.Handler().ServeHTTP(rec, req)
 	if rec.Code != http.StatusOK {
-		t.Errorf("expected %d, got: %d", http.StatusOK, rec.Code)
+		t.Errorf("http status = %d; want: %d", rec.Code, http.StatusOK)
 	}
 
 	js, err = simplejson.NewJson(rec.Body.Bytes())
@@ -108,12 +121,12 @@ func TestCRUD(t *testing.T) {
 
 	nid := data.Get("id").MustString()
 	if nid != id {
-		t.Errorf("expected: %q, got: %q", id, nid)
+		t.Errorf("id = %q; want: %q", nid, id)
 	}
 
 	title = data.Get("attributes").Get("title").MustString()
 	if title != "bar" {
-		t.Errorf("expected: %q, got: %q", "bar", title)
+		t.Errorf("title = %q; want: %q", title, "bar")
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -126,7 +139,7 @@ func TestCRUD(t *testing.T) {
 	}
 	api.Handler().ServeHTTP(rec, req)
 	if rec.Code != http.StatusOK {
-		t.Errorf("expected %d, got: %d", http.StatusOK, rec.Code)
+		t.Errorf("http status = %d; want: %d", rec.Code, http.StatusOK)
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -139,7 +152,7 @@ func TestCRUD(t *testing.T) {
 	}
 	api.Handler().ServeHTTP(rec, req)
 	if rec.Code != http.StatusNoContent {
-		t.Errorf("expected %d, got: %d", http.StatusOK, rec.Code)
+		t.Errorf("http status = %d; want: %d", rec.Code, http.StatusOK)
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -152,7 +165,7 @@ func TestCRUD(t *testing.T) {
 	}
 	api.Handler().ServeHTTP(rec, req)
 	if rec.Code != http.StatusNotFound {
-		t.Errorf("expected %d, got: %d", http.StatusNotFound, rec.Code)
+		t.Errorf("http status = %d; want: %d", rec.Code, http.StatusNotFound)
 	}
 
 }
@@ -161,11 +174,11 @@ func TestCRUDErrors(t *testing.T) {
 	api := api2go.NewAPIWithBaseURL("v0", "http://localhost:31415")
 	bookmarkStorage := storage.NewBookmarkMemoryStorage()
 	api.AddResource(model.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bookmarkStorage})
-	rec := httptest.NewRecorder()
 
 	////////////////////////////////////////////////////////////////////////
 	// POST - wrong type in payload
 	////////////////////////////////////////////////////////////////////////
+	rec := httptest.NewRecorder()
 	req, err := http.NewRequest("POST", "/v0/bookmarks", strings.NewReader(`
 		{
 			"data": {
@@ -182,7 +195,21 @@ func TestCRUDErrors(t *testing.T) {
 
 	api.Handler().ServeHTTP(rec, req)
 	if rec.Code != http.StatusNotAcceptable {
-		t.Errorf("expected %d, got: %d", http.StatusNotAcceptable, rec.Code)
+		t.Errorf("http status = %d; want: %d", rec.Code, http.StatusNotAcceptable)
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	// DELETE - bookmark not found
+	////////////////////////////////////////////////////////////////////////
+	rec = httptest.NewRecorder()
+	nf := bson.NewObjectId().Hex()
+	req, err = http.NewRequest("DELETE", "/v0/bookmarks/"+nf, nil)
+	if err != nil {
+		t.Error(err)
+	}
+	api.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusNotFound {
+		t.Errorf("http status = %d; want: %d", rec.Code, http.StatusNotFound)
 	}
 
 }

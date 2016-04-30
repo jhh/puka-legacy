@@ -16,7 +16,7 @@ func TestGetID(t *testing.T) {
 	id := bson.NewObjectId()
 	b := Bookmark{ID: id}
 	if b.GetID() != id.Hex() {
-		t.Errorf("expected %q, got %q", id.Hex(), b.GetID())
+		t.Errorf("GetID() = %q; want: %q", b.GetID(), id.Hex())
 	}
 }
 
@@ -24,12 +24,12 @@ func TestSetID(t *testing.T) {
 	b := Bookmark{}
 	err := b.SetID("bogus id string")
 	if err == nil {
-		t.Error("expected error for bogus id string")
+		t.Error("err = nil")
 	}
 
 	err = b.SetID("")
 	if err == nil {
-		t.Error("expected error for empty id string")
+		t.Error("err = nil")
 	}
 
 	err = b.SetID(bson.NewObjectId().Hex())

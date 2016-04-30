@@ -9,6 +9,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 
 	"github.com/jhh/puka/model"
+	"github.com/jhh/puka/storage"
 	"github.com/manyminds/api2go"
 )
 
@@ -22,7 +23,7 @@ var bookmarks = map[string]*model.Bookmark{
 
 type MockStorage struct{}
 
-func (s MockStorage) GetAll() (map[string]*model.Bookmark, error) {
+func (s MockStorage) GetAll(_ storage.Query) (map[string]*model.Bookmark, error) {
 	return bookmarks, nil
 }
 
@@ -70,7 +71,7 @@ func TestDelete(t *testing.T) {
 	bmr := BookmarkResource{BookmarkStorage: &MockStorage{}}
 	response, _ := bmr.Delete(oid.Hex(), api2go.Request{})
 	if response.StatusCode() != http.StatusNoContent {
-		t.Errorf("expected %v, got %v", http.StatusNoContent, response.StatusCode())
+		t.Errorf("http status = %v; want: %v", response.StatusCode(), http.StatusNoContent)
 	}
 }
 
@@ -84,7 +85,7 @@ func TestUpdate(t *testing.T) {
 
 type ErrorStorage struct{}
 
-func (s ErrorStorage) GetAll() (map[string]*model.Bookmark, error) {
+func (s ErrorStorage) GetAll(_ storage.Query) (map[string]*model.Bookmark, error) {
 	return nil, errors.New("expected")
 }
 
@@ -157,7 +158,7 @@ func checkBookmark(r api2go.Responder) (bool, string) {
 	if bma, ok := result.([]model.Bookmark); ok {
 		bm := bma[0]
 		if bm.ID != oid {
-			return true, fmt.Sprintf("expected %v, got %v", oid, bm.ID)
+			return true, fmt.Sprintf("id = %v; wanted: %v", bm.ID, oid)
 		}
 	}
 	return false, ""
@@ -165,10 +166,10 @@ func checkBookmark(r api2go.Responder) (bool, string) {
 
 func checkError(r api2go.Responder, err error) (bool, string) {
 	if res, ok := r.(*Response); !ok {
-		return true, fmt.Sprintf("expected %v, got: %v", &Response{}, res)
+		return true, fmt.Sprintf("res = %v; want: %v", res, &Response{})
 	}
 	if err == nil {
-		return true, fmt.Sprint("expected err to not be nil")
+		return true, fmt.Sprint("err = nil")
 	}
 	return false, ""
 }
