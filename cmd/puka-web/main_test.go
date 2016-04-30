@@ -156,3 +156,33 @@ func TestCRUD(t *testing.T) {
 	}
 
 }
+
+func TestCRUDErrors(t *testing.T) {
+	api := api2go.NewAPIWithBaseURL("v0", "http://localhost:31415")
+	bookmarkStorage := storage.NewBookmarkMemoryStorage()
+	api.AddResource(model.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bookmarkStorage})
+	rec := httptest.NewRecorder()
+
+	////////////////////////////////////////////////////////////////////////
+	// POST - wrong type in payload
+	////////////////////////////////////////////////////////////////////////
+	req, err := http.NewRequest("POST", "/v0/bookmarks", strings.NewReader(`
+		{
+			"data": {
+				"type": "bogus",
+				"attributes": {
+					"title": "foo"
+				}
+			}
+		}
+		`))
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	api.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusNotAcceptable {
+		t.Errorf("expected %d, got: %d", http.StatusNotAcceptable, rec.Code)
+	}
+
+}
