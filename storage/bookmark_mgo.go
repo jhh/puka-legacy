@@ -29,9 +29,9 @@ func (s BookmarkMgoStorage) Close() {
 
 // GetAll returns the user map (because we need the ID as key too)
 func (s BookmarkMgoStorage) GetAll(q Query) ([]model.Bookmark, error) {
-	sess := s.session.Copy()
-	defer sess.Close()
-	c := sess.DB("").C("bookmarks")
+	session := s.session.Copy()
+	defer session.Close()
+	c := session.DB("").C("bookmarks")
 	iter := c.Find(q.Mgo()).Sort("-timestamp").Iter()
 	var result []model.Bookmark
 	err := iter.All(&result)
@@ -43,9 +43,15 @@ func (s BookmarkMgoStorage) GetAll(q Query) ([]model.Bookmark, error) {
 
 // GetOne user
 func (s BookmarkMgoStorage) GetOne(id string) (model.Bookmark, error) {
-	return model.Bookmark{}, nil
-	// errMessage := fmt.Sprintf("Bookmark for id %s not found", id)
-	// return model.Bookmark{}, api2go.NewHTTPError(errors.New(errMessage), errMessage, http.StatusNotFound)
+	session := s.session.Copy()
+	defer session.Close()
+	c := session.DB("").C("bookmarks")
+	var result model.Bookmark
+	err := c.FindId(bson.ObjectIdHex(id)).One(&result)
+	if err != nil {
+		return model.Bookmark{}, err
+	}
+	return result, nil
 }
 
 // Insert a user

@@ -12,7 +12,10 @@ import (
 	"github.com/manyminds/api2go"
 )
 
-var storage BookmarkMgoStorage
+var (
+	storage BookmarkMgoStorage
+	oid     string
+)
 
 func TestMain(m *testing.M) {
 	if os.Getenv("MONGODB_URI") == "" {
@@ -36,8 +39,8 @@ func TestGetAll(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	if len(r) == 0 {
-		t.Error("len = 0; want: > 0")
+	if len(r) != 1000 {
+		t.Errorf("len = %d; want: 1000", len(r))
 	}
 }
 
@@ -51,8 +54,18 @@ func TestGetAllWithTag(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	if len(r) == 0 {
-		t.Error("len = 0; want: > 0")
+	if len(r) != 370 {
+		t.Errorf("len = %d; want: 370", len(r))
+	}
+}
+
+func TestGetOne(t *testing.T) {
+	bm, err := storage.GetOne(oid)
+	if err != nil {
+		t.Error(err)
+	}
+	if bm.GetID() != oid {
+		t.Errorf("id = %q; want: %q", bm.GetID(), oid)
 	}
 }
 
@@ -92,4 +105,10 @@ func loadTestData() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	var bm model.Bookmark
+	err = col.Find(nil).One(&bm)
+	if err != nil {
+		log.Fatal(err)
+	}
+	oid = bm.GetID()
 }
