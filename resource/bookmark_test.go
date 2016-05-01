@@ -15,20 +15,20 @@ import (
 
 var oid = bson.NewObjectId()
 
-var bookmarks = map[string]*model.Bookmark{
-	oid.Hex(): &model.Bookmark{
+var bookmarks = []model.Bookmark{
+	model.Bookmark{
 		ID: oid,
 	},
 }
 
 type MockStorage struct{}
 
-func (s MockStorage) GetAll(_ storage.Query) (map[string]*model.Bookmark, error) {
+func (s MockStorage) GetAll(_ storage.Query) ([]model.Bookmark, error) {
 	return bookmarks, nil
 }
 
 func (s MockStorage) GetOne(id string) (model.Bookmark, error) {
-	return *bookmarks[id], nil
+	return bookmarks[0], nil
 }
 
 func (s MockStorage) Insert(b model.Bookmark) (bson.ObjectId, error) {
@@ -85,7 +85,7 @@ func TestUpdate(t *testing.T) {
 
 type ErrorStorage struct{}
 
-func (s ErrorStorage) GetAll(_ storage.Query) (map[string]*model.Bookmark, error) {
+func (s ErrorStorage) GetAll(_ storage.Query) ([]model.Bookmark, error) {
 	return nil, errors.New("expected")
 }
 

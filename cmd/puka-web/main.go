@@ -19,7 +19,11 @@ func main() {
 		log.Fatal("$PORT must be set")
 	}
 	api := api2go.NewAPI("v0")
-	bookmarkStorage := storage.NewBookmarkMemoryStorage()
+	bookmarkStorage, err := storage.NewBookmarkMgoStorage()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer bookmarkStorage.Close()
 	api.AddResource(model.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bookmarkStorage})
 
 	fmt.Printf("Listening on :%d", port)

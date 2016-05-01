@@ -18,15 +18,11 @@ type BookmarkResource struct {
 
 // FindAll satisfies api2go.FindAll interface
 func (s BookmarkResource) FindAll(r api2go.Request) (api2go.Responder, error) {
-	bookmarks, err := s.BookmarkStorage.GetAll()
+	bookmarks, err := s.BookmarkStorage.GetAll(storage.NewQuery(r))
 	if err != nil {
 		return &Response{}, api2go.NewHTTPError(err, err.Error(), http.StatusInternalServerError)
 	}
-	result := make([]model.Bookmark, 0, len(bookmarks))
-	for _, val := range bookmarks {
-		result = append(result, *val)
-	}
-	return &Response{Res: result, Code: http.StatusOK}, nil
+	return &Response{Res: bookmarks, Code: http.StatusOK}, nil
 }
 
 // FindOne satisfies api2go.CRUD interface
@@ -36,6 +32,12 @@ func (s BookmarkResource) FindOne(id string, r api2go.Request) (api2go.Responder
 		return &Response{}, api2go.NewHTTPError(err, err.Error(), http.StatusNotFound)
 	}
 	return &Response{Res: bookmark, Code: http.StatusOK}, nil
+}
+
+// PaginatedFindAll satisfies teh api2go.PaginatedFindAll interface
+func PaginatedFindAll(req api2go.Request) (uint, api2go.Responder, error) {
+	// total count, response, error
+	return 0, &Response{}, nil
 }
 
 // Create satisfies api2go.CRUD interface
@@ -57,7 +59,7 @@ func (s BookmarkResource) Create(obj interface{}, r api2go.Request) (api2go.Resp
 // Delete satisfies api2go.CRUD interface
 func (s BookmarkResource) Delete(id string, r api2go.Request) (api2go.Responder, error) {
 	if err := s.BookmarkStorage.Delete(id); err != nil {
-		return &Response{}, api2go.NewHTTPError(err, err.Error(), http.StatusInternalServerError)
+		return &Response{}, api2go.NewHTTPError(err, err.Error(), http.StatusNotFound)
 	}
 	return &Response{Code: http.StatusNoContent}, nil
 }

@@ -22,8 +22,12 @@ type BookmarkMemoryStorage struct {
 }
 
 // GetAll returns the user map (because we need the ID as key too)
-func (s BookmarkMemoryStorage) GetAll() (map[string]*model.Bookmark, error) {
-	return s.bookmarks, nil
+func (s BookmarkMemoryStorage) GetAll(q Query) ([]model.Bookmark, error) {
+	result := make([]model.Bookmark, 0, len(s.bookmarks))
+	for _, val := range s.bookmarks {
+		result = append(result, *val)
+	}
+	return result, nil
 }
 
 // GetOne user
