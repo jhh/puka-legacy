@@ -1,9 +1,13 @@
 package main
 
 import (
+	"compress/gzip"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
+	"path"
 
 	"github.com/codegangsta/cli"
 	"github.com/jhh/puka/model"
@@ -47,6 +51,11 @@ func main() {
 			Name:   "bookmark",
 			Usage:  "print one bookmark",
 			Action: PrintOne,
+		},
+		{
+			Name:   "testdb",
+			Usage:  "upload test data to db",
+			Action: TestUpload,
 		},
 	}
 	app.Action = func(c *cli.Context) {
@@ -100,4 +109,46 @@ func PrintOne(c *cli.Context) {
 		log.Fatalln("FATAL", err)
 	}
 	fmt.Println(string(json))
+}
+
+// TestUpload uploads test data.
+func TestUpload(c *cli.Context) {
+	fi, err := os.Open(path.Join(os.Getenv("GOPATH"), "src/github.com/jhh/puka/storage/testdata/bookmarks.json.gz"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer fi.Close()
+	gz, err := gzip.NewReader(fi)
+	if err != nil {
+		log.Fatal(err)
+	}
+	b, err := ioutil.ReadAll(gz)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var bookmarks []model.Bookmark
+	err = json.Unmarshal(b, &bookmarks)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	session, err := mgo.Dial(c.GlobalString("url"))
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer session.Close()
+
+	col := session.DB(c.GlobalString("database")).C(c.GlobalString("collection"))
+	err = col.DropCollection()
+	if err != nil {
+		log.Println(err)
+	}
+	bulk := col.Bulk()
+	for _, bm := range bookmarks {
+		bulk.Insert(bm)
+	}
+	_, err = bulk.Run()
+	if err != nil {
+		log.Fatal(err)
+	}
 }
