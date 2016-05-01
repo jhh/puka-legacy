@@ -7,6 +7,39 @@
 	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/bitly/go-simplejson",
+			"Comment": "v0.5.0",
+			"Rev": "aabad6e819789e569bd6aabf444c935aa9ba1e44"
+		},
+		{
+			"ImportPath": "github.com/gedex/inflector",
+			"Rev": "91797f1712fd58f224781be1080b8613d096187e"
+		},
+		{
+			"ImportPath": "github.com/julienschmidt/httprouter",
+			"Comment": "v1.1-29-g77366a4",
+			"Rev": "77366a47451a56bb3ba682481eed85b64fea14e8"
+		},
+		{
+			"ImportPath": "github.com/manyminds/api2go",
+			"Comment": "1.0-RC1-30-g0f0aba6",
+			"Rev": "0f0aba686fffe91897ee4b7e1d682efbfcbac7fd"
+		},
+		{
+			"ImportPath": "github.com/manyminds/api2go/jsonapi",
+			"Comment": "1.0-RC1-30-g0f0aba6",
+			"Rev": "0f0aba686fffe91897ee4b7e1d682efbfcbac7fd"
+		},
+		{
+			"ImportPath": "github.com/manyminds/api2go/routing",
+			"Comment": "1.0-RC1-30-g0f0aba6",
+			"Rev": "0f0aba686fffe91897ee4b7e1d682efbfcbac7fd"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "1aafd77e1e7f6849ad16a7bdeb65e3589a10b2bb"
+		},
+		{
 			"ImportPath": "gopkg.in/mgo.v2",
 			"Comment": "r2016.02.04-1-gb6e2fa3",
 			"Rev": "b6e2fa371e64216a45e61072a96d4e3859f169da"
