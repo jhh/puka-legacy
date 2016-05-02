@@ -3,6 +3,7 @@ package storage
 import (
 	"compress/gzip"
 	"encoding/json"
+	"flag"
 	"io/ioutil"
 	"log"
 	"os"
@@ -22,6 +23,11 @@ var (
 )
 
 func TestMain(m *testing.M) {
+	flag.Parse()
+	if testing.Short() {
+		log.Println("Skipping BookmarkMgoStorage tests...")
+		os.Exit(0)
+	}
 	if os.Getenv("MONGODB_URI") == "" {
 		if err := os.Setenv("MONGODB_URI", "mongodb://localhost/test"); err != nil {
 			log.Fatal(err)
