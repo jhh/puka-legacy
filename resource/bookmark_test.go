@@ -27,6 +27,10 @@ func (s MockStorage) GetAll(_ storage.Query) ([]model.Bookmark, error) {
 	return bookmarks, nil
 }
 
+func (s MockStorage) Count(_ storage.Query) (int, error) {
+	return len(bookmarks), nil
+}
+
 func (s MockStorage) GetOne(id string) (model.Bookmark, error) {
 	return bookmarks[0], nil
 }
@@ -88,6 +92,10 @@ type ErrorStorage struct{}
 
 func (s ErrorStorage) GetAll(_ storage.Query) ([]model.Bookmark, error) {
 	return nil, errors.New("expected")
+}
+
+func (s ErrorStorage) Count(_ storage.Query) (int, error) {
+	return 0, errors.New("expected")
 }
 
 func (s ErrorStorage) GetOne(id string) (model.Bookmark, error) {

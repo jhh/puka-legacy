@@ -24,23 +24,24 @@ var (
 
 func TestMain(m *testing.M) {
 	flag.Parse()
+	code := 0
 	if testing.Short() {
-		log.Println("Skipping BookmarkMgoStorage tests...")
-		os.Exit(0)
-	}
-	if os.Getenv("MONGODB_URI") == "" {
-		if err := os.Setenv("MONGODB_URI", "mongodb://localhost/test"); err != nil {
+		code = m.Run()
+	} else {
+		if os.Getenv("MONGODB_URI") == "" {
+			if err := os.Setenv("MONGODB_URI", "mongodb://localhost/test"); err != nil {
+				log.Fatal(err)
+			}
+		}
+		var err error
+		storage, err = NewBookmarkMgoStorage()
+		if err != nil {
 			log.Fatal(err)
 		}
+		loadTestData()
+		code = m.Run()
+		storage.Close()
 	}
-	var err error
-	storage, err = NewBookmarkMgoStorage()
-	if err != nil {
-		log.Fatal(err)
-	}
-	loadTestData()
-	code := m.Run()
-	storage.Close()
 	os.Exit(code)
 }
 
@@ -52,6 +53,9 @@ func TestMgoInterface(t *testing.T) {
 }
 
 func TestGetAll(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping test in short mode.")
+	}
 	r, err := storage.GetAll(Query{})
 	if err != nil {
 		t.Error(err)
@@ -62,6 +66,9 @@ func TestGetAll(t *testing.T) {
 }
 
 func TestGetAllWithTag(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping test in short mode.")
+	}
 	req := api2go.Request{
 		QueryParams: map[string][]string{
 			"filter[tag]": []string{"go"},
@@ -76,7 +83,28 @@ func TestGetAllWithTag(t *testing.T) {
 	}
 }
 
+func TestMgoCount(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping test in short mode.")
+	}
+	req := api2go.Request{
+		QueryParams: map[string][]string{
+			"filter[tag]": []string{"ruby"},
+		},
+	}
+	n, err := storage.Count(NewQuery(req))
+	if err != nil {
+		t.Error(err)
+	}
+	if n != 417 {
+		t.Errorf("len = %d; want: 417", n)
+	}
+}
+
 func TestGetOne(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping test in short mode.")
+	}
 	bm, err := storage.GetOne(oid)
 	if err != nil {
 		t.Error(err)
@@ -87,6 +115,9 @@ func TestGetOne(t *testing.T) {
 }
 
 func TestInsert(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping test in short mode.")
+	}
 	bookmark := model.Bookmark{
 		Title:       "Test Title",
 		URL:         "http://example.com/testing",
@@ -112,6 +143,9 @@ func TestInsert(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping test in short mode.")
+	}
 	id := bson.NewObjectId()
 	bookmark := model.Bookmark{ID: id}
 
@@ -133,6 +167,9 @@ func TestDelete(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping test in short mode.")
+	}
 	id := bson.NewObjectId()
 	bookmark := model.Bookmark{ID: id}
 

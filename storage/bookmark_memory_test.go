@@ -8,3 +8,10 @@ func TestMemoryInterface(t *testing.T) {
 		t.Errorf("%v does not implement BookmarkStorage", inty)
 	}
 }
+
+func TestCount(t *testing.T) {
+	bms := NewBookmarkMemoryStorage()
+	if n, _ := bms.Count(Query{}); n != 11 {
+		t.Errorf("bookmark count = %d; want: 11", n)
+	}
+}

@@ -38,13 +38,19 @@ type BookmarkMemoryStorage struct {
 	bookmarks map[string]*model.Bookmark
 }
 
-// GetAll returns the user map (because we need the ID as key too)
+// GetAll returns the user map. . WARNING: ignores query.
 func (s BookmarkMemoryStorage) GetAll(q Query) ([]model.Bookmark, error) {
 	result := make([]model.Bookmark, 0, len(s.bookmarks))
 	for _, val := range s.bookmarks {
 		result = append(result, *val)
 	}
 	return result, nil
+}
+
+// Count returns total number of bookmarks. WARNING: ignores query.
+func (s BookmarkMemoryStorage) Count(q Query) (int, error) {
+	fmt.Println("LEN", len(s.bookmarks))
+	return len(s.bookmarks), nil
 }
 
 // GetOne user

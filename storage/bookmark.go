@@ -7,6 +7,9 @@ type BookmarkStorage interface {
 	// GetAll returns bookmarks specified by query in decending date order.
 	GetAll(q Query) ([]model.Bookmark, error)
 
+	// Count returns the total number of bookmarks specified by query.
+	Count(q Query) (int, error)
+
 	// GetOne returns the bookmark with the specified id
 	GetOne(id string) (model.Bookmark, error)
 

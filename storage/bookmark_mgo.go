@@ -28,7 +28,7 @@ func (s BookmarkMgoStorage) Close() {
 	s.session.Close()
 }
 
-// GetAll returns the user map (because we need the ID as key too)
+// GetAll returns the bookmarks specified by query.
 func (s BookmarkMgoStorage) GetAll(q Query) ([]model.Bookmark, error) {
 	session := s.session.Copy()
 	defer session.Close()
@@ -40,6 +40,15 @@ func (s BookmarkMgoStorage) GetAll(q Query) ([]model.Bookmark, error) {
 		return nil, err
 	}
 	return result, nil
+}
+
+// Count returns the total number of bookmarks specified by query.
+func (s BookmarkMgoStorage) Count(q Query) (int, error) {
+	session := s.session.Copy()
+	defer session.Close()
+	c := session.DB("").C("bookmarks")
+	n, err := c.Find(q.Mgo()).Count()
+	return n, err
 }
 
 // GetOne user
