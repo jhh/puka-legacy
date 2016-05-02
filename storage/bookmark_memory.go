@@ -41,11 +41,11 @@ func (s BookmarkMemoryStorage) GetOne(id string) (model.Bookmark, error) {
 }
 
 // Insert a user
-func (s BookmarkMemoryStorage) Insert(b model.Bookmark) (bson.ObjectId, error) {
+func (s BookmarkMemoryStorage) Insert(b *model.Bookmark) error {
 	id := bson.NewObjectId()
 	b.ID = id
-	s.bookmarks[id.Hex()] = &b
-	return id, nil
+	s.bookmarks[id.Hex()] = b
+	return nil
 }
 
 // Delete one :(
@@ -60,12 +60,12 @@ func (s BookmarkMemoryStorage) Delete(id string) error {
 }
 
 // Update a user
-func (s BookmarkMemoryStorage) Update(b model.Bookmark) error {
+func (s BookmarkMemoryStorage) Update(b *model.Bookmark) error {
 	_, exists := s.bookmarks[b.ID.Hex()]
 	if !exists {
 		return fmt.Errorf("Bookmark with id %s does not exist", b.ID)
 	}
-	s.bookmarks[b.ID.Hex()] = &b
+	s.bookmarks[b.ID.Hex()] = b
 
 	return nil
 }

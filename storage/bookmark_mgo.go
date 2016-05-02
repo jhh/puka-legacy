@@ -2,6 +2,7 @@ package storage
 
 import (
 	"os"
+	"time"
 
 	"github.com/jhh/puka/model"
 	"gopkg.in/mgo.v2"
@@ -54,19 +55,37 @@ func (s BookmarkMgoStorage) GetOne(id string) (model.Bookmark, error) {
 	return result, nil
 }
 
-// Insert a user
-func (s BookmarkMgoStorage) Insert(b model.Bookmark) (bson.ObjectId, error) {
+// Insert a user and set Timestamp to insert time if not already set.
+func (s BookmarkMgoStorage) Insert(b *model.Bookmark) error {
 	id := bson.NewObjectId()
 	b.ID = id
-	return id, nil
+
+	if b.Timestamp.IsZero() {
+		b.Timestamp = time.Now()
+	}
+
+	session := s.session.Copy()
+	defer session.Close()
+	c := session.DB("").C("bookmarks")
+	err := c.Insert(b)
+	return err
 }
 
 // Delete one :(
 func (s BookmarkMgoStorage) Delete(id string) error {
-	return nil
+	session := s.session.Copy()
+	defer session.Close()
+	c := session.DB("").C("bookmarks")
+	err := c.RemoveId(bson.ObjectIdHex(id))
+	return err
 }
 
-// Update a user
-func (s BookmarkMgoStorage) Update(b model.Bookmark) error {
-	return nil
+// Update a user and updates Timestamp.
+func (s BookmarkMgoStorage) Update(b *model.Bookmark) error {
+	session := s.session.Copy()
+	defer session.Close()
+	c := session.DB("").C("bookmarks")
+	b.Timestamp = time.Now()
+	err := c.UpdateId(b.ID, b)
+	return err
 }

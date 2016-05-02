@@ -31,15 +31,16 @@ func (s MockStorage) GetOne(id string) (model.Bookmark, error) {
 	return bookmarks[0], nil
 }
 
-func (s MockStorage) Insert(b model.Bookmark) (bson.ObjectId, error) {
-	return oid, nil
+func (s MockStorage) Insert(b *model.Bookmark) error {
+	b.ID = oid
+	return nil
 }
 
 func (s MockStorage) Delete(id string) error {
 	return nil
 }
 
-func (s MockStorage) Update(b model.Bookmark) error {
+func (s MockStorage) Update(b *model.Bookmark) error {
 	return nil
 }
 
@@ -93,15 +94,15 @@ func (s ErrorStorage) GetOne(id string) (model.Bookmark, error) {
 	return model.Bookmark{}, errors.New("expected")
 }
 
-func (s ErrorStorage) Insert(b model.Bookmark) (bson.ObjectId, error) {
-	return "", errors.New("expected")
+func (s ErrorStorage) Insert(b *model.Bookmark) error {
+	return errors.New("expected")
 }
 
 func (s ErrorStorage) Delete(id string) error {
 	return errors.New("expected")
 }
 
-func (s ErrorStorage) Update(b model.Bookmark) error {
+func (s ErrorStorage) Update(b *model.Bookmark) error {
 	return errors.New("expected")
 }
 

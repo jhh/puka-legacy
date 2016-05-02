@@ -1,10 +1,14 @@
 package main
 
 import (
+	"log"
+	"math/rand"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"strings"
 	"testing"
+	"time"
 
 	"gopkg.in/mgo.v2/bson"
 
@@ -15,14 +19,35 @@ import (
 	"github.com/manyminds/api2go"
 )
 
-func TestCRUD(t *testing.T) {
-	api := api2go.NewAPIWithBaseURL("v0", "http://localhost:31415")
-	bookmarkStorage := storage.NewBookmarkMemoryStorage()
-	api.AddResource(model.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bookmarkStorage})
+var (
+	api      *api2go.API
+	bookmark model.Bookmark
+)
 
-	////////////////////////////////////////////////////////////////////////
-	// GET Collection
-	////////////////////////////////////////////////////////////////////////
+func TestMain(m *testing.M) {
+	if os.Getenv("MONGODB_URI") == "" {
+		if err := os.Setenv("MONGODB_URI", "mongodb://localhost/test"); err != nil {
+			log.Fatal(err)
+		}
+	}
+	var err error
+	bms, err := storage.NewBookmarkMgoStorage()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer bms.Close()
+	api = api2go.NewAPIWithBaseURL("v0", "http://localhost:31415")
+	api.AddResource(model.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bms})
+	bookmarks, err := bms.GetAll(storage.Query{})
+	if err != nil {
+		log.Fatal(err)
+	}
+	rand.Seed(time.Now().UnixNano())
+	bookmark = bookmarks[rand.Intn(len(bookmarks))]
+	os.Exit(m.Run())
+}
+
+func TestGetAll(t *testing.T) {
 	rec := httptest.NewRecorder()
 	req, err := http.NewRequest("GET", "/v0/bookmarks", nil)
 	if err != nil {
@@ -32,21 +57,20 @@ func TestCRUD(t *testing.T) {
 	if rec.Code != http.StatusOK {
 		t.Errorf("http status = %d; want: %d", rec.Code, http.StatusOK)
 	}
+}
 
-	////////////////////////////////////////////////////////////////////////
-	// POST
-	////////////////////////////////////////////////////////////////////////
-	rec = httptest.NewRecorder()
-	req, err = http.NewRequest("POST", "/v0/bookmarks", strings.NewReader(`
+func TestCreate(t *testing.T) {
+	rec := httptest.NewRecorder()
+	req, err := http.NewRequest("POST", "/v0/bookmarks", strings.NewReader(`
 		{
 			"data": {
 				"type": "bookmarks",
 				"attributes": {
-					"title": "foo"
+				"title": "foo"
 				}
 			}
 		}
-		`))
+	`))
 	if err != nil {
 		t.Error(err)
 	}
@@ -77,11 +101,9 @@ func TestCRUD(t *testing.T) {
 		t.Errorf("title = %q; want: %q", title, "foo")
 	}
 
-	////////////////////////////////////////////////////////////////////////
-	// GET Collection
-	////////////////////////////////////////////////////////////////////////
+	//Fetch again and compare
 	rec = httptest.NewRecorder()
-	req, err = http.NewRequest("GET", "/v0/bookmarks", nil)
+	req, err = http.NewRequest("GET", "/v0/bookmarks/"+id, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -89,12 +111,22 @@ func TestCRUD(t *testing.T) {
 	if rec.Code != http.StatusOK {
 		t.Errorf("http status = %d; want: %d", rec.Code, http.StatusOK)
 	}
+	js, err = simplejson.NewJson(rec.Body.Bytes())
+	if err != nil {
+		t.Error(err)
+	}
+	data = js.Get("data")
+	title = data.Get("attributes").Get("title").MustString()
+	if title != "foo" {
+		t.Errorf("title = %q; want: %q", title, "foo")
+	}
 
-	////////////////////////////////////////////////////////////////////////
-	// PATCH
-	////////////////////////////////////////////////////////////////////////
-	rec = httptest.NewRecorder()
-	req, err = http.NewRequest("PATCH", "/v0/bookmarks/"+id, strings.NewReader(`
+}
+
+func TestPatch(t *testing.T) {
+	rec := httptest.NewRecorder()
+	id := bookmark.GetID()
+	req, err := http.NewRequest("PATCH", "/v0/bookmarks/"+id, strings.NewReader(`
 		{
 			"data": {
 				"type": "bookmarks",
@@ -112,26 +144,24 @@ func TestCRUD(t *testing.T) {
 		t.Errorf("http status = %d; want: %d", rec.Code, http.StatusOK)
 	}
 
-	js, err = simplejson.NewJson(rec.Body.Bytes())
+	js, err := simplejson.NewJson(rec.Body.Bytes())
 	if err != nil {
 		t.Error(err)
 	}
 
-	data = js.Get("data")
+	data := js.Get("data")
 
 	nid := data.Get("id").MustString()
 	if nid != id {
 		t.Errorf("id = %q; want: %q", nid, id)
 	}
 
-	title = data.Get("attributes").Get("title").MustString()
+	title := data.Get("attributes").Get("title").MustString()
 	if title != "bar" {
 		t.Errorf("title = %q; want: %q", title, "bar")
 	}
 
-	////////////////////////////////////////////////////////////////////////
-	// GET One
-	////////////////////////////////////////////////////////////////////////
+	//Fetch again and compare
 	rec = httptest.NewRecorder()
 	req, err = http.NewRequest("GET", "/v0/bookmarks/"+id, nil)
 	if err != nil {
@@ -141,10 +171,47 @@ func TestCRUD(t *testing.T) {
 	if rec.Code != http.StatusOK {
 		t.Errorf("http status = %d; want: %d", rec.Code, http.StatusOK)
 	}
+	js, err = simplejson.NewJson(rec.Body.Bytes())
+	if err != nil {
+		t.Error(err)
+	}
+	data = js.Get("data")
+	title = data.Get("attributes").Get("title").MustString()
+	if title != "bar" {
+		t.Errorf("title = %q; want: %q", title, "bar")
+	}
+}
 
-	////////////////////////////////////////////////////////////////////////
-	// DELETE
-	////////////////////////////////////////////////////////////////////////
+func TestDelete(t *testing.T) {
+	// Create bookmark to delete
+	rec := httptest.NewRecorder()
+	req, err := http.NewRequest("POST", "/v0/bookmarks", strings.NewReader(`
+		{
+			"data": {
+				"type": "bookmarks"
+			}
+		}
+	`))
+	if err != nil {
+		t.Error(err)
+	}
+
+	api.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusCreated {
+		t.Errorf("http status = %d; want: %d", rec.Code, http.StatusCreated)
+	}
+
+	js, err := simplejson.NewJson(rec.Body.Bytes())
+	if err != nil {
+		t.Error(err)
+	}
+
+	id := js.Get("data").Get("id").MustString()
+	if !bson.IsObjectIdHex(id) {
+		t.Errorf("id = %q is not ObjectId", id)
+	}
+
+	// Now delete bookmark with id from above
 	rec = httptest.NewRecorder()
 	req, err = http.NewRequest("DELETE", "/v0/bookmarks/"+id, nil)
 	if err != nil {
@@ -155,9 +222,7 @@ func TestCRUD(t *testing.T) {
 		t.Errorf("http status = %d; want: %d", rec.Code, http.StatusOK)
 	}
 
-	////////////////////////////////////////////////////////////////////////
-	// GET One
-	////////////////////////////////////////////////////////////////////////
+	// Should be really gone
 	rec = httptest.NewRecorder()
 	req, err = http.NewRequest("GET", "/v0/bookmarks/"+id, nil)
 	if err != nil {
@@ -167,25 +232,18 @@ func TestCRUD(t *testing.T) {
 	if rec.Code != http.StatusNotFound {
 		t.Errorf("http status = %d; want: %d", rec.Code, http.StatusNotFound)
 	}
-
+	js, err = simplejson.NewJson(rec.Body.Bytes())
+	if err != nil {
+		t.Error(err)
+	}
 }
 
-func TestCRUDErrors(t *testing.T) {
-	api := api2go.NewAPIWithBaseURL("v0", "http://localhost:31415")
-	bookmarkStorage := storage.NewBookmarkMemoryStorage()
-	api.AddResource(model.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bookmarkStorage})
-
-	////////////////////////////////////////////////////////////////////////
-	// POST - wrong type in payload
-	////////////////////////////////////////////////////////////////////////
+func TestTypeError(t *testing.T) {
 	rec := httptest.NewRecorder()
 	req, err := http.NewRequest("POST", "/v0/bookmarks", strings.NewReader(`
 		{
 			"data": {
-				"type": "bogus",
-				"attributes": {
-					"title": "foo"
-				}
+				"type": "bogus"
 			}
 		}
 		`))
@@ -197,13 +255,12 @@ func TestCRUDErrors(t *testing.T) {
 	if rec.Code != http.StatusNotAcceptable {
 		t.Errorf("http status = %d; want: %d", rec.Code, http.StatusNotAcceptable)
 	}
+}
 
-	////////////////////////////////////////////////////////////////////////
-	// DELETE - bookmark not found
-	////////////////////////////////////////////////////////////////////////
-	rec = httptest.NewRecorder()
+func TestDeleteNotFoundError(t *testing.T) {
+	rec := httptest.NewRecorder()
 	nf := bson.NewObjectId().Hex()
-	req, err = http.NewRequest("DELETE", "/v0/bookmarks/"+nf, nil)
+	req, err := http.NewRequest("DELETE", "/v0/bookmarks/"+nf, nil)
 	if err != nil {
 		t.Error(err)
 	}

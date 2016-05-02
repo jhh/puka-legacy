@@ -1,9 +1,6 @@
 package storage
 
-import (
-	"github.com/jhh/puka/model"
-	"gopkg.in/mgo.v2/bson"
-)
+import "github.com/jhh/puka/model"
 
 // BookmarkStorage abstracts database interactions.
 type BookmarkStorage interface {
@@ -14,11 +11,11 @@ type BookmarkStorage interface {
 	GetOne(id string) (model.Bookmark, error)
 
 	// Insert adds a bookmark to the database
-	Insert(b model.Bookmark) (bson.ObjectId, error)
+	Insert(b *model.Bookmark) error
 
 	// Delete removes a bookmark from the database
 	Delete(id string) error
 
 	// Update modifies an existing bookmark
-	Update(b model.Bookmark) error
+	Update(b *model.Bookmark) error
 }

@@ -47,11 +47,10 @@ func (s BookmarkResource) Create(obj interface{}, r api2go.Request) (api2go.Resp
 		return &Response{}, api2go.NewHTTPError(errors.New(typeErrMsg), typeErrMsg, http.StatusBadRequest)
 	}
 
-	id, err := s.BookmarkStorage.Insert(bookmark)
+	err := s.BookmarkStorage.Insert(&bookmark)
 	if err != nil {
 		return &Response{}, api2go.NewHTTPError(err, err.Error(), http.StatusInternalServerError)
 	}
-	bookmark.ID = id
 
 	return &Response{Res: bookmark, Code: http.StatusCreated}, nil
 }
@@ -71,7 +70,7 @@ func (s BookmarkResource) Update(obj interface{}, r api2go.Request) (api2go.Resp
 		return &Response{}, api2go.NewHTTPError(errors.New(typeErrMsg), typeErrMsg, http.StatusBadRequest)
 	}
 
-	if err := s.BookmarkStorage.Update(bookmark); err != nil {
+	if err := s.BookmarkStorage.Update(&bookmark); err != nil {
 		return &Response{}, api2go.NewHTTPError(err, err.Error(), http.StatusInternalServerError)
 	}
 
