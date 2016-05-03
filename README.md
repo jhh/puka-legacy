@@ -1,5 +1,7 @@
 # Puka
 
+[![Build Status](https://travis-ci.org/jhh/puka.svg?branch=master)](https://travis-ci.org/jhh/puka)
+
 This is the Puka API implemented in [Go][golang]. It relies on the
 [api2go][api2go] package for implementation of the [JSONAPI.org][jsonapi] json
 API spec and REST service. It uses MongoDB as a database. An in-memory storage
