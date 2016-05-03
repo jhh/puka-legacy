@@ -68,6 +68,7 @@ GET /v0/bookmarks
 The $PORT environment variable must be set.
 
 ```
+$ go get github.org/jhh/puka
 $ go install ./cmd/puka-web
 $ env PORT=8080 puka-web
 ```
