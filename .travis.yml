@@ -1,2 +1,2 @@
 language: go
-script: go test -short $(go find ./... | grep -v /vendor/)
+script: go test -short $(go list ./... | grep -v /vendor/)
