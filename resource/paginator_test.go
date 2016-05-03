@@ -15,6 +15,7 @@ var tests = []struct {
 	limit int
 	isErr bool
 }{
+	{"", "", "", "", 0, 0, true},
 	{"1", "0", "", "", 0, 0, false},
 	{"1", "2", "", "", 0, 2, false},
 	{"2", "2", "", "", 2, 2, false},
