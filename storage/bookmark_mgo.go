@@ -42,6 +42,20 @@ func (s BookmarkMgoStorage) GetAll(q Query) ([]model.Bookmark, error) {
 	return result, nil
 }
 
+// GetPage returns a portion of bookmarks specified by query.
+func (s BookmarkMgoStorage) GetPage(q Query, skip, limit int) ([]model.Bookmark, error) {
+	session := s.session.Copy()
+	defer session.Close()
+	c := session.DB("").C("bookmarks")
+	iter := c.Find(q.Mgo()).Sort("-timestamp").Skip(skip).Limit(limit).Iter()
+	var result []model.Bookmark
+	err := iter.All(&result)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 // Count returns the total number of bookmarks specified by query.
 func (s BookmarkMgoStorage) Count(q Query) (int, error) {
 	session := s.session.Copy()

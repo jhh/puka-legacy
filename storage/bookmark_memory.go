@@ -38,13 +38,18 @@ type BookmarkMemoryStorage struct {
 	bookmarks map[string]*model.Bookmark
 }
 
-// GetAll returns the user map. . WARNING: ignores query.
+// GetAll returns the user map. WARNING: ignores query.
 func (s BookmarkMemoryStorage) GetAll(q Query) ([]model.Bookmark, error) {
 	result := make([]model.Bookmark, 0, len(s.bookmarks))
 	for _, val := range s.bookmarks {
 		result = append(result, *val)
 	}
 	return result, nil
+}
+
+// GetPage returns a portion of bookmarks specified by query. WARNING: not implemented
+func (s BookmarkMemoryStorage) GetPage(q Query, skip, limit int) ([]model.Bookmark, error) {
+	return []model.Bookmark{}, errors.New("not implemented")
 }
 
 // Count returns total number of bookmarks. WARNING: ignores query.

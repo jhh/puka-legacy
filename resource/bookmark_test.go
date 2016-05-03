@@ -27,6 +27,10 @@ func (s MockStorage) GetAll(_ storage.Query) ([]model.Bookmark, error) {
 	return bookmarks, nil
 }
 
+func (s MockStorage) GetPage(_ storage.Query, skip, limit int) ([]model.Bookmark, error) {
+	return []model.Bookmark{}, errors.New("not implemented")
+}
+
 func (s MockStorage) Count(_ storage.Query) (int, error) {
 	return len(bookmarks), nil
 }
@@ -92,6 +96,10 @@ type ErrorStorage struct{}
 
 func (s ErrorStorage) GetAll(_ storage.Query) ([]model.Bookmark, error) {
 	return nil, errors.New("expected")
+}
+
+func (s ErrorStorage) GetPage(_ storage.Query, skip, limit int) ([]model.Bookmark, error) {
+	return []model.Bookmark{}, errors.New("not implemented")
 }
 
 func (s ErrorStorage) Count(_ storage.Query) (int, error) {
