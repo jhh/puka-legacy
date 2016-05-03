@@ -3,7 +3,6 @@ package resource
 import (
 	"errors"
 	"net/http"
-	"strconv"
 
 	"github.com/jhh/puka/model"
 	"github.com/jhh/puka/storage"
@@ -28,54 +27,16 @@ func (s BookmarkResource) FindAll(r api2go.Request) (api2go.Responder, error) {
 
 // PaginatedFindAll satisfies the api2go.PaginatedFindAll interface
 func (s BookmarkResource) PaginatedFindAll(req api2go.Request) (uint, api2go.Responder, error) {
-	var (
-		numberStr, sizeStr, offsetStr, limitStr string
-		skip, limit                             int
-	)
-
-	if numberQuery, ok := req.QueryParams["page[number]"]; ok {
-		numberStr = numberQuery[0]
+	p, err := NewPaginator(req)
+	if err != nil {
+		return 0, &Response{}, api2go.NewHTTPError(err, err.Error(), http.StatusBadRequest)
 	}
-	if sizeQuery, ok := req.QueryParams["page[size]"]; ok {
-		sizeStr = sizeQuery[0]
-	}
-	if offsetQuery, ok := req.QueryParams["page[offset]"]; ok {
-		offsetStr = offsetQuery[0]
-	}
-	if limitQuery, ok := req.QueryParams["page[limit]"]; ok {
-		limitStr = limitQuery[0]
-	}
-
-	if sizeStr != "" {
-		si, err := strconv.Atoi(sizeStr)
-		if err != nil {
-			return 0, &Response{}, err
-		}
-		ni, err := strconv.Atoi(numberStr)
-		if err != nil {
-			return 0, &Response{}, err
-		}
-		skip = si * (ni - 1)
-		limit = si
-
-	} else {
-		var err error
-		skip, err = strconv.Atoi(offsetStr)
-		if err != nil {
-			return 0, &Response{}, err
-		}
-		limit, err = strconv.Atoi(limitStr)
-		if err != nil {
-			return 0, &Response{}, err
-		}
-	}
-
 	q := storage.NewQuery(req)
 	count, err := s.BookmarkStorage.Count(q)
 	if err != nil {
-		return 0, &Response{}, err
+		return 0, &Response{}, api2go.NewHTTPError(err, err.Error(), http.StatusInternalServerError)
 	}
-	bookmarks, err := s.BookmarkStorage.GetPage(q, skip, limit)
+	bookmarks, err := s.BookmarkStorage.GetPage(q, p.Skip, p.Limit)
 	if err != nil {
 		return 0, &Response{}, err
 	}
