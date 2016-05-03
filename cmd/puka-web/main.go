@@ -18,7 +18,11 @@ func main() {
 	if err != nil {
 		log.Fatal("$PORT must be set")
 	}
-	api := api2go.NewAPI("v0")
+	baseURL := os.Getenv("BASE_URL")
+	if baseURL == "" {
+		log.Fatal("$BASE_URL must be set")
+	}
+	api := api2go.NewAPIWithBaseURL("v0", baseURL)
 	bookmarkStorage, err := storage.NewBookmarkMgoStorage()
 	if err != nil {
 		log.Fatal(err)
