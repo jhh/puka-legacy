@@ -40,12 +40,15 @@ func NewPaginator(r api2go.Request) (*Paginator, error) {
 		if err != nil {
 			return &Paginator{}, err
 		}
+		if limit < 0 {
+			return &Paginator{}, errors.New("page[size] must be >= 0")
+		}
 		var num int
 		num, err = strconv.Atoi(numberStr)
 		if err != nil {
 			return &Paginator{}, err
 		}
-		if num <= 0 {
+		if num < 1 {
 			return &Paginator{}, errors.New("page[number] must be > 0")
 		}
 		skip = limit * (num - 1)
@@ -56,9 +59,15 @@ func NewPaginator(r api2go.Request) (*Paginator, error) {
 		if err != nil {
 			return &Paginator{}, err
 		}
+		if skip < 0 {
+			return &Paginator{}, errors.New("page[offset] must be >= 0")
+		}
 		limit, err = strconv.Atoi(limitStr)
 		if err != nil {
 			return &Paginator{}, err
+		}
+		if limit < 0 {
+			return &Paginator{}, errors.New("page[limit] must be >= 0")
 		}
 	}
 
