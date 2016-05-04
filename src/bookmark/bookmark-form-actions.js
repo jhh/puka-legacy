@@ -40,9 +40,7 @@ export const saveBookmarkSuccess = (response) => ({
 export const saveBookmarkFailure = (reason) => ({
   type: c.SAVE_BOOKMARK_FAILURE,
   error: true,
-  payload: {
-    reason,
-  },
+  reason,
 });
 
 export const addBookmark = (tag, bookmark) => ({
@@ -79,17 +77,13 @@ export const submitBookmarkForm = () => (dispatch, getState) => {
   return api(PUKA_API_ENDPOINT, bookmarkForm)
     .then(response => {
       dispatch(saveBookmarkSuccess(response));
-      try {
         if (isUpdate) {
           processRemoveBookmark(dispatch, response);
         }
-        processAddBookmark(dispatch, response);
-        dispatch(resetBookmarkForm());
-        browserHistory.push('/');
-        return Promise.resolve(response);
-      } catch (e) {
-        return Promise.reject(`Error in actions.submitBookmarkForm: ${e.message}`);
-      }
+      processAddBookmark(dispatch, response);
+      dispatch(resetBookmarkForm());
+      browserHistory.push('/');
+      return Promise.resolve(response);
     })
     .catch(reason => dispatch(saveBookmarkFailure(reason)));
 };

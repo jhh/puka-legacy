@@ -18,7 +18,7 @@ function mapResponse(response) {
   }
   return Promise.resolve({
     entities: { bookmarks },
-    nextPage: response.links.next,
+    nextPage: response.links ? response.links.next : null,
   });
 }
 
@@ -45,7 +45,9 @@ export const saveBookmark = (endpoint, bookmark) => {
       attributes: bookmark,
     },
   };
-  body.data.attributes.tags = bookmark.tags.split(/\s*,\s*/);
+  if (typeof body.data.attributes.tags === 'string') {
+    body.data.attributes.tags = bookmark.tags.split(/\s*,\s*/);
+  }
   return fetch(endpoint, {
     method: bookmark.id ? 'PATCH' : 'POST',
     body: JSON.stringify(body),
