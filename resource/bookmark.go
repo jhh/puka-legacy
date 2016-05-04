@@ -18,7 +18,7 @@ type BookmarkResource struct {
 
 // FindAll satisfies api2go.FindAll interface
 func (s BookmarkResource) FindAll(r api2go.Request) (api2go.Responder, error) {
-	// check for middleware error
+	// check for authentication error set by middleware
 	if err, ok := r.Context.Get("error"); ok {
 		return &Response{}, err.(error)
 	}
@@ -31,7 +31,7 @@ func (s BookmarkResource) FindAll(r api2go.Request) (api2go.Responder, error) {
 
 // PaginatedFindAll satisfies the api2go.PaginatedFindAll interface
 func (s BookmarkResource) PaginatedFindAll(r api2go.Request) (uint, api2go.Responder, error) {
-	// check for middleware error
+	// check for authentication error set by middleware
 	if err, ok := r.Context.Get("error"); ok {
 		return 0, &Response{}, err.(error)
 	}
@@ -56,7 +56,7 @@ func (s BookmarkResource) PaginatedFindAll(r api2go.Request) (uint, api2go.Respo
 
 // FindOne satisfies api2go.CRUD interface
 func (s BookmarkResource) FindOne(id string, r api2go.Request) (api2go.Responder, error) {
-	// check for middleware error
+	// check for authentication error set by middleware
 	if err, ok := r.Context.Get("error"); ok {
 		return &Response{}, err.(error)
 	}
@@ -70,7 +70,7 @@ func (s BookmarkResource) FindOne(id string, r api2go.Request) (api2go.Responder
 
 // Create satisfies api2go.CRUD interface
 func (s BookmarkResource) Create(obj interface{}, r api2go.Request) (api2go.Responder, error) {
-	// check for middleware error
+	// check for authentication error set by middleware
 	if err, ok := r.Context.Get("error"); ok {
 		return &Response{}, err.(error)
 	}
@@ -90,7 +90,7 @@ func (s BookmarkResource) Create(obj interface{}, r api2go.Request) (api2go.Resp
 
 // Delete satisfies api2go.CRUD interface
 func (s BookmarkResource) Delete(id string, r api2go.Request) (api2go.Responder, error) {
-	// check for middleware error
+	// check for authentication error set by middleware
 	if err, ok := r.Context.Get("error"); ok {
 		return &Response{}, err.(error)
 	}
@@ -103,7 +103,7 @@ func (s BookmarkResource) Delete(id string, r api2go.Request) (api2go.Responder,
 
 // Update satisfies api2go.CRUD interface
 func (s BookmarkResource) Update(obj interface{}, r api2go.Request) (api2go.Responder, error) {
-	// check for middleware error
+	// check for authentication error set by middleware
 	if err, ok := r.Context.Get("error"); ok {
 		return &Response{}, err.(error)
 	}

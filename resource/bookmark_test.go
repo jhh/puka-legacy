@@ -21,6 +21,11 @@ var bookmarks = []model.Bookmark{
 	},
 }
 
+// BookmarkResource uses Request.Context for authentication error checks.
+var request = api2go.Request{
+	Context: &api2go.APIContext{},
+}
+
 type MockStorage struct{}
 
 func (s MockStorage) GetAll(_ storage.Query) ([]model.Bookmark, error) {
@@ -54,7 +59,7 @@ func (s MockStorage) Update(b *model.Bookmark) error {
 
 func TestFindAll(t *testing.T) {
 	bmr := BookmarkResource{BookmarkStorage: &MockStorage{}}
-	response, _ := bmr.FindAll(api2go.Request{})
+	response, _ := bmr.FindAll(request)
 	if invalid, msg := checkBookmark(response); invalid {
 		t.Error(msg)
 	}
@@ -62,7 +67,7 @@ func TestFindAll(t *testing.T) {
 
 func TestFindOne(t *testing.T) {
 	bmr := BookmarkResource{BookmarkStorage: &MockStorage{}}
-	response, _ := bmr.FindOne(oid.Hex(), api2go.Request{})
+	response, _ := bmr.FindOne(oid.Hex(), request)
 	if invalid, msg := checkBookmark(response); invalid {
 		t.Error(msg)
 	}
@@ -70,7 +75,7 @@ func TestFindOne(t *testing.T) {
 
 func TestCreate(t *testing.T) {
 	bmr := BookmarkResource{BookmarkStorage: &MockStorage{}}
-	response, _ := bmr.Create(model.Bookmark{}, api2go.Request{})
+	response, _ := bmr.Create(model.Bookmark{}, request)
 	if invalid, msg := checkBookmark(response); invalid {
 		t.Error(msg)
 	}
@@ -78,7 +83,7 @@ func TestCreate(t *testing.T) {
 
 func TestDelete(t *testing.T) {
 	bmr := BookmarkResource{BookmarkStorage: &MockStorage{}}
-	response, _ := bmr.Delete(oid.Hex(), api2go.Request{})
+	response, _ := bmr.Delete(oid.Hex(), request)
 	if response.StatusCode() != http.StatusNoContent {
 		t.Errorf("http status = %v; want: %v", response.StatusCode(), http.StatusNoContent)
 	}
@@ -86,7 +91,7 @@ func TestDelete(t *testing.T) {
 
 func TestUpdate(t *testing.T) {
 	bmr := BookmarkResource{BookmarkStorage: &MockStorage{}}
-	response, _ := bmr.Update(model.Bookmark{}, api2go.Request{})
+	response, _ := bmr.Update(model.Bookmark{}, request)
 	if invalid, msg := checkBookmark(response); invalid {
 		t.Error(msg)
 	}
@@ -124,7 +129,7 @@ func (s ErrorStorage) Update(b *model.Bookmark) error {
 
 func TestFindAllError(t *testing.T) {
 	bmr := BookmarkResource{BookmarkStorage: &ErrorStorage{}}
-	response, err := bmr.FindAll(api2go.Request{})
+	response, err := bmr.FindAll(request)
 	if invalid, msg := checkError(response, err); invalid {
 		t.Error(msg)
 	}
@@ -132,7 +137,7 @@ func TestFindAllError(t *testing.T) {
 
 func TestFindOneError(t *testing.T) {
 	bmr := BookmarkResource{BookmarkStorage: &ErrorStorage{}}
-	response, err := bmr.FindOne("", api2go.Request{})
+	response, err := bmr.FindOne("", request)
 	if invalid, msg := checkError(response, err); invalid {
 		t.Error(msg)
 	}
@@ -140,11 +145,11 @@ func TestFindOneError(t *testing.T) {
 
 func TestCreateError(t *testing.T) {
 	bmr := BookmarkResource{BookmarkStorage: &ErrorStorage{}}
-	response, err := bmr.Create("", api2go.Request{})
+	response, err := bmr.Create("", request)
 	if invalid, msg := checkError(response, err); invalid {
 		t.Error(msg)
 	}
-	response, err = bmr.Create(model.Bookmark{}, api2go.Request{})
+	response, err = bmr.Create(model.Bookmark{}, request)
 	if invalid, msg := checkError(response, err); invalid {
 		t.Error(msg)
 	}
@@ -152,7 +157,7 @@ func TestCreateError(t *testing.T) {
 
 func TestDeleteError(t *testing.T) {
 	bmr := BookmarkResource{BookmarkStorage: &ErrorStorage{}}
-	response, err := bmr.Delete(oid.Hex(), api2go.Request{})
+	response, err := bmr.Delete(oid.Hex(), request)
 	if invalid, msg := checkError(response, err); invalid {
 		t.Error(msg)
 	}
@@ -160,11 +165,11 @@ func TestDeleteError(t *testing.T) {
 
 func TestUpdateError(t *testing.T) {
 	bmr := BookmarkResource{BookmarkStorage: &ErrorStorage{}}
-	response, err := bmr.Update("", api2go.Request{})
+	response, err := bmr.Update("", request)
 	if invalid, msg := checkError(response, err); invalid {
 		t.Error(msg)
 	}
-	response, err = bmr.Update(model.Bookmark{}, api2go.Request{})
+	response, err = bmr.Update(model.Bookmark{}, request)
 	if invalid, msg := checkError(response, err); invalid {
 		t.Error(msg)
 	}
