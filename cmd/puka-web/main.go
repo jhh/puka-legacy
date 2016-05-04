@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -30,5 +29,5 @@ func main() {
 	api.AddResource(model.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bookmarkStorage})
 
 	log.Printf("Listening on :%s", port)
-	http.ListenAndServe(fmt.Sprintf(":"+port), api.Handler())
+	http.ListenAndServe(":"+port, api.Handler())
 }
