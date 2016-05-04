@@ -46,8 +46,10 @@ const endpoint = (state) => {
   if (bookmarks && bookmarks.nextPage) {
     return bookmarks.nextPage;
   }
-  return tag === c.TAG_NONE ? `${PUKA_API_ENDPOINT}?page[limit]=100`
-                          : `${PUKA_API_ENDPOINT}?page[limit]=100&filter[tag]=${tag}`;
+  if (tag === c.TAG_NONE) {
+    return `${PUKA_API_ENDPOINT}?page[offset]=0&page[limit]=100`;
+  }
+  return `${PUKA_API_ENDPOINT}?page[offset]=0&page[limit]=100&filter[tag]=${tag}`;
 };
 
 const fetchBookmarks = () => (dispatch, getState) => {

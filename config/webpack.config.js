@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const PRODUCTION_API_ENDPOINT = 'https://puka-api-001.herokuapp.com/api/bookmarks';
-const DEV_API_ENDPOINT = `http://${process.env.PUKA_DEV_API_HOST || 'localhost'}:9292/api/bookmarks`;
+const DEV_API_ENDPOINT = `http://${process.env.PUKA_DEV_API_HOST || 'localhost'}:8088/v0/bookmarks`;
 
 module.exports = {
   devtool: process.env.NODE_ENV === 'production' ? 'hidden-source-map' : '#inline-source-map',
