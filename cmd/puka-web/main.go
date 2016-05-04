@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/jhh/puka/middleware"
 	"github.com/jhh/puka/model"
 	"github.com/jhh/puka/resource"
 	"github.com/jhh/puka/storage"
@@ -25,6 +26,7 @@ func main() {
 		log.Fatal(err)
 	}
 	api := api2go.NewAPIWithBaseURL("v0", baseURL)
+	api.UseMiddleware(middleware.Authenticate)
 	defer bookmarkStorage.Close()
 	api.AddResource(model.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bookmarkStorage})
 
