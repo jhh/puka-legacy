@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 
 	"github.com/jhh/puka/model"
 	"github.com/jhh/puka/resource"
@@ -14,22 +13,22 @@ import (
 )
 
 func main() {
-	port, err := strconv.Atoi(os.Getenv("PORT"))
-	if err != nil {
+	port := os.Getenv("PORT")
+	if port == "" {
 		log.Fatal("$PORT must be set")
 	}
 	baseURL := os.Getenv("BASE_URL")
 	if baseURL == "" {
 		log.Fatal("$BASE_URL must be set")
 	}
-	api := api2go.NewAPIWithBaseURL("v0", baseURL)
 	bookmarkStorage, err := storage.NewBookmarkMgoStorage()
 	if err != nil {
 		log.Fatal(err)
 	}
+	api := api2go.NewAPIWithBaseURL("v0", baseURL)
 	defer bookmarkStorage.Close()
 	api.AddResource(model.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bookmarkStorage})
 
-	fmt.Printf("Listening on :%d", port)
-	http.ListenAndServe(fmt.Sprintf(":%d", port), api.Handler())
+	log.Printf("Listening on :%s", port)
+	http.ListenAndServe(fmt.Sprintf(":"+port), api.Handler())
 }
