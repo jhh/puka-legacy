@@ -67,12 +67,12 @@ GET /v0/bookmarks
 
 ## Getting Started
 
-The $PORT environment variable must be set.
+The $PORT and $BASE_URL environment variables must be set.
 
 ```
-$ go get github.org/jhh/puka
-$ go install ./cmd/puka-web
-$ env PORT=8080 puka-web
+$ go get github.org/jhh/puka-api
+$ go install .
+$ env PORT=8080 BASE_URL=http://localhost:8080 puka-api
 ```
 
 [golang]: https://golang.org/
