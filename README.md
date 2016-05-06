@@ -1,6 +1,6 @@
 # Puka
 
-[![Build Status](https://travis-ci.org/jhh/puka.svg?branch=master)](https://travis-ci.org/jhh/puka)
+[![Build Status](https://travis-ci.org/jhh/puka-api.svg?branch=master)](https://travis-ci.org/jhh/puka-api)
 
 This is the Puka API implemented in [Go][golang]. It relies on the
 [api2go][api2go] package for implementation of the [JSONAPI.org][jsonapi] json
