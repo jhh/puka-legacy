@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/jhh/puka/middleware"
-	"github.com/jhh/puka/model"
-	"github.com/jhh/puka/resource"
-	"github.com/jhh/puka/storage"
+	"github.com/jhh/puka-api/lib"
+	"github.com/jhh/puka-api/lib/middleware"
+	"github.com/jhh/puka-api/lib/resource"
+	"github.com/jhh/puka-api/lib/storage"
 	"github.com/manyminds/api2go"
 )
 
@@ -28,7 +28,7 @@ func main() {
 	api := api2go.NewAPIWithBaseURL("v0", baseURL)
 	api.UseMiddleware(middleware.Authenticate)
 	defer bookmarkStorage.Close()
-	api.AddResource(model.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bookmarkStorage})
+	api.AddResource(lib.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bookmarkStorage})
 
 	log.Printf("Listening on :%s", port)
 	http.ListenAndServe(":"+port, api.Handler())

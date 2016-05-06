@@ -4,7 +4,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/jhh/puka/model"
+	"github.com/jhh/puka-api/lib"
+
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -29,12 +30,12 @@ func (s BookmarkMgoStorage) Close() {
 }
 
 // GetAll returns the bookmarks specified by query.
-func (s BookmarkMgoStorage) GetAll(q Query) ([]model.Bookmark, error) {
+func (s BookmarkMgoStorage) GetAll(q Query) ([]lib.Bookmark, error) {
 	session := s.session.Copy()
 	defer session.Close()
 	c := session.DB("").C("bookmarks")
 	iter := c.Find(q.Mgo()).Sort("-timestamp").Iter()
-	var result []model.Bookmark
+	var result []lib.Bookmark
 	err := iter.All(&result)
 	if err != nil {
 		return nil, err
@@ -43,12 +44,12 @@ func (s BookmarkMgoStorage) GetAll(q Query) ([]model.Bookmark, error) {
 }
 
 // GetPage returns a portion of bookmarks specified by query.
-func (s BookmarkMgoStorage) GetPage(q Query, skip, limit int) ([]model.Bookmark, error) {
+func (s BookmarkMgoStorage) GetPage(q Query, skip, limit int) ([]lib.Bookmark, error) {
 	session := s.session.Copy()
 	defer session.Close()
 	c := session.DB("").C("bookmarks")
 	iter := c.Find(q.Mgo()).Sort("-timestamp").Skip(skip).Limit(limit).Iter()
-	var result []model.Bookmark
+	var result []lib.Bookmark
 	err := iter.All(&result)
 	if err != nil {
 		return nil, err
@@ -66,20 +67,20 @@ func (s BookmarkMgoStorage) Count(q Query) (int, error) {
 }
 
 // GetOne user
-func (s BookmarkMgoStorage) GetOne(id string) (model.Bookmark, error) {
+func (s BookmarkMgoStorage) GetOne(id string) (lib.Bookmark, error) {
 	session := s.session.Copy()
 	defer session.Close()
 	c := session.DB("").C("bookmarks")
-	var result model.Bookmark
+	var result lib.Bookmark
 	err := c.FindId(bson.ObjectIdHex(id)).One(&result)
 	if err != nil {
-		return model.Bookmark{}, err
+		return lib.Bookmark{}, err
 	}
 	return result, nil
 }
 
 // Insert a user and set Timestamp to insert time if not already set.
-func (s BookmarkMgoStorage) Insert(b *model.Bookmark) error {
+func (s BookmarkMgoStorage) Insert(b *lib.Bookmark) error {
 	id := bson.NewObjectId()
 	b.ID = id
 
@@ -104,7 +105,7 @@ func (s BookmarkMgoStorage) Delete(id string) error {
 }
 
 // Update a user and updates Timestamp.
-func (s BookmarkMgoStorage) Update(b *model.Bookmark) error {
+func (s BookmarkMgoStorage) Update(b *lib.Bookmark) error {
 	session := s.session.Copy()
 	defer session.Close()
 	c := session.DB("").C("bookmarks")

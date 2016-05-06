@@ -1,1 +1,1 @@
-web: puka-web
+web: puka-api

@@ -15,16 +15,16 @@ import (
 	"gopkg.in/mgo.v2/bson"
 
 	"github.com/bitly/go-simplejson"
-	"github.com/jhh/puka/middleware"
-	"github.com/jhh/puka/model"
-	"github.com/jhh/puka/resource"
-	"github.com/jhh/puka/storage"
+	"github.com/jhh/puka-api/lib"
+	"github.com/jhh/puka-api/lib/middleware"
+	"github.com/jhh/puka-api/lib/resource"
+	"github.com/jhh/puka-api/lib/storage"
 	"github.com/manyminds/api2go"
 )
 
 var (
 	api      *api2go.API
-	bookmark model.Bookmark
+	bookmark lib.Bookmark
 )
 
 func TestMain(m *testing.M) {
@@ -48,7 +48,7 @@ func TestMain(m *testing.M) {
 	}
 	api = api2go.NewAPIWithBaseURL("v0", "http://localhost:31415")
 	api.UseMiddleware(middleware.Authenticate)
-	api.AddResource(model.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bms})
+	api.AddResource(lib.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bms})
 	bookmarks, err := bms.GetAll(storage.Query{})
 	if err != nil {
 		log.Fatal(err)

@@ -13,7 +13,7 @@ import (
 
 	"gopkg.in/mgo.v2/bson"
 
-	"github.com/jhh/puka/model"
+	"github.com/jhh/puka-api/lib"
 	"github.com/manyminds/api2go"
 )
 
@@ -118,7 +118,7 @@ func TestInsert(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping test in short mode.")
 	}
-	bookmark := model.Bookmark{
+	bookmark := lib.Bookmark{
 		Title:       "Test Title",
 		URL:         "http://example.com/testing",
 		Description: "This is a test bookmark.",
@@ -133,7 +133,7 @@ func TestInsert(t *testing.T) {
 	session := storage.session.Copy()
 	defer session.Close()
 	col := session.DB("").C("bookmarks")
-	var result model.Bookmark
+	var result lib.Bookmark
 	if err := col.FindId(bookmark.ID).One(&result); err != nil {
 		t.Error(err)
 	}
@@ -147,7 +147,7 @@ func TestDelete(t *testing.T) {
 		t.Skip("skipping test in short mode.")
 	}
 	id := bson.NewObjectId()
-	bookmark := model.Bookmark{ID: id}
+	bookmark := lib.Bookmark{ID: id}
 
 	session := storage.session.Copy()
 	defer session.Close()
@@ -171,7 +171,7 @@ func TestUpdate(t *testing.T) {
 		t.Skip("skipping test in short mode.")
 	}
 	id := bson.NewObjectId()
-	bookmark := model.Bookmark{ID: id}
+	bookmark := lib.Bookmark{ID: id}
 
 	session := storage.session.Copy()
 	defer session.Close()
@@ -188,7 +188,7 @@ func TestUpdate(t *testing.T) {
 		t.Error(err)
 	}
 
-	var result model.Bookmark
+	var result lib.Bookmark
 	if err := col.FindId(bookmark.ID).One(&result); err != nil {
 		t.Error(err)
 	}
@@ -212,7 +212,7 @@ func loadTestData() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	var bookmarks []model.Bookmark
+	var bookmarks []lib.Bookmark
 	err = json.Unmarshal(b, &bookmarks)
 	if err != nil {
 		log.Fatal(err)
@@ -234,7 +234,7 @@ func loadTestData() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	var bm model.Bookmark
+	var bm lib.Bookmark
 	err = col.Find(nil).One(&bm)
 	if err != nil {
 		log.Fatal(err)

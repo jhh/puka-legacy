@@ -4,8 +4,8 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/jhh/puka/model"
-	"github.com/jhh/puka/storage"
+	"github.com/jhh/puka-api/lib"
+	"github.com/jhh/puka-api/lib/storage"
 	"github.com/manyminds/api2go"
 )
 
@@ -75,7 +75,7 @@ func (s BookmarkResource) Create(obj interface{}, r api2go.Request) (api2go.Resp
 		return &Response{}, err.(error)
 	}
 
-	bookmark, ok := obj.(model.Bookmark)
+	bookmark, ok := obj.(lib.Bookmark)
 	if !ok {
 		return &Response{}, api2go.NewHTTPError(errors.New(typeErrMsg), typeErrMsg, http.StatusBadRequest)
 	}
@@ -108,7 +108,7 @@ func (s BookmarkResource) Update(obj interface{}, r api2go.Request) (api2go.Resp
 		return &Response{}, err.(error)
 	}
 
-	bookmark, ok := obj.(model.Bookmark)
+	bookmark, ok := obj.(lib.Bookmark)
 	if !ok {
 		return &Response{}, api2go.NewHTTPError(errors.New(typeErrMsg), typeErrMsg, http.StatusBadRequest)
 	}
