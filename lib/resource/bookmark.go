@@ -11,7 +11,7 @@ import (
 
 const typeErrMsg = "Invalid instance given"
 
-// The BookmarkResource struct implements api2go routes
+// The BookmarkResource struct implements api2go routes.
 type BookmarkResource struct {
 	BookmarkStorage storage.BookmarkStorage
 }
