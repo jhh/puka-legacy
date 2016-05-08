@@ -103,9 +103,12 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	defer r.Close()
-	bookmarksJSON, err = ioutil.ReadAll(r)
-	if err != nil {
+	defer func() {
+		if err := r.Close(); err != nil {
+			panic(err)
+		}
+	}()
+	bookmarksJSON, err = ioutil.ReadAll(r) if err != nil {
 		panic(err)
 	}
 }

@@ -203,7 +203,12 @@ func loadTestData() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer fi.Close()
+	defer func() {
+		if err := fi.Close(); err != nil {
+			log.Fatal(err)
+		}
+	}()
+
 	gz, err := gzip.NewReader(fi)
 	if err != nil {
 		log.Fatal(err)
