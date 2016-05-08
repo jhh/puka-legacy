@@ -3,6 +3,7 @@ package lib
 import (
 	"bytes"
 	"encoding/json"
+	"log"
 	"os"
 	"testing"
 	"time"
@@ -47,14 +48,20 @@ func ExampleBookmark() {
 		Timestamp:   timestamp,
 		Tags:        []string{"foo", "bar"},
 	}
-	b.SetID("572135023cd994201b0bb61c")
+	if err := b.SetID("572135023cd994201b0bb61c"); err != nil {
+		log.Fatal(err)
+	}
 	result, err := jsonapi.Marshal(b)
 	if err != nil {
 		return
 	}
 	var out bytes.Buffer
-	json.Indent(&out, result, "", "  ")
-	out.WriteTo(os.Stdout)
+	if err := json.Indent(&out, result, "", "  "); err != nil {
+		log.Fatal(err)
+	}
+	if _, err := out.WriteTo(os.Stdout); err != nil {
+		log.Fatal(err)
+	}
 	// Output:
 	// {
 	//   "data": {
