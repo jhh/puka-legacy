@@ -35,15 +35,14 @@ func TestMain(m *testing.M) {
 		bms = storage.NewBookmarkMemoryStorage()
 	} else {
 		log.Println("Using BookmarkMgoStorage for testing.")
-		if os.Getenv("MONGODB_URI") == "" {
-			if err := os.Setenv("MONGODB_URI", "mongodb://localhost/test"); err != nil {
-				log.Fatal(err)
-			}
-			var err error
-			bms, err = storage.NewBookmarkMgoStorage()
-			if err != nil {
-				log.Fatal(err)
-			}
+		uri := os.Getenv("MONGODB_URI")
+		if uri == "" {
+			uri = "mongodb://localhost/test"
+		}
+		var err error
+		bms, err = storage.NewBookmarkMgoStorage(uri)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 	api = api2go.NewAPIWithBaseURL("v0", "http://localhost:31415")

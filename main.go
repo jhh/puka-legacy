@@ -21,7 +21,11 @@ func main() {
 	if baseURL == "" {
 		log.Fatal("$BASE_URL must be set")
 	}
-	bookmarkStorage, err := storage.NewBookmarkMgoStorage()
+	mongoURL := os.Getenv("MONGODB_URI")
+	if mongoURL == "" {
+		log.Fatal("$MONGODB_URI must be set")
+	}
+	bookmarkStorage, err := storage.NewBookmarkMgoStorage(mongoURL)
 	if err != nil {
 		log.Fatal(err)
 	}

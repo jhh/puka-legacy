@@ -1,7 +1,6 @@
 package storage
 
 import (
-	"os"
 	"time"
 
 	"github.com/jhh/puka-api/lib"
@@ -11,8 +10,8 @@ import (
 )
 
 // NewBookmarkMgoStorage initializes the storage
-func NewBookmarkMgoStorage() (BookmarkMgoStorage, error) {
-	session, err := mgo.Dial(os.Getenv("MONGODB_URI"))
+func NewBookmarkMgoStorage(uri string) (BookmarkMgoStorage, error) {
+	session, err := mgo.Dial(uri)
 	if err != nil {
 		return BookmarkMgoStorage{}, err
 	}

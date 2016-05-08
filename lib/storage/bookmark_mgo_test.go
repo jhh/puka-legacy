@@ -28,13 +28,12 @@ func TestMain(m *testing.M) {
 	if testing.Short() {
 		code = m.Run()
 	} else {
-		if os.Getenv("MONGODB_URI") == "" {
-			if err := os.Setenv("MONGODB_URI", "mongodb://localhost/test"); err != nil {
-				log.Fatal(err)
-			}
+		uri := os.Getenv("MONGODB_URI")
+		if uri == "" {
+			uri = "mongodb://localhost/test"
 		}
 		var err error
-		storage, err = NewBookmarkMgoStorage()
+		storage, err = NewBookmarkMgoStorage(uri)
 		if err != nil {
 			log.Fatal(err)
 		}
