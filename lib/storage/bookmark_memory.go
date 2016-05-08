@@ -108,7 +108,8 @@ func init() {
 			panic(err)
 		}
 	}()
-	bookmarksJSON, err = ioutil.ReadAll(r) if err != nil {
+	bookmarksJSON, err = ioutil.ReadAll(r)
+	if err != nil {
 		panic(err)
 	}
 }
