@@ -35,5 +35,5 @@ func main() {
 	api.AddResource(lib.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bookmarkStorage})
 
 	log.Printf("Listening on :%s", port)
-	http.ListenAndServe(":"+port, api.Handler())
+	log.Fatal(http.ListenAndServe(":"+port, api.Handler()))
 }
