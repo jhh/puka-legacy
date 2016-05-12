@@ -13,18 +13,9 @@ import (
 )
 
 func main() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		log.Fatal("$PORT must be set")
-	}
-	baseURL := os.Getenv("BASE_URL")
-	if baseURL == "" {
-		log.Fatal("$BASE_URL must be set")
-	}
-	mongoURL := os.Getenv("MONGODB_URI")
-	if mongoURL == "" {
-		log.Fatal("$MONGODB_URI must be set")
-	}
+	port := getenv("PORT")
+	baseURL := getenv("BASE_URL")
+	mongoURL := getenv("MONGODB_URI")
 	bookmarkStorage, err := storage.NewBookmarkMgoStorage(mongoURL)
 	if err != nil {
 		log.Fatal(err)
@@ -36,4 +27,12 @@ func main() {
 
 	log.Printf("Listening on :%s", port)
 	log.Fatal(http.ListenAndServe(":"+port, api.Handler()))
+}
+
+func getenv(v string) string {
+	r := os.Getenv(v)
+	if r == "" {
+		log.Fatalf("$%s must be set", v)
+	}
+	return r
 }
