@@ -34,10 +34,10 @@ func (b *Bookmark) SetID(id string) error {
 
 func (b Bookmark) String() string {
 	return fmt.Sprintln(
-		"ID:", b.GetID(),
-		"Title:", b.Title,
-		"URL:", b.URL,
-		"Description:", b.Description,
-		"Date:", b.Timestamp.Format(time.UnixDate),
-		"Tags:", b.Tags)
+		"\nID:", b.GetID(),
+		"\nTitle:", b.Title,
+		"\nURL:", b.URL,
+		"\nDescription:", b.Description,
+		"\nDate:", b.Timestamp.Format(time.UnixDate),
+		"\nTags:", b.Tags)
 }
