@@ -1,9 +1,9 @@
 {
-	"ImportPath": "github.com/jhh/puka",
+	"ImportPath": "github.com/jhh/puka-api",
 	"GoVersion": "go1.6",
 	"GodepVersion": "v62",
 	"Packages": [
-		"./cmd/puka-web"
+		"."
 	],
 	"Deps": [
 		{
