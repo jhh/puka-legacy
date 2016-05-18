@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
 	"math/rand"
 	"net/http"
 	"net/http/httptest"
@@ -30,10 +29,10 @@ func TestMain(m *testing.M) {
 	flag.Parse()
 	var bms storage.BookmarkStorage
 	if testing.Short() {
-		log.Println("Using BookmarkMemoryStorage for testing")
+		fmt.Println("Using BookmarkMemoryStorage for testing")
 		bms = storage.NewBookmarkMemoryStorage()
 	} else {
-		log.Println("Using BookmarkMgoStorage for testing")
+		fmt.Println("Using BookmarkMgoStorage for testing")
 		uri := os.Getenv("MONGODB_URI")
 		if uri == "" {
 			uri = "mongodb://localhost/test"
@@ -41,7 +40,7 @@ func TestMain(m *testing.M) {
 		var err error
 		bms, err = storage.NewBookmarkMgoStorage(uri)
 		if err != nil {
-			log.Fatal(err)
+			fmt.Println(err)
 		}
 	}
 	api = api2go.NewAPIWithBaseURL("v0", "http://localhost:31415")
@@ -49,11 +48,12 @@ func TestMain(m *testing.M) {
 	api.AddResource(lib.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bms})
 	bookmarks, err := bms.GetAll(storage.Query{})
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
 	}
 	l := len(bookmarks)
 	if l == 0 {
-		log.Fatal("len(bookmarks) = 0 in test data")
+		fmt.Println("len(bookmarks) = 0 in test data")
+		os.Exit(1)
 	}
 	rand.Seed(time.Now().UnixNano())
 	bookmark = bookmarks[rand.Intn(l)]
