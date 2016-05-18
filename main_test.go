@@ -30,10 +30,10 @@ func TestMain(m *testing.M) {
 	flag.Parse()
 	var bms storage.BookmarkStorage
 	if testing.Short() {
-		log.Println("Using BookmarkMemoryStorage for testing.")
+		log.Println("Using BookmarkMemoryStorage for testing")
 		bms = storage.NewBookmarkMemoryStorage()
 	} else {
-		log.Println("Using BookmarkMgoStorage for testing.")
+		log.Println("Using BookmarkMgoStorage for testing")
 		uri := os.Getenv("MONGODB_URI")
 		if uri == "" {
 			uri = "mongodb://localhost/test"
