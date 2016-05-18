@@ -16,7 +16,6 @@ import (
 
 	"github.com/bitly/go-simplejson"
 	"github.com/jhh/puka-api/lib"
-	"github.com/jhh/puka-api/lib/middleware"
 	"github.com/jhh/puka-api/lib/resource"
 	"github.com/jhh/puka-api/lib/storage"
 	"github.com/manyminds/api2go"
@@ -46,7 +45,7 @@ func TestMain(m *testing.M) {
 		}
 	}
 	api = api2go.NewAPIWithBaseURL("v0", "http://localhost:31415")
-	api.UseMiddleware(middleware.Authenticate)
+	// api.UseMiddleware(middleware.Authenticate)
 	api.AddResource(lib.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bms})
 	bookmarks, err := bms.GetAll(storage.Query{})
 	if err != nil {
