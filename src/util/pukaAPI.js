@@ -28,6 +28,7 @@ export const getBookmarks = (endpoint) =>
     credentials: 'include',
     headers: {
       Accept: JSON_API_CONTENT_TYPE,
+      'X-Puka-Token': localStorage.getItem('puka_auth_token'),
     },
   }).then(response => {
     if (response.status >= 200 && response.status < 300) {
@@ -56,6 +57,7 @@ export const saveBookmark = (endpoint, bookmark) => {
     headers: {
       Accept: JSON_API_CONTENT_TYPE,
       'Content-Type': JSON_API_CONTENT_TYPE,
+      'X-Puka-Token': localStorage.getItem('puka_auth_token'),
     },
   }).then(response => {
     if (response.status >= 200 && response.status < 300) {
