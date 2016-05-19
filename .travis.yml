@@ -1,5 +1,7 @@
 language: go
 go:
   - 1.6.2
-install: true
+install:
+    - go get github.com/kardianos/govendor
+    - govendor sync
 script: go test -short $(go list ./... | grep -v /vendor/)
