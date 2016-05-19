@@ -13,5 +13,6 @@ func NewCORS(origin string) api2go.HandlerFunc {
 		w.Header().Set("Access-Control-Allow-Credentials", "true")
 		// TODO: Check Access-Control-Request-Headers, Access-Control-Request-Method
 		w.Header().Set("Access-Control-Allow-Headers", "accept, content-type, x-puka-token")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS")
 	}
 }
