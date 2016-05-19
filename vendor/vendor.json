@@ -53,7 +53,8 @@
 			"checksumSHA1": "bDSCvmvwCYcN5mPjePIzpPyqGYM=",
 			"comment": "r2016.02.04-1-gb6e2fa3",
 			"path": "gopkg.in/mgo.v2",
-			"revision": "b6e2fa371e64216a45e61072a96d4e3859f169da"
+			"revision": "b6e2fa371e64216a45e61072a96d4e3859f169da",
+			"revisionTime": "2016-02-23T13:38:14Z"
 		},
 		{
 			"checksumSHA1": "zTjQOFGy4XTv4L33Kd2FhrV+mbM=",
