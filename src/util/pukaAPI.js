@@ -27,7 +27,6 @@ export const getBookmarks = (endpoint) =>
     redirect: 'follow',
     headers: {
       Accept: JSON_API_CONTENT_TYPE,
-      'X-Puka-Token': localStorage.getItem('puka_auth_token'),
     },
   }).then(response => {
     if (response.status >= 200 && response.status < 300) {
@@ -48,14 +47,14 @@ export const saveBookmark = (endpoint, bookmark) => {
   if (typeof body.data.attributes.tags === 'string') {
     body.data.attributes.tags = bookmark.tags.split(/\s*,\s*/);
   }
-  return fetch(endpoint, {
+  const token = localStorage.getItem('puka_auth_token');
+  return fetch(`${endpoint}?token=${token}`, {
     method: bookmark.id ? 'PATCH' : 'POST',
     body: JSON.stringify(body),
     redirect: 'follow',
     headers: {
       Accept: JSON_API_CONTENT_TYPE,
       'Content-Type': JSON_API_CONTENT_TYPE,
-      'X-Puka-Token': localStorage.getItem('puka_auth_token'),
     },
   }).then(response => {
     if (response.status >= 200 && response.status < 300) {

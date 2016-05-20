@@ -41,15 +41,16 @@ export const fetchBookmarksFailure = (tag, error) => ({
 });
 
 const endpoint = (state) => {
+  const token = localStorage.getItem('puka_auth_token');
   const tag = state.selectedTag;
   const bookmarks = state.bookmarksByTag[state.selectedTag];
   if (bookmarks && bookmarks.nextPage) {
     return bookmarks.nextPage;
   }
   if (tag === c.TAG_NONE) {
-    return `${PUKA_API_ENDPOINT}?page[offset]=0&page[limit]=100`;
+    return `${PUKA_API_ENDPOINT}?page[offset]=0&page[limit]=100&token=${token}`;
   }
-  return `${PUKA_API_ENDPOINT}?page[offset]=0&page[limit]=100&filter[tag]=${tag}`;
+  return `${PUKA_API_ENDPOINT}?page[offset]=0&page[limit]=100&filter[tag]=${tag}&token=${token}`;
 };
 
 const fetchBookmarks = () => (dispatch, getState) => {
