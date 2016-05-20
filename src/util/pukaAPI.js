@@ -25,7 +25,6 @@ function mapResponse(response) {
 export const getBookmarks = (endpoint) =>
   fetch(endpoint, {
     redirect: 'follow',
-    credentials: 'include',
     headers: {
       Accept: JSON_API_CONTENT_TYPE,
       'X-Puka-Token': localStorage.getItem('puka_auth_token'),
@@ -53,7 +52,6 @@ export const saveBookmark = (endpoint, bookmark) => {
     method: bookmark.id ? 'PATCH' : 'POST',
     body: JSON.stringify(body),
     redirect: 'follow',
-    credentials: 'include',
     headers: {
       Accept: JSON_API_CONTENT_TYPE,
       'Content-Type': JSON_API_CONTENT_TYPE,
