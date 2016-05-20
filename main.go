@@ -50,10 +50,10 @@ func main() {
 	}
 	defer bookmarkStorage.Close()
 	api := newAPI(bookmarkStorage, baseURL)
+	api.UseMiddleware(middleware.CORS)
 	if authToken != "" {
 		api.UseMiddleware(middleware.NewAuthenticator(authToken))
 	}
-	api.UseMiddleware(middleware.NewCORS(origin))
 	fmt.Printf("Listening on :%s\n", port)
 	fmt.Println(http.ListenAndServe(":"+port, api.Handler()))
 }
