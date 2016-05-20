@@ -1,7 +1,9 @@
 package middleware
 
 import (
+	"log"
 	"net/http"
+	"net/url"
 	"testing"
 
 	"github.com/manyminds/api2go"
@@ -11,7 +13,11 @@ func TestAuthPass(t *testing.T) {
 	tok := "test_context_token"
 	handler := NewAuthenticator(tok)
 	context := &api2go.APIContext{}
-	req := &http.Request{Header: http.Header{PukaTokenHeader: []string{tok}}}
+	u, err := url.Parse("http://example.com/search?token=" + tok)
+	if err != nil {
+		log.Fatal(err)
+	}
+	req := &http.Request{URL: u}
 	handler(context, nil, req)
 	ret, ok := context.Get("error")
 	if ok {
@@ -23,7 +29,11 @@ func TestAuthFail(t *testing.T) {
 	tok := "test_token"
 	handler := NewAuthenticator(tok)
 	context := &api2go.APIContext{}
-	req := &http.Request{Header: http.Header{PukaTokenHeader: []string{"fail"}}}
+	u, err := url.Parse("http://example.com/search?token=fail")
+	if err != nil {
+		log.Fatal(err)
+	}
+	req := &http.Request{URL: u}
 	handler(context, nil, req)
 	rc, ok := context.Get("error")
 	if !ok {
@@ -43,7 +53,11 @@ func TestNoToken(t *testing.T) {
 	tok := "test_token"
 	handler := NewAuthenticator(tok)
 	context := &api2go.APIContext{}
-	req := &http.Request{Header: http.Header{}}
+	u, err := url.Parse("http://example.com/search")
+	if err != nil {
+		log.Fatal(err)
+	}
+	req := &http.Request{URL: u}
 	handler(context, nil, req)
 	rc, ok := context.Get("error")
 	if !ok {

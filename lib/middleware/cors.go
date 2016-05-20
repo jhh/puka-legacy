@@ -19,10 +19,10 @@ func CORS(c api2go.APIContexter, w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodOptions {
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "accept, content-type, x-puka-token")
+		w.Header().Set("Access-Control-Max-Age", "600")
 	}
 
 	w.Header().Set("Access-Control-Allow-Origin", origin)
-	// w.Header().Set("Access-Control-Allow-Credentials", "true")
 }
 
 func getOrigin(h http.Header) (string, error) {
