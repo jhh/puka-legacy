@@ -1,4 +1,4 @@
-package storage
+package storage // import "jhhgo.us/pukaws/lib/storage"
 
 import (
 	"testing"

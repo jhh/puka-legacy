@@ -7,6 +7,12 @@ This is the Puka API implemented in [Go][golang]. It relies on the
 API spec and REST service. It uses MongoDB as a database. An in-memory storage
 implmentation is provided for testing.
 
+## Installing
+
+```
+$ go get jhhgo.us/pukaws
+```
+
 ## REST API
 The Puka server provides the following API endpoints.
 

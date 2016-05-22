@@ -1,4 +1,4 @@
-package storage
+package storage // import "jhhgo.us/pukaws/lib/storage"
 
 import (
 	"github.com/manyminds/api2go"

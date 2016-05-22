@@ -1,4 +1,4 @@
-package storage
+package storage // import "jhhgo.us/pukaws/lib/storage"
 
 import (
 	"compress/gzip"
@@ -13,8 +13,8 @@ import (
 
 	"gopkg.in/mgo.v2/bson"
 
-	"github.com/jhh/puka-api/lib"
 	"github.com/manyminds/api2go"
+	"jhhgo.us/pukaws/lib"
 )
 
 var (
