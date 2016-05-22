@@ -1,4 +1,4 @@
-package middleware
+package middleware // import "jhhgo.us/pukaws/lib/middleware"
 
 import (
 	"log"

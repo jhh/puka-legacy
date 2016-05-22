@@ -1,9 +1,9 @@
-package storage
+package storage // import "jhhgo.us/pukaws/lib/storage"
 
 import (
 	"time"
 
-	"github.com/jhh/puka-api/lib"
+	"jhhgo.us/pukaws/lib"
 
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"

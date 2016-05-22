@@ -1,6 +1,6 @@
-package storage
+package storage // import "jhhgo.us/pukaws/lib/storage"
 
-import "github.com/jhh/puka-api/lib"
+import "jhhgo.us/pukaws/lib"
 
 // BookmarkStorage abstracts database interactions.
 type BookmarkStorage interface {

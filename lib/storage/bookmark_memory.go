@@ -1,4 +1,4 @@
-package storage
+package storage // import "jhhgo.us/pukaws/lib/storage"
 
 import (
 	"bytes"
@@ -12,8 +12,8 @@ import (
 
 	"gopkg.in/mgo.v2/bson"
 
-	"github.com/jhh/puka-api/lib"
 	"github.com/manyminds/api2go"
+	"jhhgo.us/pukaws/lib"
 )
 
 var bookmarksJSON []byte // set in init

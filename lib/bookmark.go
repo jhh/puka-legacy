@@ -1,4 +1,4 @@
-package lib
+package lib // import "jhhgo.us/pukaws/lib"
 
 import (
 	"errors"
