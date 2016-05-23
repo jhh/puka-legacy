@@ -1,4 +1,4 @@
-package resource // import "jhhgo.us/pukaws/lib/resource"
+package resource // import "jhhgo.us/pukaws/resource"
 
 import (
 	"errors"
@@ -9,8 +9,8 @@ import (
 	"gopkg.in/mgo.v2/bson"
 
 	"github.com/manyminds/api2go"
-	"jhhgo.us/pukaws/lib"
-	"jhhgo.us/pukaws/lib/storage"
+	"jhhgo.us/pukaws/model"
+	"jhhgo.us/pukaws/storage"
 )
 
 var oid = bson.NewObjectId()

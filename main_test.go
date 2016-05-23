@@ -15,9 +15,9 @@ import (
 
 	"github.com/bitly/go-simplejson"
 	"github.com/manyminds/api2go"
-	"jhhgo.us/pukaws/lib"
-	"jhhgo.us/pukaws/lib/resource"
-	"jhhgo.us/pukaws/lib/storage"
+	"jhhgo.us/pukaws/model"
+	"jhhgo.us/pukaws/resource"
+	"jhhgo.us/pukaws/storage"
 )
 
 var (

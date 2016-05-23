@@ -1,4 +1,4 @@
-package middleware // import "jhhgo.us/pukaws/lib/middleware"
+package middleware // import "jhhgo.us/pukaws/middleware"
 
 import (
 	"net/http"

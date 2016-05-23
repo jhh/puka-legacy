@@ -7,9 +7,8 @@ import (
 	"log"
 	"net/http"
 
-	"jhhgo.us/pukaws/lib"
-
 	"github.com/manyminds/api2go/jsonapi"
+	"jhhgo.us/pukaws/model"
 )
 
 var tag = flag.String("tag", "", "shows bookmarks for tag.")

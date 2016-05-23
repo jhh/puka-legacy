@@ -1,12 +1,12 @@
-package resource // import "jhhgo.us/pukaws/lib/resource"
+package resource // import "jhhgo.us/pukaws/resource"
 
 import (
 	"errors"
 	"net/http"
 
 	"github.com/manyminds/api2go"
-	"jhhgo.us/pukaws/lib"
-	"jhhgo.us/pukaws/lib/storage"
+	"jhhgo.us/pukaws/model"
+	"jhhgo.us/pukaws/storage"
 )
 
 const typeErrMsg = "Invalid instance given"

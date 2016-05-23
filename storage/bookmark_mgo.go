@@ -1,12 +1,11 @@
-package storage // import "jhhgo.us/pukaws/lib/storage"
+package storage // import "jhhgo.us/pukaws/storage"
 
 import (
 	"time"
 
-	"jhhgo.us/pukaws/lib"
-
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	"jhhgo.us/pukaws/model"
 )
 
 // NewBookmarkMgoStorage initializes the storage

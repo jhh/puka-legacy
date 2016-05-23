@@ -1,4 +1,4 @@
-package resource // import "jhhgo.us/pukaws/lib/resource"
+package resource // import "jhhgo.us/pukaws/resource"
 
 import (
 	"errors"
