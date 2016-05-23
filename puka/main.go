@@ -7,7 +7,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/jhh/puka-api/lib"
+	"jhhgo.us/pukaws/lib"
+
 	"github.com/manyminds/api2go/jsonapi"
 )
 
