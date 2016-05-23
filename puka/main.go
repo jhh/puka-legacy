@@ -7,8 +7,9 @@ import (
 	"log"
 	"net/http"
 
+	"jhhgo.us/pukaws/bookmark"
+
 	"github.com/manyminds/api2go/jsonapi"
-	"jhhgo.us/pukaws/model"
 )
 
 var tag = flag.String("tag", "", "shows bookmarks for tag.")
@@ -29,7 +30,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	var bookmarks []lib.Bookmark
+	var bookmarks []bookmark.Bookmark
 	err = jsonapi.Unmarshal(body, &bookmarks)
 	if err != nil {
 		log.Fatal(err)

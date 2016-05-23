@@ -1,4 +1,4 @@
-package resource // import "jhhgo.us/pukaws/resource"
+package bookmark // import "jhhgo.us/pukaws/bookmark"
 
 import (
 	"testing"

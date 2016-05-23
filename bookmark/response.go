@@ -1,4 +1,4 @@
-package resource // import "jhhgo.us/pukaws/resource"
+package bookmark // import "jhhgo.us/pukaws/bookmark"
 
 // The Response struct implements api2go.Responder
 type Response struct {

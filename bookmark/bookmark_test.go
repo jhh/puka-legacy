@@ -1,4 +1,4 @@
-package lib // import "jhhgo.us/pukaws/model"
+package bookmark // import "jhhgo.us/pukaws/bookmark"
 
 import (
 	"bytes"

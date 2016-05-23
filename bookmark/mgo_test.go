@@ -1,4 +1,4 @@
-package storage // import "jhhgo.us/pukaws/storage"
+package bookmark // import "jhhgo.us/pukaws/bookmark"
 
 import (
 	"compress/gzip"
@@ -14,11 +14,10 @@ import (
 	"gopkg.in/mgo.v2/bson"
 
 	"github.com/manyminds/api2go"
-	"jhhgo.us/pukaws/model"
 )
 
 var (
-	storage BookmarkMgoStorage
+	storage MgoStorage
 	oid     string
 )
 
@@ -33,7 +32,7 @@ func TestMain(m *testing.M) {
 			uri = "mongodb://localhost/test"
 		}
 		var err error
-		storage, err = NewBookmarkMgoStorage(uri)
+		storage, err = NewMgoStorage(uri)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -45,9 +44,9 @@ func TestMain(m *testing.M) {
 }
 
 func TestMgoInterface(t *testing.T) {
-	var bm interface{} = BookmarkMgoStorage{}
-	if inty, ok := bm.(BookmarkStorage); !ok {
-		t.Fatalf("%v does not implement BookmarkStorage", inty)
+	var bm interface{} = MgoStorage{}
+	if inty, ok := bm.(Storage); !ok {
+		t.Fatalf("%v does not implement Storage", inty)
 	}
 }
 
@@ -117,7 +116,7 @@ func TestInsert(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping test in short mode.")
 	}
-	bookmark := lib.Bookmark{
+	bookmark := Bookmark{
 		Title:       "Test Title",
 		URL:         "http://example.com/testing",
 		Description: "This is a test bookmark.",
@@ -132,7 +131,7 @@ func TestInsert(t *testing.T) {
 	session := storage.session.Copy()
 	defer session.Close()
 	col := session.DB("").C("bookmarks")
-	var result lib.Bookmark
+	var result Bookmark
 	if err := col.FindId(bookmark.ID).One(&result); err != nil {
 		t.Error(err)
 	}
@@ -146,7 +145,7 @@ func TestDelete(t *testing.T) {
 		t.Skip("skipping test in short mode.")
 	}
 	id := bson.NewObjectId()
-	bookmark := lib.Bookmark{ID: id}
+	bookmark := Bookmark{ID: id}
 
 	session := storage.session.Copy()
 	defer session.Close()
@@ -170,7 +169,7 @@ func TestUpdate(t *testing.T) {
 		t.Skip("skipping test in short mode.")
 	}
 	id := bson.NewObjectId()
-	bookmark := lib.Bookmark{ID: id}
+	bookmark := Bookmark{ID: id}
 
 	session := storage.session.Copy()
 	defer session.Close()
@@ -187,7 +186,7 @@ func TestUpdate(t *testing.T) {
 		t.Error(err)
 	}
 
-	var result lib.Bookmark
+	var result Bookmark
 	if err := col.FindId(bookmark.ID).One(&result); err != nil {
 		t.Error(err)
 	}
@@ -216,7 +215,7 @@ func loadTestData() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	var bookmarks []lib.Bookmark
+	var bookmarks []Bookmark
 	err = json.Unmarshal(b, &bookmarks)
 	if err != nil {
 		log.Fatal(err)
@@ -238,7 +237,7 @@ func loadTestData() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	var bm lib.Bookmark
+	var bm Bookmark
 	err = col.Find(nil).One(&bm)
 	if err != nil {
 		log.Fatal(err)

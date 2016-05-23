@@ -11,26 +11,25 @@ import (
 	"testing"
 	"time"
 
+	"jhhgo.us/pukaws/bookmark"
+
 	"gopkg.in/mgo.v2/bson"
 
 	"github.com/bitly/go-simplejson"
 	"github.com/manyminds/api2go"
-	"jhhgo.us/pukaws/model"
-	"jhhgo.us/pukaws/resource"
-	"jhhgo.us/pukaws/storage"
 )
 
 var (
-	api      *api2go.API
-	bookmark lib.Bookmark
+	api *api2go.API
+	bmk bookmark.Bookmark
 )
 
 func TestMain(m *testing.M) {
 	flag.Parse()
-	var bms storage.BookmarkStorage
+	var bms bookmark.Storage
 	if testing.Short() {
 		fmt.Println("Using BookmarkMemoryStorage for testing")
-		bms = storage.NewBookmarkMemoryStorage()
+		bms = bookmark.NewMemoryStorage()
 	} else {
 		fmt.Println("Using BookmarkMgoStorage for testing")
 		uri := os.Getenv("MONGODB_URI")
@@ -38,15 +37,15 @@ func TestMain(m *testing.M) {
 			uri = "mongodb://localhost/test"
 		}
 		var err error
-		bms, err = storage.NewBookmarkMgoStorage(uri)
+		bms, err = bookmark.NewMgoStorage(uri)
 		if err != nil {
 			fmt.Println(err)
 		}
 	}
 	api = api2go.NewAPIWithBaseURL("v0", "http://localhost:31415")
 	// api.UseMiddleware(middleware.Authenticate)
-	api.AddResource(lib.Bookmark{}, resource.BookmarkResource{BookmarkStorage: bms})
-	bookmarks, err := bms.GetAll(storage.Query{})
+	api.AddResource(bookmark.Bookmark{}, bookmark.Resource{Storage: bms})
+	bookmarks, err := bms.GetAll(bookmark.Query{})
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -56,7 +55,7 @@ func TestMain(m *testing.M) {
 		os.Exit(1)
 	}
 	rand.Seed(time.Now().UnixNano())
-	bookmark = bookmarks[rand.Intn(l)]
+	bmk = bookmarks[rand.Intn(l)]
 	os.Exit(m.Run())
 }
 
@@ -138,7 +137,7 @@ func TestCreate(t *testing.T) {
 
 func TestPatch(t *testing.T) {
 	rec := httptest.NewRecorder()
-	id := bookmark.GetID()
+	id := bmk.GetID()
 	req, err := http.NewRequest("PATCH", "/v0/bookmarks/"+id, strings.NewReader(`
 		{
 			"data": {

@@ -1,28 +1,26 @@
-package resource // import "jhhgo.us/pukaws/resource"
+package bookmark // import "jhhgo.us/pukaws/bookmark"
 
 import (
 	"errors"
 	"net/http"
 
 	"github.com/manyminds/api2go"
-	"jhhgo.us/pukaws/model"
-	"jhhgo.us/pukaws/storage"
 )
 
 const typeErrMsg = "Invalid instance given"
 
-// The BookmarkResource struct implements api2go routes.
-type BookmarkResource struct {
-	BookmarkStorage storage.BookmarkStorage
+// The Resource struct implements api2go routes.
+type Resource struct {
+	Storage Storage
 }
 
 // FindAll satisfies api2go.FindAll interface
-func (s BookmarkResource) FindAll(r api2go.Request) (api2go.Responder, error) {
+func (s Resource) FindAll(r api2go.Request) (api2go.Responder, error) {
 	// check for authentication error set by middleware
 	if err, ok := r.Context.Get("error"); ok {
 		return &Response{}, err.(error)
 	}
-	bookmarks, err := s.BookmarkStorage.GetAll(storage.NewQuery(r))
+	bookmarks, err := s.Storage.GetAll(NewQuery(r))
 	if err != nil {
 		return &Response{}, api2go.NewHTTPError(err, err.Error(), http.StatusInternalServerError)
 	}
@@ -30,7 +28,7 @@ func (s BookmarkResource) FindAll(r api2go.Request) (api2go.Responder, error) {
 }
 
 // PaginatedFindAll satisfies the api2go.PaginatedFindAll interface
-func (s BookmarkResource) PaginatedFindAll(r api2go.Request) (uint, api2go.Responder, error) {
+func (s Resource) PaginatedFindAll(r api2go.Request) (uint, api2go.Responder, error) {
 	// check for authentication error set by middleware
 	if err, ok := r.Context.Get("error"); ok {
 		return 0, &Response{}, err.(error)
@@ -40,12 +38,12 @@ func (s BookmarkResource) PaginatedFindAll(r api2go.Request) (uint, api2go.Respo
 	if err != nil {
 		return 0, &Response{}, api2go.NewHTTPError(err, err.Error(), http.StatusBadRequest)
 	}
-	q := storage.NewQuery(r)
-	count, err := s.BookmarkStorage.Count(q)
+	q := NewQuery(r)
+	count, err := s.Storage.Count(q)
 	if err != nil {
 		return 0, &Response{}, api2go.NewHTTPError(err, err.Error(), http.StatusInternalServerError)
 	}
-	bookmarks, err := s.BookmarkStorage.GetPage(q, p.Skip, p.Limit)
+	bookmarks, err := s.Storage.GetPage(q, p.Skip, p.Limit)
 	if err != nil {
 		return 0, &Response{}, err
 	}
@@ -55,13 +53,13 @@ func (s BookmarkResource) PaginatedFindAll(r api2go.Request) (uint, api2go.Respo
 }
 
 // FindOne satisfies api2go.CRUD interface
-func (s BookmarkResource) FindOne(id string, r api2go.Request) (api2go.Responder, error) {
+func (s Resource) FindOne(id string, r api2go.Request) (api2go.Responder, error) {
 	// check for authentication error set by middleware
 	if err, ok := r.Context.Get("error"); ok {
 		return &Response{}, err.(error)
 	}
 
-	bookmark, err := s.BookmarkStorage.GetOne(id)
+	bookmark, err := s.Storage.GetOne(id)
 	if err != nil {
 		return &Response{}, api2go.NewHTTPError(err, err.Error(), http.StatusNotFound)
 	}
@@ -69,18 +67,18 @@ func (s BookmarkResource) FindOne(id string, r api2go.Request) (api2go.Responder
 }
 
 // Create satisfies api2go.CRUD interface
-func (s BookmarkResource) Create(obj interface{}, r api2go.Request) (api2go.Responder, error) {
+func (s Resource) Create(obj interface{}, r api2go.Request) (api2go.Responder, error) {
 	// check for authentication error set by middleware
 	if err, ok := r.Context.Get("error"); ok {
 		return &Response{}, err.(error)
 	}
 
-	bookmark, ok := obj.(lib.Bookmark)
+	bookmark, ok := obj.(Bookmark)
 	if !ok {
 		return &Response{}, api2go.NewHTTPError(errors.New(typeErrMsg), typeErrMsg, http.StatusBadRequest)
 	}
 
-	err := s.BookmarkStorage.Insert(&bookmark)
+	err := s.Storage.Insert(&bookmark)
 	if err != nil {
 		return &Response{}, api2go.NewHTTPError(err, err.Error(), http.StatusInternalServerError)
 	}
@@ -89,31 +87,31 @@ func (s BookmarkResource) Create(obj interface{}, r api2go.Request) (api2go.Resp
 }
 
 // Delete satisfies api2go.CRUD interface
-func (s BookmarkResource) Delete(id string, r api2go.Request) (api2go.Responder, error) {
+func (s Resource) Delete(id string, r api2go.Request) (api2go.Responder, error) {
 	// check for authentication error set by middleware
 	if err, ok := r.Context.Get("error"); ok {
 		return &Response{}, err.(error)
 	}
 
-	if err := s.BookmarkStorage.Delete(id); err != nil {
+	if err := s.Storage.Delete(id); err != nil {
 		return &Response{}, api2go.NewHTTPError(err, err.Error(), http.StatusNotFound)
 	}
 	return &Response{Code: http.StatusNoContent}, nil
 }
 
 // Update satisfies api2go.CRUD interface
-func (s BookmarkResource) Update(obj interface{}, r api2go.Request) (api2go.Responder, error) {
+func (s Resource) Update(obj interface{}, r api2go.Request) (api2go.Responder, error) {
 	// check for authentication error set by middleware
 	if err, ok := r.Context.Get("error"); ok {
 		return &Response{}, err.(error)
 	}
 
-	bookmark, ok := obj.(lib.Bookmark)
+	bookmark, ok := obj.(Bookmark)
 	if !ok {
 		return &Response{}, api2go.NewHTTPError(errors.New(typeErrMsg), typeErrMsg, http.StatusBadRequest)
 	}
 
-	if err := s.BookmarkStorage.Update(&bookmark); err != nil {
+	if err := s.Storage.Update(&bookmark); err != nil {
 		return &Response{}, api2go.NewHTTPError(err, err.Error(), http.StatusInternalServerError)
 	}
 

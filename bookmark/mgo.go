@@ -1,39 +1,38 @@
-package storage // import "jhhgo.us/pukaws/storage"
+package bookmark // import "jhhgo.us/pukaws/bookmark"
 
 import (
 	"time"
 
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"jhhgo.us/pukaws/model"
 )
 
-// NewBookmarkMgoStorage initializes the storage
-func NewBookmarkMgoStorage(uri string) (BookmarkMgoStorage, error) {
+// NewMgoStorage initializes the storage
+func NewMgoStorage(uri string) (MgoStorage, error) {
 	session, err := mgo.Dial(uri)
 	if err != nil {
-		return BookmarkMgoStorage{}, err
+		return MgoStorage{}, err
 	}
-	return BookmarkMgoStorage{session: session}, nil
+	return MgoStorage{session: session}, nil
 }
 
-// BookmarkMgoStorage stores all users
-type BookmarkMgoStorage struct {
+// MgoStorage stores all users
+type MgoStorage struct {
 	session *mgo.Session
 }
 
 // Close will close the master session
-func (s BookmarkMgoStorage) Close() {
+func (s MgoStorage) Close() {
 	s.session.Close()
 }
 
 // GetAll returns the bookmarks specified by query.
-func (s BookmarkMgoStorage) GetAll(q Query) ([]lib.Bookmark, error) {
+func (s MgoStorage) GetAll(q Query) ([]Bookmark, error) {
 	session := s.session.Copy()
 	defer session.Close()
 	c := session.DB("").C("bookmarks")
 	iter := c.Find(q.Mgo()).Sort("-timestamp").Iter()
-	var result []lib.Bookmark
+	var result []Bookmark
 	err := iter.All(&result)
 	if err != nil {
 		return nil, err
@@ -42,12 +41,12 @@ func (s BookmarkMgoStorage) GetAll(q Query) ([]lib.Bookmark, error) {
 }
 
 // GetPage returns a portion of bookmarks specified by query.
-func (s BookmarkMgoStorage) GetPage(q Query, skip, limit int) ([]lib.Bookmark, error) {
+func (s MgoStorage) GetPage(q Query, skip, limit int) ([]Bookmark, error) {
 	session := s.session.Copy()
 	defer session.Close()
 	c := session.DB("").C("bookmarks")
 	iter := c.Find(q.Mgo()).Sort("-timestamp").Skip(skip).Limit(limit).Iter()
-	var result []lib.Bookmark
+	var result []Bookmark
 	err := iter.All(&result)
 	if err != nil {
 		return nil, err
@@ -56,7 +55,7 @@ func (s BookmarkMgoStorage) GetPage(q Query, skip, limit int) ([]lib.Bookmark, e
 }
 
 // Count returns the total number of bookmarks specified by query.
-func (s BookmarkMgoStorage) Count(q Query) (int, error) {
+func (s MgoStorage) Count(q Query) (int, error) {
 	session := s.session.Copy()
 	defer session.Close()
 	c := session.DB("").C("bookmarks")
@@ -65,20 +64,20 @@ func (s BookmarkMgoStorage) Count(q Query) (int, error) {
 }
 
 // GetOne user
-func (s BookmarkMgoStorage) GetOne(id string) (lib.Bookmark, error) {
+func (s MgoStorage) GetOne(id string) (Bookmark, error) {
 	session := s.session.Copy()
 	defer session.Close()
 	c := session.DB("").C("bookmarks")
-	var result lib.Bookmark
+	var result Bookmark
 	err := c.FindId(bson.ObjectIdHex(id)).One(&result)
 	if err != nil {
-		return lib.Bookmark{}, err
+		return Bookmark{}, err
 	}
 	return result, nil
 }
 
 // Insert a user and set Timestamp to insert time if not already set.
-func (s BookmarkMgoStorage) Insert(b *lib.Bookmark) error {
+func (s MgoStorage) Insert(b *Bookmark) error {
 	id := bson.NewObjectId()
 	b.ID = id
 
@@ -94,7 +93,7 @@ func (s BookmarkMgoStorage) Insert(b *lib.Bookmark) error {
 }
 
 // Delete one :(
-func (s BookmarkMgoStorage) Delete(id string) error {
+func (s MgoStorage) Delete(id string) error {
 	session := s.session.Copy()
 	defer session.Close()
 	c := session.DB("").C("bookmarks")
@@ -103,7 +102,7 @@ func (s BookmarkMgoStorage) Delete(id string) error {
 }
 
 // Update a user and updates Timestamp.
-func (s BookmarkMgoStorage) Update(b *lib.Bookmark) error {
+func (s MgoStorage) Update(b *Bookmark) error {
 	session := s.session.Copy()
 	defer session.Close()
 	c := session.DB("").C("bookmarks")

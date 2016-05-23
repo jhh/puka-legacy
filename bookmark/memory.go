@@ -1,4 +1,4 @@
-package storage // import "jhhgo.us/pukaws/storage"
+package bookmark // import "jhhgo.us/pukaws/bookmark"
 
 import (
 	"bytes"
@@ -13,34 +13,33 @@ import (
 	"gopkg.in/mgo.v2/bson"
 
 	"github.com/manyminds/api2go"
-	"jhhgo.us/pukaws/model"
 )
 
 var bookmarksJSON []byte // set in init
 
-// NewBookmarkMemoryStorage initializes the storage
-func NewBookmarkMemoryStorage() *BookmarkMemoryStorage {
-	var bookmarks []lib.Bookmark
+// NewMemoryStorage initializes the storage
+func NewMemoryStorage() *MemoryStorage {
+	var bookmarks []Bookmark
 	err := json.Unmarshal(bookmarksJSON, &bookmarks)
 	if err != nil {
 		log.Fatal(err)
 	}
-	data := make(map[string]*lib.Bookmark)
+	data := make(map[string]*Bookmark)
 	for _, b := range bookmarks {
 		b.ID = bson.NewObjectId()
 		data[b.GetID()] = &b
 	}
-	return &BookmarkMemoryStorage{bookmarks: data}
+	return &MemoryStorage{bookmarks: data}
 }
 
-// BookmarkMemoryStorage stores all users
-type BookmarkMemoryStorage struct {
-	bookmarks map[string]*lib.Bookmark
+// MemoryStorage stores all users
+type MemoryStorage struct {
+	bookmarks map[string]*Bookmark
 }
 
 // GetAll returns the user map. WARNING: ignores query.
-func (s BookmarkMemoryStorage) GetAll(q Query) ([]lib.Bookmark, error) {
-	result := make([]lib.Bookmark, 0, len(s.bookmarks))
+func (s MemoryStorage) GetAll(q Query) ([]Bookmark, error) {
+	result := make([]Bookmark, 0, len(s.bookmarks))
 	for _, val := range s.bookmarks {
 		result = append(result, *val)
 	}
@@ -48,28 +47,28 @@ func (s BookmarkMemoryStorage) GetAll(q Query) ([]lib.Bookmark, error) {
 }
 
 // GetPage returns a portion of bookmarks specified by query. WARNING: not implemented
-func (s BookmarkMemoryStorage) GetPage(q Query, skip, limit int) ([]lib.Bookmark, error) {
-	return []lib.Bookmark{}, errors.New("not implemented")
+func (s MemoryStorage) GetPage(q Query, skip, limit int) ([]Bookmark, error) {
+	return []Bookmark{}, errors.New("not implemented")
 }
 
 // Count returns total number of bookmarks. WARNING: ignores query.
-func (s BookmarkMemoryStorage) Count(q Query) (int, error) {
+func (s MemoryStorage) Count(q Query) (int, error) {
 	fmt.Println("LEN", len(s.bookmarks))
 	return len(s.bookmarks), nil
 }
 
 // GetOne user
-func (s BookmarkMemoryStorage) GetOne(id string) (lib.Bookmark, error) {
+func (s MemoryStorage) GetOne(id string) (Bookmark, error) {
 	user, ok := s.bookmarks[id]
 	if ok {
 		return *user, nil
 	}
 	errMessage := fmt.Sprintf("Bookmark for id %s not found", id)
-	return lib.Bookmark{}, api2go.NewHTTPError(errors.New(errMessage), errMessage, http.StatusNotFound)
+	return Bookmark{}, api2go.NewHTTPError(errors.New(errMessage), errMessage, http.StatusNotFound)
 }
 
 // Insert a user
-func (s BookmarkMemoryStorage) Insert(b *lib.Bookmark) error {
+func (s MemoryStorage) Insert(b *Bookmark) error {
 	id := bson.NewObjectId()
 	b.ID = id
 	s.bookmarks[id.Hex()] = b
@@ -77,7 +76,7 @@ func (s BookmarkMemoryStorage) Insert(b *lib.Bookmark) error {
 }
 
 // Delete one :(
-func (s BookmarkMemoryStorage) Delete(id string) error {
+func (s MemoryStorage) Delete(id string) error {
 	_, exists := s.bookmarks[id]
 	if !exists {
 		return fmt.Errorf("Bookmark with id %s does not exist", id)
@@ -88,7 +87,7 @@ func (s BookmarkMemoryStorage) Delete(id string) error {
 }
 
 // Update a user
-func (s BookmarkMemoryStorage) Update(b *lib.Bookmark) error {
+func (s MemoryStorage) Update(b *Bookmark) error {
 	_, exists := s.bookmarks[b.ID.Hex()]
 	if !exists {
 		return fmt.Errorf("Bookmark with id %s does not exist", b.ID)

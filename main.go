@@ -6,10 +6,8 @@ import (
 	"os"
 
 	"github.com/manyminds/api2go"
+	"jhhgo.us/pukaws/bookmark"
 	"jhhgo.us/pukaws/middleware"
-	"jhhgo.us/pukaws/model"
-	"jhhgo.us/pukaws/resource"
-	"jhhgo.us/pukaws/storage"
 )
 
 var (
@@ -43,7 +41,7 @@ func init() {
 }
 
 func main() {
-	bookmarkStorage, err := storage.NewBookmarkMgoStorage(mongoURL)
+	bookmarkStorage, err := bookmark.NewMgoStorage(mongoURL)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -58,8 +56,8 @@ func main() {
 	fmt.Println(http.ListenAndServe(":"+port, api.Handler()))
 }
 
-func newAPI(st storage.BookmarkStorage, base string) *api2go.API {
+func newAPI(st bookmark.Storage, base string) *api2go.API {
 	api := api2go.NewAPIWithBaseURL("v0", base)
-	api.AddResource(lib.Bookmark{}, resource.BookmarkResource{BookmarkStorage: st})
+	api.AddResource(bookmark.Bookmark{}, bookmark.Resource{Storage: st})
 	return api
 }
