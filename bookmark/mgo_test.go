@@ -202,8 +202,8 @@ func loadTestData() {
 		log.Fatal(err)
 	}
 	defer func() {
-		if err := fi.Close(); err != nil {
-			log.Fatal(err)
+		if derr := fi.Close(); derr != nil {
+			log.Fatal(derr)
 		}
 	}()
 

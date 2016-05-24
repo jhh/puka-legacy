@@ -103,8 +103,8 @@ func init() {
 		panic(err)
 	}
 	defer func() {
-		if err := r.Close(); err != nil {
-			panic(err)
+		if derr := r.Close(); derr != nil {
+			panic(derr)
 		}
 	}()
 	bookmarksJSON, err = ioutil.ReadAll(r)
