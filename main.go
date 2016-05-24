@@ -15,7 +15,6 @@ var (
 	baseURL   = os.Getenv("BASE_URL")
 	mongoURL  = os.Getenv("MONGODB_URI")
 	authToken = os.Getenv("PUKA_TOKEN")
-	origin    = os.Getenv("ALLOW_ORIGIN")
 )
 
 func init() {
@@ -33,10 +32,6 @@ func init() {
 	}
 	if authToken == "" {
 		fmt.Println("$PUKA_TOKEN not set, will not authenticate")
-	}
-	if origin == "" {
-		origin = "http://localhost:8080"
-		fmt.Printf("$ALLOW_ORIGIN not set, using %s\n", origin)
 	}
 }
 
