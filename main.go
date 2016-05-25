@@ -2,6 +2,7 @@ package main // import "jhhgo.us/pukaws"
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 
@@ -18,20 +19,22 @@ var (
 )
 
 func init() {
+	log.SetFlags(0)
+	log.SetPrefix("pukaws: ")
 	if port == "" {
 		port = "8088"
-		fmt.Println("$PORT not set, using: 8088")
+		log.Println("$PORT not set, using: 8088")
 	}
 	if baseURL == "" {
 		baseURL = "http://localhost:" + port
-		fmt.Printf("$BASE_URL not set, using: %s\n", baseURL)
+		log.Printf("$BASE_URL not set, using: %s\n", baseURL)
 	}
 	if mongoURL == "" {
 		mongoURL = "mongodb://localhost/test"
-		fmt.Printf("$MONGODB_URI not set, using: %s\n", mongoURL)
+		log.Printf("$MONGODB_URI not set, using: %s\n", mongoURL)
 	}
 	if authToken == "" {
-		fmt.Println("$PUKA_TOKEN not set, will not authenticate")
+		log.Println("$PUKA_TOKEN not set, will not authenticate")
 	}
 }
 
@@ -47,8 +50,8 @@ func main() {
 	if authToken != "" {
 		api.UseMiddleware(middleware.NewAuthenticator(authToken))
 	}
-	fmt.Printf("Listening on :%s\n", port)
-	fmt.Println(http.ListenAndServe(":"+port, api.Handler()))
+	log.Printf("listening on %s\n", baseURL)
+	log.Fatal(http.ListenAndServe(":"+port, api.Handler()))
 }
 
 func newAPI(st bookmark.Storage, base string) *api2go.API {
