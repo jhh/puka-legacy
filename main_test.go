@@ -26,22 +26,7 @@ var (
 
 func TestMain(m *testing.M) {
 	flag.Parse()
-	var bms bookmark.Storage
-	if testing.Short() {
-		fmt.Println("Using BookmarkMemoryStorage for testing")
-		bms = bookmark.NewMemoryStorage()
-	} else {
-		fmt.Println("Using BookmarkMgoStorage for testing")
-		uri := os.Getenv("MONGODB_URI")
-		if uri == "" {
-			uri = "mongodb://localhost/test"
-		}
-		var err error
-		bms, err = bookmark.NewMgoStorage(uri)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
+	bms := bookmark.NewMemoryStorage()
 	api = api2go.NewAPIWithBaseURL("v0", "http://localhost:31415")
 	api.AddResource(bookmark.Bookmark{}, bookmark.Resource{Storage: bms})
 	bookmarks, err := bms.GetAll(bookmark.Query{})
