@@ -43,7 +43,6 @@ func TestMain(m *testing.M) {
 		}
 	}
 	api = api2go.NewAPIWithBaseURL("v0", "http://localhost:31415")
-	// api.UseMiddleware(middleware.Authenticate)
 	api.AddResource(bookmark.Bookmark{}, bookmark.Resource{Storage: bms})
 	bookmarks, err := bms.GetAll(bookmark.Query{})
 	if err != nil {
