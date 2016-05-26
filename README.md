@@ -2,10 +2,7 @@
 
 [![Build Status](https://travis-ci.org/jhh/puka-api.svg?branch=master)](https://travis-ci.org/jhh/puka-api)
 
-This is the Puka API implemented in [Go][golang]. It relies on the
-[api2go][api2go] package for implementation of the [JSONAPI.org][jsonapi] json
-API spec and REST service. It uses MongoDB as a database. An in-memory storage
-implmentation is provided for testing.
+This is the Puka API implemented in [Go][golang]. It relies on the [api2go] package for implementation of the [JSONAPI.org][jsonapi] json API spec and REST service. It uses MongoDB as a database. An in-memory storage implementation is provided for testing.
 
 ## Installing
 
@@ -14,6 +11,7 @@ $ go get jhhgo.us/pukaws
 ```
 
 ## REST API
+
 The Puka server provides the following API endpoints.
 
 ```
@@ -81,6 +79,6 @@ $ go install .
 $ env PORT=8080 BASE_URL=http://localhost:8080 puka-api
 ```
 
-[golang]: https://golang.org/
 [api2go]: https://github.com/manyminds/api2go
+[golang]: https://golang.org/
 [jsonapi]: http://jsonapi.org/
