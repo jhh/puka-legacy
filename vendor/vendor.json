@@ -26,11 +26,11 @@
 			"revision": "77366a47451a56bb3ba682481eed85b64fea14e8"
 		},
 		{
-			"checksumSHA1": "AzHfc4G65Czfq+kLDYCn6TfhGek=",
+			"checksumSHA1": "giuMrSJ2U1CjvTert7bZ+YknDFw=",
 			"comment": "1.0-RC1-30-g0f0aba6",
 			"path": "github.com/manyminds/api2go",
-			"revision": "5207f05d44090999ebf2e09b3e66566484c4dbee",
-			"revisionTime": "2016-05-15T17:55:41Z"
+			"revision": "22da272c420e3e0f59a8aaa74dbd0f170053ade7",
+			"revisionTime": "2016-06-16T19:13:24Z"
 		},
 		{
 			"checksumSHA1": "QSZQmADkwdTGIT7Z/T0wXCUBpgA=",
