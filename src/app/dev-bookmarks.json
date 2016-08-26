@@ -1,5 +1,17 @@
 [
   {
+    "title": "Python",
+    "url": "/tag/python"
+  },
+  {
+    "title": "FRC",
+    "url": "/tag/frc"
+  },
+  {
+    "title": "OpenCV",
+    "url": "/tag/opencv"
+  },
+  {
     "title": "React",
     "url": "/tag/react"
   },
@@ -24,10 +36,6 @@
     "url": "http://html5please.com/"
   },
   {
-    "title": "Axios",
-    "url": "https://github.com/mzabriskie/axios"
-  },
-  {
     "title": "React.js Program",
     "url": "https://github.com/reactjsprogram"
   },
@@ -42,9 +50,5 @@
   {
     "title": "Chai Assertion Library",
     "url": "http://chaijs.com/"
-  },
-  {
-    "title": "Immutable",
-    "url": "https://facebook.github.io/immutable-js/"
   }
 ]
