@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 
-	"jhhgo.us/pukaws/bookmark"
+	"github.com/jhh/puka/api/bookmark"
 
 	"github.com/manyminds/api2go/jsonapi"
 )

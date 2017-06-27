@@ -1,4 +1,4 @@
-package middleware // import "jhhgo.us/pukaws/middleware"
+package middleware // import "github.com/jhh/puka/api/middleware"
 
 import (
 	"log"

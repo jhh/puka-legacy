@@ -1,4 +1,4 @@
-package main // import "jhhgo.us/pukaws"
+package main // import "github.com/jhh/puka/api"
 
 import (
 	"fmt"
@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/jhh/puka/api/bookmark"
+	"github.com/jhh/puka/api/middleware"
 	"github.com/manyminds/api2go"
-	"jhhgo.us/pukaws/bookmark"
-	"jhhgo.us/pukaws/middleware"
 )
 
 var (

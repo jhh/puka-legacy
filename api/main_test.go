@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"jhhgo.us/pukaws/bookmark"
+	"github.com/jhh/puka/api/bookmark"
 
 	"gopkg.in/mgo.v2/bson"
 

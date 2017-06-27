@@ -1,4 +1,4 @@
-package bookmark // import "jhhgo.us/pukaws/bookmark"
+package bookmark // import "github.com/jhh/puka/api/bookmark"
 
 import (
 	"github.com/manyminds/api2go"

@@ -1,7 +1,7 @@
 language: go
 go:
   - 1.6.2
-go_import_path: jhhgo.us/pukaws
+go_import_path: github.com/jhh/puka/api
 install:
     - go get github.com/kardianos/govendor
     - govendor sync
