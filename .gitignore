@@ -1,0 +1,5 @@
+.env
+/node_modules
+/build
+/output
+npm-debug.log

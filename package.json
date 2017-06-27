@@ -1,0 +1,87 @@
+{
+  "name": "puka-react",
+  "version": "1.0.0",
+  "description": "Puka client implemented using React and Redux",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "build": "scripty",
+    "clean": "scripty",
+    "deploy": "scripty",
+    "deploy:dryrun": "scripty",
+    "deploy:upload": "scripty",
+    "start": "scripty",
+    "test": "scripty",
+    "test:browser": "scripty",
+    "test:debug": "scripty",
+    "test:watch": "scripty"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhh/puka-react.git"
+  },
+  "keywords": [
+    "puka"
+  ],
+  "author": "Jeff Hutchison",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/jhh/puka-react/issues"
+  },
+  "homepage": "https://github.com/jhh/puka-react#readme",
+  "dependencies": {
+    "babel-core": "^6.7.2",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-object-rest-spread": "^6.6.5",
+    "babel-polyfill": "^6.7.2",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-3": "^6.5.0",
+    "css-loader": "^0.23.1",
+    "exports-loader": "^0.6.3",
+    "file-loader": "^0.8.5",
+    "html-webpack-plugin": "^2.9.0",
+    "imports-loader": "^0.6.5",
+    "json-loader": "^0.5.4",
+    "lodash": "^4.6.1",
+    "moment": "^2.12.0",
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0",
+    "react-redux": "^4.4.1",
+    "react-router": "^2.0.1",
+    "redux": "^3.3.1",
+    "redux-thunk": "^2.0.1",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.14",
+    "whatwg-fetch": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^2.4.0",
+    "eslint-config-airbnb": "^9.0.0",
+    "eslint-import-resolver-webpack": "^0.3.0",
+    "eslint-plugin-import": "^1.5.0",
+    "eslint-plugin-jsx-a11y": "^1.0.0",
+    "eslint-plugin-mocha": "^3.0.0",
+    "eslint-plugin-react": "^5.0.0",
+    "isomorphic-fetch": "^2.2.1",
+    "jsdom": "^9.0.0",
+    "mocha": "^2.4.5",
+    "mocha-loader": "^0.7.1",
+    "null-loader": "^0.1.1",
+    "react-addons-test-utils": "^15.0.0",
+    "react-hot-loader": "^1.3.0",
+    "scripty": "^1.2.1",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "babel": {
+    "plugins": [
+      "syntax-object-rest-spread"
+    ],
+    "presets": [
+      "es2015",
+      "react",
+      "babel-preset-stage-3"
+    ]
+  }
+}

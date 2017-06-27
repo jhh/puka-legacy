@@ -1,0 +1,3 @@
+#!/bin/sh
+
+webpack-dev-server --hot --inline --config webpack.tests.config.js

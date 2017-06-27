@@ -1,0 +1,24 @@
+{
+  "extends": "airbnb",
+  "plugins": [
+      "react",
+      "mocha"
+  ],
+  "rules" : {
+    "mocha/no-exclusive-tests": "error",
+    "no-console": ["warn", {"allow": ["warn", "error"]}]
+  },
+  "env": {
+    "mocha": true
+  },
+  "globals": {
+    "PUKA_API_ENDPOINT": false
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "config/webpack.config.js"
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+jsc="js:babel-core/register"
+cssc="css:./test/misc/null-compiler"
+helper="./test/misc/test_helper.js"
+
+mocha --compilers $jsc,$cssc --require $helper "test/*/*@(.js|.jsx)" $1

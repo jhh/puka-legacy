@@ -1,0 +1,42 @@
+.bookmark {
+  padding-bottom: 0.5rem;
+}
+
+.url {
+  color: rgb(0, 183, 255);
+  font-size: 110%;
+}
+
+.description {
+  margin-bottom: auto;
+  font-size: 95%;
+}
+
+.tags {
+  padding-left: 0;
+  list-style: none;
+  display: inline-block;
+  margin-bottom: auto;
+}
+
+.tags li {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.tag {
+  color: rgb(185, 54, 54);
+  font-size: 85%;
+}
+
+.date {
+  color: rgb(154, 143, 150);
+  font-size: 85%;
+  margin-left: 5px;
+}
+
+.edit {
+  color: rgb(100, 100, 100);
+  font-size: 85%;
+  margin-left: 10px;
+}

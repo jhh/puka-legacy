@@ -1,0 +1,3 @@
+. config/scripts.sh
+export NODE_ENV=production
+s3_website push --config-dir=$CONFIG_DIR --site=$BUILD_DIR $1
