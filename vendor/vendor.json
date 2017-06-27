@@ -1,0 +1,79 @@
+{
+	"comment": "Puka API server",
+	"heroku": {
+		"goVersion": "go1.6",
+		"install": [
+			"."
+		]
+	},
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "4+wnUoVOdK9cHy7rqdQdweYKiOA=",
+			"comment": "v0.5.0",
+			"path": "github.com/bitly/go-simplejson",
+			"revision": "aabad6e819789e569bd6aabf444c935aa9ba1e44"
+		},
+		{
+			"checksumSHA1": "XffqQIcep1INkknFt0SBPTKo9zI=",
+			"path": "github.com/gedex/inflector",
+			"revision": "91797f1712fd58f224781be1080b8613d096187e"
+		},
+		{
+			"checksumSHA1": "mZK+4q1Xr8z0AwkCAgO+7Rb8xk8=",
+			"comment": "v1.1-29-g77366a4",
+			"path": "github.com/julienschmidt/httprouter",
+			"revision": "77366a47451a56bb3ba682481eed85b64fea14e8"
+		},
+		{
+			"checksumSHA1": "giuMrSJ2U1CjvTert7bZ+YknDFw=",
+			"comment": "1.0-RC1-30-g0f0aba6",
+			"path": "github.com/manyminds/api2go",
+			"revision": "22da272c420e3e0f59a8aaa74dbd0f170053ade7",
+			"revisionTime": "2016-06-16T19:13:24Z"
+		},
+		{
+			"checksumSHA1": "QSZQmADkwdTGIT7Z/T0wXCUBpgA=",
+			"comment": "1.0-RC1-30-g0f0aba6",
+			"path": "github.com/manyminds/api2go/jsonapi",
+			"revision": "0f0aba686fffe91897ee4b7e1d682efbfcbac7fd"
+		},
+		{
+			"checksumSHA1": "OrImna56/KBZ02BhwyqsCLe13h0=",
+			"comment": "1.0-RC1-30-g0f0aba6",
+			"path": "github.com/manyminds/api2go/routing",
+			"revision": "0f0aba686fffe91897ee4b7e1d682efbfcbac7fd"
+		},
+		{
+			"checksumSHA1": "9jjO5GjLa0XF/nfWihF02RoH4qc=",
+			"path": "golang.org/x/net/context",
+			"revision": "1aafd77e1e7f6849ad16a7bdeb65e3589a10b2bb"
+		},
+		{
+			"checksumSHA1": "bDSCvmvwCYcN5mPjePIzpPyqGYM=",
+			"comment": "r2016.02.04-1-gb6e2fa3",
+			"path": "gopkg.in/mgo.v2",
+			"revision": "b6e2fa371e64216a45e61072a96d4e3859f169da",
+			"revisionTime": "2016-02-23T13:38:14Z"
+		},
+		{
+			"checksumSHA1": "zTjQOFGy4XTv4L33Kd2FhrV+mbM=",
+			"comment": "r2016.02.04-1-gb6e2fa3",
+			"path": "gopkg.in/mgo.v2/bson",
+			"revision": "b6e2fa371e64216a45e61072a96d4e3859f169da"
+		},
+		{
+			"checksumSHA1": "CkCDTsyN2Lbj1cL8+oaYKoPpI9w=",
+			"comment": "r2016.02.04-1-gb6e2fa3",
+			"path": "gopkg.in/mgo.v2/internal/sasl",
+			"revision": "b6e2fa371e64216a45e61072a96d4e3859f169da"
+		},
+		{
+			"checksumSHA1": "+1WDRPaOphSCmRMxVPIPBV4aubc=",
+			"comment": "r2016.02.04-1-gb6e2fa3",
+			"path": "gopkg.in/mgo.v2/internal/scram",
+			"revision": "b6e2fa371e64216a45e61072a96d4e3859f169da"
+		}
+	],
+	"rootPath": "jhhgo.us/pukaws"
+}
