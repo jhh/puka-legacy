@@ -1,16 +1,20 @@
 # Puka
 
+A web bookmark application.
+
+## Puka API
+
 [![Build Status](https://travis-ci.org/jhh/puka-api.svg?branch=master)](https://travis-ci.org/jhh/puka-api)
 
 This is the Puka API implemented in [Go][golang]. It relies on the [api2go] package for implementation of the [JSONAPI.org][jsonapi] json API spec and REST service. It uses MongoDB as a database. An in-memory storage implementation is provided for testing.
 
-## Installing
+### Installing
 
 ```
-$ go get jhhgo.us/pukaws
+$ go get github.com/jhh/pukaws
 ```
 
-## REST API
+### REST API
 
 The Puka server provides the following API endpoints.
 
@@ -69,7 +73,7 @@ GET /v0/bookmarks
 }
 ```
 
-## Getting Started
+### Getting Started
 
 The $PORT and $BASE_URL environment variables must be set.
 
@@ -82,3 +86,6 @@ $ env PORT=8080 BASE_URL=http://localhost:8080 puka-api
 [api2go]: https://github.com/manyminds/api2go
 [golang]: https://golang.org/
 [jsonapi]: http://jsonapi.org/
+
+## Puka Front End
+Puka client implemented with React and Redux
