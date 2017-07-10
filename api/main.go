@@ -20,7 +20,7 @@ var (
 
 func init() {
 	log.SetFlags(0)
-	log.SetPrefix("pukaws: ")
+	log.SetPrefix("puka: ")
 	if port == "" {
 		port = "8088"
 		log.Println("$PORT not set, using: 8088")
@@ -39,6 +39,7 @@ func init() {
 }
 
 func main() {
+	log.Printf("connecting to mongo at %s\n", mongoURL)
 	bookmarkStorage, err := bookmark.NewMgoStorage(mongoURL)
 	if err != nil {
 		fmt.Println(err)

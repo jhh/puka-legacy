@@ -11,7 +11,10 @@ This is the Puka API implemented in [Go][golang]. It relies on the [api2go] pack
 ### Installing
 
 ```
-$ go get github.com/jhh/pukaws
+$ cd api
+$ go get github.com/kardianos/govendor
+$ govendor sync
+$ go test -short $(go list ./... | grep -v /vendor/)
 ```
 
 ### REST API
@@ -87,5 +90,13 @@ $ env PORT=8080 BASE_URL=http://localhost:8080 puka-api
 [golang]: https://golang.org/
 [jsonapi]: http://jsonapi.org/
 
+### Restoring data
+This will restore to the mongo database container named `puka_mongo` and will rename the database from `heroku_foo` to `test`.
+
+```
+$ docker run --rm --network=puka_default --name restore -v /opt/puka/backup:/backup -it mongo:3 bash
+# mongorestore -h puka_mongo --nsFrom heroku_foo.bookmarks --nsTo test.bookmarks --drop --gzip --archive=/backup/puka.archive.gz
+```
+
 ## Puka Front End
-Puka client implemented with React and Redux
+Puka client implemented with React and Redux, uses nginx-proxy

@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  web:
+    image: j3ff/puka-web:latest
+    build: ./web
+    container_name: puka_web
+    environment:
+      VIRTUAL_HOST: puka.j3ff.io
+    depends_on:
+      - api
+  
+  api:
+    image: j3ff/puka-api:latest
+    build:
+      context: ./api
+      args:
+        port: 80
+    container_name: puka_api
+    environment:
+      BASE_URL: "http://puka-api.j3ff.io"
+      VIRTUAL_HOST: "puka-api.j3ff.io"
+      MONGODB_URI: "mongodb://puka_mongo/puka"
+    depends_on:
+      - db
+
+  db:
+    image: mongo:3
+    container_name: puka_mongo
+    volumes:
+      - /opt/puka/db:/data/db

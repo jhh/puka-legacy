@@ -3,7 +3,8 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const PRODUCTION_API_ENDPOINT = 'https://polar-crag-16716.herokuapp.com/v0/bookmarks';
+// const PRODUCTION_API_ENDPOINT = 'https://polar-crag-16716.herokuapp.com/v0/bookmarks';
+const PRODUCTION_API_ENDPOINT = 'http://puka-api.j3ff.io/v0/bookmarks';
 const DEV_API_ENDPOINT = `http://${process.env.PUKA_DEV_API_HOST || 'localhost'}:8088/v0/bookmarks`;
 
 module.exports = {
@@ -23,7 +24,8 @@ module.exports = {
         test: /\.jsx?$/,
         include: path.resolve(__dirname, '..', 'src'),
       },
-      { test: /\.css$/,
+      {
+        test: /\.css$/,
         loaders: [
           'style',
           'css?' + JSON.stringify({
@@ -74,19 +76,19 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin(),
   ] : [
-    new HtmlWebpackPlugin({
-      title: 'Puka Development',
-      template: path.resolve(__dirname, '..', 'src', 'index.html'),
-    }),
-    new webpack.ProvidePlugin({
-      fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
-    }),
-    new webpack.DefinePlugin({
-      PUKA_API_ENDPOINT: JSON.stringify(DEV_API_ENDPOINT),
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        PUKA_DEV_API_HOST: JSON.stringify(process.env.PUKA_DEV_API_HOST),
-      },
-    }),
-  ],
+      new HtmlWebpackPlugin({
+        title: 'Puka Development',
+        template: path.resolve(__dirname, '..', 'src', 'index.html'),
+      }),
+      new webpack.ProvidePlugin({
+        fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
+      }),
+      new webpack.DefinePlugin({
+        PUKA_API_ENDPOINT: JSON.stringify(DEV_API_ENDPOINT),
+        'process.env': {
+          NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+          PUKA_DEV_API_HOST: JSON.stringify(process.env.PUKA_DEV_API_HOST),
+        },
+      }),
+    ],
 };

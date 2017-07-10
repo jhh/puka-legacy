@@ -1,0 +1,7 @@
+assets
+node_modules
+scripts
+src
+test
+*.md
+*.json
