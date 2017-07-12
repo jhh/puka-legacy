@@ -8,6 +8,10 @@ services:
     restart: unless-stopped
     environment:
       VIRTUAL_HOST: puka.j3ff.io
+      LETSENCRYPT_HOST: puka.j3ff.io
+      LETSENCRYPT_EMAIL: jeff@j3ff.io
+    networks:
+      - nginxproxy_default
     depends_on:
       - api
 
@@ -20,9 +24,14 @@ services:
     container_name: puka_api
     restart: unless-stopped
     environment:
-      BASE_URL: "http://puka-api.j3ff.io"
-      VIRTUAL_HOST: "puka-api.j3ff.io"
+      BASE_URL: "https://puka-api.j3ff.io"
       MONGODB_URI: "mongodb://puka_mongo/puka"
+      VIRTUAL_HOST: puka-api.j3ff.io
+      LETSENCRYPT_HOST: puka-api.j3ff.io
+      LETSENCRYPT_EMAIL: jeff@j3ff.io
+    networks:
+      - nginxproxy_default
+      - private
     depends_on:
       - db
 
@@ -32,3 +41,10 @@ services:
     restart: unless-stopped
     volumes:
       - /opt/puka/db:/data/db
+    networks:
+      - private
+
+networks:
+  nginxproxy_default:
+    external: true
+  private:

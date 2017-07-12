@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // const PRODUCTION_API_ENDPOINT = 'https://polar-crag-16716.herokuapp.com/v0/bookmarks';
-const PRODUCTION_API_ENDPOINT = 'http://puka-api.j3ff.io/v0/bookmarks';
+const PRODUCTION_API_ENDPOINT = 'https://puka-api.j3ff.io/v0/bookmarks';
 const DEV_API_ENDPOINT = `http://${process.env.PUKA_DEV_API_HOST || 'localhost'}:8088/v0/bookmarks`;
 
 module.exports = {
