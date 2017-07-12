@@ -5,11 +5,12 @@ services:
     image: j3ff/puka-web:latest
     build: ./web
     container_name: puka_web
+    restart: unless-stopped
     environment:
       VIRTUAL_HOST: puka.j3ff.io
     depends_on:
       - api
-  
+
   api:
     image: j3ff/puka-api:latest
     build:
@@ -17,6 +18,7 @@ services:
       args:
         port: 80
     container_name: puka_api
+    restart: unless-stopped
     environment:
       BASE_URL: "http://puka-api.j3ff.io"
       VIRTUAL_HOST: "puka-api.j3ff.io"
@@ -27,5 +29,6 @@ services:
   db:
     image: mongo:3
     container_name: puka_mongo
+    restart: unless-stopped
     volumes:
       - /opt/puka/db:/data/db
