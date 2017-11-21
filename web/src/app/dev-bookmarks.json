@@ -1,54 +1,30 @@
 [
   {
-    "title": "Python",
-    "url": "/tag/python"
+    "title": "Android",
+    "url": "/tag/android"
+  },
+  {
+    "title": "Dagger",
+    "url": "/tag/dagger"
   },
   {
     "title": "FRC",
     "url": "/tag/frc"
   },
   {
+    "title": "Homelab",
+    "url": "/tag/homelab"
+  },
+  {
+    "title": "Java",
+    "url": "/tag/java"
+  },
+  {
     "title": "OpenCV",
     "url": "/tag/opencv"
   },
   {
-    "title": "React",
-    "url": "/tag/react"
-  },
-  {
-    "title": "Redux",
-    "url": "/tag/redux"
-  },
-  {
-    "title": "Javascript",
-    "url": "/tag/javascript"
-  },
-  {
-    "title": "Mozilla Developer Network",
-    "url": "https://developer.mozilla.org/en-US/"
-  },
-  {
-    "title": "Bootstrap 4",
-    "url": "http://v4-alpha.getbootstrap.com/"
-  },
-  {
-    "title": "HTML5 Please",
-    "url": "http://html5please.com/"
-  },
-  {
-    "title": "React.js Program",
-    "url": "https://github.com/reactjsprogram"
-  },
-  {
-    "title": "Chrome DevTools",
-    "url": "https://developers.google.com/web/tools/chrome-devtools/"
-  },
-  {
-    "title": "Mocha Javascript Test Framework",
-    "url": "https://mochajs.org/"
-  },
-  {
-    "title": "Chai Assertion Library",
-    "url": "http://chaijs.com/"
+    "title": "Vision",
+    "url": "/tag/vision"
   }
 ]

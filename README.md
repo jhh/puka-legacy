@@ -90,7 +90,18 @@ $ env PORT=8080 BASE_URL=http://localhost:8080 puka-api
 [golang]: https://golang.org/
 [jsonapi]: http://jsonapi.org/
 
-### Restoring data
+### Back up database
+
+```sh
+#!/bin/sh
+
+PUKA=/opt/puka
+
+docker run --rm -v $PUKA/backup:/backup --network=puka_private mongo:3 bash -c 'mongodump --out /backup --host puka_mongo'
+tar -C $PUKA -czf puka.tgz backup
+```
+
+### Restoring data from Heroku
 This will restore to the mongo database container named `puka_mongo` and will rename the database from `heroku_foo` to `test`.
 
 ```

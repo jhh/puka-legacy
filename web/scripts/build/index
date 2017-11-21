@@ -1,3 +1,4 @@
 #!/bin/sh
+export NODE_ENV=production
 . config/scripts.sh
 webpack --config $CONFIG_DIR/webpack.config.js
