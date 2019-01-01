@@ -9,3 +9,9 @@
 - `docker-compose push web`
 - `docker-compose down`
 - `docker-compose up -d`
+
+## Sort Dev Bookmarks
+
+```
+cat dev-bookmarks.json | jq -c 'sort_by(.title)' | pbcopy
+```
