@@ -8,6 +8,8 @@ A web bookmark application.
 
 This is the Puka API implemented in [Go][golang]. It relies on the [api2go] package for implementation of the [JSONAPI.org][jsonapi] json API spec and REST service. It uses MongoDB as a database. An in-memory storage implementation is provided for testing.
 
+Assign the `PUKA_TOKEN` env variable value to `puka_auth_token` in browser local storage.
+
 ### Installing
 
 ```
@@ -92,22 +94,3 @@ $ env PORT=8080 BASE_URL=http://localhost:8080 puka-api
 
 ### Back up database
 
-```sh
-#!/bin/sh
-
-PUKA=/opt/puka
-
-docker run --rm -v $PUKA/backup:/backup --network=puka_private mongo:3 bash -c 'mongodump --out /backup --host puka_mongo'
-tar -C $PUKA -czf puka.tgz backup
-```
-
-### Restoring data from Heroku
-This will restore to the mongo database container named `puka_mongo` and will rename the database from `heroku_foo` to `test`.
-
-```
-$ docker run --rm --network=puka_default --name restore -v /opt/puka/backup:/backup -it mongo:3 bash
-# mongorestore -h puka_mongo --nsFrom heroku_foo.bookmarks --nsTo test.bookmarks --drop --gzip --archive=/backup/puka.archive.gz
-```
-
-## Puka Front End
-Puka client implemented with React and Redux, uses nginx-proxy
